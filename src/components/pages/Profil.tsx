@@ -1,13 +1,12 @@
 import { SectionLabel } from "../ui/SectionLabel";
 import { PROFILE_ACTIVITY, PROFILE_SETTINGS } from "../../data/mockData";
-import profileAvatar from "../../../public/assets/men.png"
 
 export function PageProfil() {
   return (
     <>
       <div className="flex-shrink-0 text-center px-5 pt-10 pb-6" style={{ background: "linear-gradient(160deg,#0b3d2e 0%,#1a6b4a 70%)" }}>
         <div className="w-18 h-18 rounded-full overflow-hidden mx-auto mb-2.5 border-[3px] border-white/30" style={{ width: 72, height: 72 }}>
-          <img src={profileAvatar} alt="Profile" className="w-full h-full object-cover" />
+          <img src="/image.png" alt="Profile" className="w-full h-full object-cover" />
         </div>
         <div className="text-[18px] font-black text-white mb-1">Izz Al-Islam</div>
         <div className="text-[12px] text-white/55 mb-4">izz.alislam@ukhuwah.tech</div>
