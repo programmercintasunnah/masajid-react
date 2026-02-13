@@ -1,5 +1,35 @@
 import { useState } from "react";
-import { AMAL_SECTIONS } from "../../data/mockData";
+import { CheckCircle2, Flame, BookOpen, Sunrise, Sparkles, Check } from "lucide-react";
+
+const AMAL_SECTIONS = [
+  {
+    icon: Sunrise, label: "Dzikir Pagi", items: [
+      { name: "Dzikir setelah Subuh", count: "1x", done: true },
+      { name: "Membaca Ayat Kursi", count: "1x", done: true },
+      { name: "Subhanallah (33x)", count: "33x", done: true },
+      { name: "Alhamdulillah (33x)", count: "33x", done: true },
+      { name: "Allahu Akbar (34x)", count: "34x", done: false },
+    ],
+  },
+  {
+    icon: Sparkles, label: "Shalat", items: [
+      { name: "Shalat Subuh", count: "2 rakaat", done: true },
+      { name: "Shalat Dzuhur", count: "4 rakaat", done: true },
+      { name: "Shalat Sunnah Dzuhur", count: "4 rakaat", done: true },
+      { name: "Shalat Ashar", count: "4 rakaat", done: false },
+      { name: "Shalat Maghrib", count: "3 rakaat", done: false },
+    ],
+  },
+  {
+    icon: CheckCircle2, label: "Amal Lainnya", items: [
+      { name: "Sedekah", count: "1x", done: true },
+      { name: "Membaca Hadits harian", count: "1x", done: true },
+      { name: "Dzikir Petang", count: "1x", done: false },
+      { name: "Shalat Tahajud", count: "2 rakaat", done: false },
+      { name: "Dzikir Sebelum Tidur", count: "1x", done: false },
+    ],
+  },
+];
 
 export function PageAmal() {
   const [sections, setSections] = useState(AMAL_SECTIONS.map(s => ({
@@ -23,7 +53,10 @@ export function PageAmal() {
   return (
     <>
       <div className="flex-shrink-0 px-5 pt-10 pb-5" style={{ background: "linear-gradient(160deg,#0b3d2e 0%,#1a6b4a 70%)" }}>
-        <h2 className="text-xl font-black text-white mb-3">☑️ Amal Harian</h2>
+        <h2 className="text-xl font-black text-white mb-3 flex items-center gap-2">
+          <CheckCircle2 className="w-5 h-5" />
+          Amal Harian
+        </h2>
         <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-3.5 border border-white/10">
           <div className="relative w-16 h-16 flex-shrink-0">
             <svg className="w-16 h-16 -rotate-90" viewBox="0 0 60 60">
@@ -36,7 +69,10 @@ export function PageAmal() {
           <div>
             <div className="text-[14px] font-bold text-white mb-1">{done} dari {total} amal selesai</div>
             <div className="text-[11px] text-white/60">Kamis, 12 Februari 2026</div>
-            <div className="text-[11px] text-amber-300 mt-1">🔥 Streak 7 hari berturut!</div>
+            <div className="text-[11px] text-amber-300 mt-1 flex items-center gap-1">
+              <Flame className="w-3 h-3" />
+              Streak 7 hari berturut!
+            </div>
           </div>
         </div>
       </div>
@@ -45,7 +81,10 @@ export function PageAmal() {
         <div className="h-3.5" />
 
         <div className="mx-5 mb-3 bg-white rounded-2xl p-4 shadow-sm">
-          <h4 className="text-[12px] font-bold text-gray-900 mb-2.5">📖 Target Baca Al-Qur'an Hari Ini</h4>
+          <h4 className="text-[12px] font-bold text-gray-900 mb-2.5 flex items-center gap-2">
+            <BookOpen className="w-4 h-4" />
+            Target Baca Al-Qur'an Hari Ini
+          </h4>
           <div className="h-2 bg-gray-100 rounded-full mb-2">
             <div className="h-full w-[45%] bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full" />
           </div>
@@ -57,12 +96,16 @@ export function PageAmal() {
 
         {sections.map((sec, si) => {
           const doneCount = sec.items.filter(it => it.done).length;
+          const Icon = sec.icon;
           return (
             <div key={si} className="mx-5 mb-3 bg-white rounded-2xl overflow-hidden shadow-sm">
               <div className="flex items-center gap-2 px-4 py-3 border-b border-black/[0.05]" style={{ background: "linear-gradient(90deg,rgba(30,107,74,0.06),transparent)" }}>
-                <span className="text-base">{sec.icon}</span>
+                <Icon className="w-4 h-4 text-emerald-600" />
                 <span className="text-[12px] font-bold text-gray-900 flex-1">{sec.label}</span>
-                <span className="text-[10px] text-gray-400">{doneCount}/{sec.items.length} ✓</span>
+                <span className="text-[10px] text-gray-400 flex items-center gap-1">
+                  {doneCount}/{sec.items.length}
+                  <Check className="w-3 h-3" />
+                </span>
               </div>
               {sec.items.map((it, ii) => (
                 <button
@@ -70,8 +113,8 @@ export function PageAmal() {
                   onClick={() => toggle(si, ii)}
                   className={`w-full flex items-center gap-3 px-4 py-3 text-left border-b border-black/[0.04] last:border-b-0 hover:bg-black/[0.02] transition-colors`}
                 >
-                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 text-[12px] transition-all ${it.done ? "bg-emerald-500 border-emerald-500 text-white" : "border-gray-300"}`}>
-                    {it.done ? "✓" : ""}
+                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all ${it.done ? "bg-emerald-500 border-emerald-500" : "border-gray-300"}`}>
+                    {it.done ? <Check className="w-3 h-3 text-white" /> : null}
                   </div>
                   <span className={`text-[12px] font-semibold flex-1 transition-colors ${it.done ? "text-gray-400 line-through" : "text-gray-900"}`}>{it.name}</span>
                   <span className="text-[11px] text-gray-400">{it.count}</span>

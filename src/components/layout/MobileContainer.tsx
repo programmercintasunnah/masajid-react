@@ -1,5 +1,13 @@
 import type { Page } from "../../types";
-import { NAV_ITEMS } from "../../data/mockData";
+import { Home, Heart, Coins, CheckSquare, User } from "lucide-react";
+
+const NAV_ITEMS = [
+  { id: "beranda" as Page, icon: Home, label: "Beranda" },
+  { id: "favorit" as Page, icon: Heart, label: "Favorit" },
+  { id: "infaq" as Page, icon: Coins, label: "Infaq" },
+  { id: "amal" as Page, icon: CheckSquare, label: "Amal" },
+  { id: "profil" as Page, icon: User, label: "Profil" },
+];
 
 interface MobileContainerProps {
   children: React.ReactNode;
@@ -26,20 +34,23 @@ interface BottomNavProps {
 export function BottomNav({ current, onChange }: BottomNavProps) {
   return (
     <div className="bg-white border-t border-black/[0.06] flex justify-around pt-1.5 pb-6 px-1 shadow-[0_-4px_24px_rgba(0,0,0,0.08)] flex-shrink-0">
-      {NAV_ITEMS.map((n) => (
-        <button
-          key={n.id}
-          onClick={() => onChange(n.id)}
-          className="flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl active:scale-90 transition-transform"
-        >
-          <div className={`w-10 h-10 rounded-[14px] flex items-center justify-center text-xl transition-all ${current === n.id ? "bg-[#0b3d2e]" : ""}`}>
-            {n.icon}
-          </div>
-          <span className={`text-[9px] font-semibold tracking-tight ${current === n.id ? "text-[#0b3d2e]" : "text-gray-400"}`}>
-            {n.label}
-          </span>
-        </button>
-      ))}
+      {NAV_ITEMS.map((n) => {
+        const Icon = n.icon;
+        return (
+          <button
+            key={n.id}
+            onClick={() => onChange(n.id)}
+            className="flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl active:scale-90 transition-transform"
+          >
+            <div className={`w-10 h-10 rounded-[14px] flex items-center justify-center transition-all ${current === n.id ? "bg-[#0b3d2e]" : ""}`}>
+              <Icon className={`w-5 h-5 ${current === n.id ? "text-white" : "text-gray-400"}`} />
+            </div>
+            <span className={`text-[9px] font-semibold tracking-tight ${current === n.id ? "text-[#0b3d2e]" : "text-gray-400"}`}>
+              {n.label}
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Bell, Sunrise, Sun, Cloud, Sunset, Moon } from "lucide-react";
 
 interface HeaderProps {
   userName?: string;
@@ -8,11 +9,11 @@ interface HeaderProps {
 const HEADER_BG = "linear-gradient(160deg,#0b3d2e 0%,#1a6b4a 55%,#1f8a5e 100%)";
 
 const PRAYER_TIMES = [
-  { name: "Subuh", time: "05:10" },
-  { name: "Dzuhur", time: "12:32" },
-  { name: "Ashar", time: "15:50" },
-  { name: "Maghrib", time: "18:34" },
-  { name: "Isya", time: "19:45" },
+  { name: "Subuh", time: "05:10", icon: Sunrise },
+  { name: "Dzuhur", time: "12:32", icon: Sun },
+  { name: "Ashar", time: "15:50", icon: Cloud },
+  { name: "Maghrib", time: "18:34", icon: Sunset },
+  { name: "Isya", time: "19:45", icon: Moon },
 ];
 
 function getHijriDate(): { day: number; month: string; year: number } {
@@ -83,7 +84,7 @@ export function Header({ userName, userPhoto }: HeaderProps) {
         
         <div className="flex items-center gap-2">
           <button className="relative w-8 h-8 rounded-xl flex items-center justify-center transition-all active:scale-90" style={{ background: "rgba(255,255,255,0.13)", border: "1px solid rgba(255,255,255,0.18)" }}>
-            <span className="text-[15px]">🔔</span>
+            <Bell className="w-4 h-4 text-white" />
             <span className="absolute top-[5px] right-[5px] w-[7px] h-[7px] bg-red-500 rounded-full" style={{ border: "1.5px solid #1a6b4a" }} />
           </button>
           <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0" style={{ background: "rgba(255,255,255,0.18)", border: "2px solid rgba(255,255,255,0.4)" }}>
@@ -113,9 +114,10 @@ export function Header({ userName, userPhoto }: HeaderProps) {
         <div className="flex justify-between items-center bg-black/20 backdrop-blur-sm rounded-2xl px-3 py-2.5 border border-white/10">
           {PRAYER_TIMES.map((p, i) => {
             const isActive = nextPrayer.name === p.name;
+            const Icon = p.icon;
             return (
               <div key={i} className={`flex flex-col items-center gap-1 flex-1 ${i > 0 ? "border-l border-white/10" : ""}`}>
-                <span className="text-[17px]">{p.name === "Subuh" ? "🌅" : p.name === "Dzuhur" ? "☀️" : p.name === "Ashar" ? "🌤" : p.name === "Maghrib" ? "🌆" : "🌙"}</span>
+                <Icon className={`w-[17px] h-[17px] ${isActive ? "text-amber-300" : "text-white/70"}`} />
                 <span className={`text-[10px] font-medium ${isActive ? "text-amber-300" : "text-white/55"}`}>{p.name}</span>
                 <span className={`text-[12px] font-bold ${isActive ? "text-amber-300" : "text-white"}`}>{p.time}</span>
               </div>
