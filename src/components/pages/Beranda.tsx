@@ -2,7 +2,7 @@ import { SectionLabel } from "../ui/SectionLabel";
 import { MasjidCard } from "../ui/MasjidCard";
 import { KajianCard } from "../ui/KajianCard";
 import { Header } from "../layout/Header";
-import { MapPin, Landmark } from "lucide-react";
+import { Landmark } from "lucide-react";
 
 const MENUS = [
   { icon: "📖", label: "Al-Qur'an", bg: "from-emerald-100 to-teal-200" },
@@ -31,13 +31,6 @@ export function PageBeranda() {
   return (
     <>
       <Header userName="Ahmad Fauzan" />
-
-      <div className="text-[11px] text-white/50 px-5 pt-2 pb-0 flex-shrink-0" style={{ background: "linear-gradient(160deg,#0b3d2e,#1a6b4a 60%)" }}>
-        <span className="flex items-center gap-1">
-          <MapPin className="w-3 h-3" />
-          Kota Pekanbaru, Riau
-        </span>
-      </div>
 
       <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-none bg-[#f5f7f5]">
         <SectionLabel>Menu</SectionLabel>

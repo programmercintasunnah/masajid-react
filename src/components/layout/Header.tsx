@@ -21,6 +21,10 @@ function getGregorianDate(date: Date): string {
   return `${days[date.getDay()]}, ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
 }
 
+function getHijriDate(): { day: number; month: string; year: number } {
+  return { day: 25, month: "Sha'ban", year: 1447 };
+}
+
 function formatCountdown(minutes: number): string {
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
@@ -39,6 +43,7 @@ export function Header({ userName, userPhoto }: HeaderProps) {
   );
 
   const gregorian = getGregorianDate(time);
+  const hijri = getHijriDate();
   const nextPrayer = getNextPrayer(prayerTimes);
 
   useEffect(() => {
@@ -114,6 +119,9 @@ export function Header({ userName, userPhoto }: HeaderProps) {
       <div className="relative z-10 px-5 pb-5">
         <div className="flex justify-between text-[12px] text-white/60 font-medium mb-3">
           <span>{gregorian}</span>
+          <span>{hijri.day} {hijri.month} {hijri.year}H</span>
+        </div>
+        <div className="flex justify-start text-[11px] text-white/50 mb-2">
           {location ? (
             <span className="flex items-center gap-1">
               <MapPin className="w-3 h-3" />
