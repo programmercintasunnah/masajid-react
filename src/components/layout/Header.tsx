@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 interface HeaderProps {
   userName?: string;
   userPhoto?: string;
@@ -5,7 +7,40 @@ interface HeaderProps {
 
 const HEADER_BG = "linear-gradient(160deg,#0b3d2e 0%,#1a6b4a 55%,#1f8a5e 100%)";
 
+const HIJRI_MONTHS = [
+  "Muharram", "Safar", "Rabi'ul Awal", "Rabi'ul Akhir",
+  "Jumadil Awal", "Jumadil Akhir", "Rajab", "Sha'ban",
+  "Ramadhan", "Syawwal", "Dzulqa'dah", "Dzulhijjah"
+];
+
+function getHijriDate(date: Date): { day: number; month: string; year: number } {
+  const offset = 7 * 24 * 60 * 60 * 1000;
+  const hijriMs = date.getTime() + date.getTimezoneOffset() * 60 * 1000 + offset;
+  const day = Math.floor(hijriMs / (24 * 60 * 60 * 1000)) % 30 + 1;
+  const monthIndex = Math.floor(((hijriMs / (24 * 60 * 60 * 1000)) % 354) / 29.5);
+  const year = 1446 + Math.floor((date.getTime() - new Date("2024-07-07").getTime()) / (354 * 24 * 60 * 60 * 1000));
+  return { day, month: HIJRI_MONTHS[monthIndex] || "Sha'ban", year };
+}
+
+function getGregorianDate(date: Date): string {
+  const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+  const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+  return `${days[date.getDay()]}, ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+}
+
 export function Header({ userName, userPhoto }: HeaderProps) {
+  const [time, setTime] = useState(new Date());
+  const hijri = getHijriDate(time);
+  const gregorian = getGregorianDate(time);
+
+  useEffect(() => {
+    const timer = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const hours = time.getHours().toString().padStart(2, "0");
+  const minutes = time.getMinutes().toString().padStart(2, "0");
+
   return (
     <div 
       className="relative overflow-hidden flex-shrink-0"
@@ -17,7 +52,7 @@ export function Header({ userName, userPhoto }: HeaderProps) {
       <div className="relative z-10 flex items-center justify-between px-5 pt-6 pb-3">
         <div className="flex flex-col leading-none gap-0.5">
           <div className="flex items-center gap-1.5">
-            <span className="text-[14px] font-black px-2 py-0.5 rounded-md" style={{ background: "#fff", color: "#0b3d2e" }}>مساجد</span>
+            <span className="text-[14px] font-black px-2 py-0.5 rounded-md" style={{ background: "#fff", color: "#0b3d2e" }}>Masajid</span>
             <span className="text-[14px] font-black text-white">App</span>
           </div>
         </div>
@@ -42,11 +77,11 @@ export function Header({ userName, userPhoto }: HeaderProps) {
       {/* Prayer Time Info */}
       <div className="relative z-10 px-5 pb-5">
         <div className="flex justify-between text-[12px] text-white/60 font-medium mb-3">
-          <span>Kamis, 12 Februari 2026</span>
-          <span>24 Sha'ban 1447H</span>
+          <span>{gregorian}</span>
+          <span>{hijri.day} {hijri.month} {hijri.year}H</span>
         </div>
         <div className="text-center mb-1.5">
-          <span className="text-[64px] font-black text-white leading-none tracking-[-3px]" style={{ textShadow: "0 4px 20px rgba(0,0,0,0.3)" }}>14:17</span>
+          <span className="text-[64px] font-black text-white leading-none tracking-[-3px]" style={{ textShadow: "0 4px 20px rgba(0,0,0,0.3)" }}>{hours}:{minutes}</span>
         </div>
         <div className="text-center text-[12px] text-white/60 mb-4">
           ± 1 jam 32 menit lagi menuju waktu <strong className="text-amber-300">Ashar</strong>
