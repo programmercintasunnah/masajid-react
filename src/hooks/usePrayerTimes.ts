@@ -9,6 +9,12 @@ export interface PrayerTimes {
   Isha: string;
 }
 
+export interface HijriDate {
+  day: number;
+  month: string;
+  year: number;
+}
+
 const DEFAULT_PRAYER_TIMES: PrayerTimes = {
   Fajr: "05:10",
   Sunrise: "06:22",
@@ -18,8 +24,15 @@ const DEFAULT_PRAYER_TIMES: PrayerTimes = {
   Isha: "19:45",
 };
 
+const DEFAULT_HIJRI: HijriDate = {
+  day: 25,
+  month: "Sha'ban",
+  year: 1447,
+};
+
 export function usePrayerTimes(latitude?: number, longitude?: number) {
   const [prayerTimes, setPrayerTimes] = useState<PrayerTimes>(DEFAULT_PRAYER_TIMES);
+  const [hijriDate, setHijriDate] = useState<HijriDate>(DEFAULT_HIJRI);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -42,13 +55,12 @@ export function usePrayerTimes(latitude?: number, longitude?: number) {
         
         const data = await response.json();
         
-        console.log("Aladhan API response:", data);
-        
         if (!data.data || !data.data.timings) {
           throw new Error("Invalid API response");
         }
         
         const timings = data.data.timings;
+        const hijri = data.data.date.hijri;
         
         const formatTime = (time: string) => {
           if (!time) return "00:00";
@@ -64,11 +76,20 @@ export function usePrayerTimes(latitude?: number, longitude?: number) {
           Isha: formatTime(timings.Isha),
         });
         
+        if (hijri) {
+          setHijriDate({
+            day: parseInt(hijri.day),
+            month: hijri.month.en,
+            year: parseInt(hijri.year),
+          });
+        }
+        
         setError(null);
       } catch (err) {
         console.error("Prayer times error:", err);
         setError("Gagal mengambil jadwal solat");
         setPrayerTimes(DEFAULT_PRAYER_TIMES);
+        setHijriDate(DEFAULT_HIJRI);
       } finally {
         setLoading(false);
       }
@@ -77,7 +98,7 @@ export function usePrayerTimes(latitude?: number, longitude?: number) {
     fetchPrayerTimes();
   }, [latitude, longitude]);
 
-  return { prayerTimes, loading, error };
+  return { prayerTimes, hijriDate, loading, error };
 }
 
 export function getNextPrayer(prayerTimes: PrayerTimes): { name: string; minutesLeft: number } {
