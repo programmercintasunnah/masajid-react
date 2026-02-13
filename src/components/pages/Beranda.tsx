@@ -3,7 +3,7 @@ import { MasjidCard } from "../ui/MasjidCard";
 import { KajianCard } from "../ui/KajianCard";
 import { Header } from "../layout/Header";
 import { MENUS, MASJID_NEARBY, KAJIAN_LIST } from "../../data/mockData";
-import profileAvatar from "../../../dist/assets/men.png"
+import profileAvatar from "../../../public/assets/men.png"
 
 export function PageBeranda() {
   return (
