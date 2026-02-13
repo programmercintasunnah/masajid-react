@@ -9,8 +9,8 @@ const HEADER_BG = "linear-gradient(160deg,#0b3d2e 0%,#1a6b4a 55%,#1f8a5e 100%)";
 
 const HIJRI_MONTHS = [
   "Muharram", "Safar", "Rabi'ul Awal", "Rabi'ul Akhir",
-  "Jumadil Awal", "Jumadil Akhir", "Rajab", "Ramadhan",
-  "Syawwal", "Dzulqa'dah", "Dzulhijjah", "Sha'ban"
+  "Jumadil Awal", "Jumadil Akhir", "Rajab", "Sha'ban",
+  "Ramadhan", "Syawwal", "Dzulqa'dah", "Dzulhijjah"
 ];
 
 const PRAYER_TIMES = [
@@ -22,18 +22,19 @@ const PRAYER_TIMES = [
 ];
 
 function getHijriDate(date: Date): { day: number; month: string; year: number } {
-  const baseDate = new Date("2024-07-07T00:00:00Z");
-  const daysDiff = Math.floor((date.getTime() - baseDate.getTime()) / (24 * 60 * 60 * 1000));
-  const hijriDays = daysDiff + 1948440;
-  const year = Math.floor((hijriDays - 1) / 354) + 1;
-  const dayOfYear = ((hijriDays - 1) % 354) + 1;
-  const month = Math.ceil(dayOfYear / 29.5) - 1;
-  const day = dayOfYear - Math.floor(month * 29.5);
-  return {
-    day: Math.max(1, Math.min(day, 29)),
-    month: HIJRI_MONTHS[Math.min(month, 11)],
-    year: 1445 + year
-  };
+  const d = Math.floor((date.getTime() / 86400000) + 2440587.5);
+  const jd = d - 1948440 + 1;
+  const l = jd - 1913245;
+  const n = Math.floor(l / 10631);
+  const j = l - 10631 * n;
+  const i = Math.floor((j - 1) / 10631);
+  const j1 = j - 10631 * i + 1;
+  const m = Math.floor((j1 - 1) / 531 + (j1 - 1) / 1770 + (j1 - 1) / 147120);
+  const y = 30 * n + i + Math.floor((1600 + m) / 33) + m + 3;
+  const m1 = m - Math.floor((m + 2) / 33) * 12;
+  const d1 = j1 - Math.floor((10631 * m1 + 1568) / 5310 - (10631 * m1 + 1568) / 5310 * 3 + (m1 + 2) / 33 * -1);
+  const month = HIJRI_MONTHS[m1];
+  return { day: d1, month, year: y };
 }
 
 function getGregorianDate(date: Date): string {
