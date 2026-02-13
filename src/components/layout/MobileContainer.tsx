@@ -9,8 +9,8 @@ interface MobileContainerProps {
 
 export function MobileContainer({ children, currentPage, onNavigate }: MobileContainerProps) {
   return (
-    <div className="w-[390px] h-[100dvh] flex flex-col overflow-hidden bg-[#f5f7f5] shadow-lg">
-      <div className="flex-1 flex flex-col overflow-hidden animate-fade-up" key={currentPage}>
+    <div className="w-[390px] h-[100dvh] flex flex-col bg-[#f5f7f5] shadow-lg">
+      <div className="flex-1 overflow-y-auto animate-fade-up" key={currentPage}>
         {children}
       </div>
       <BottomNav current={currentPage} onChange={onNavigate} />
