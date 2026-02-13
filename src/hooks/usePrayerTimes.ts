@@ -35,12 +35,14 @@ export function usePrayerTimes(latitude?: number, longitude?: number) {
         const dateStr = today.toISOString().split('T')[0];
         
         const response = await fetch(
-          `https://api.aladhan.com/v1/timings/${dateStr}?latitude=${latitude}&longitude=${longitude}&method=2`
+          `https://api.aladhan.com/v1/timings/${dateStr}?latitude=${latitude}&longitude=${longitude}&method=2&timezone=Asia/Jakarta`
         );
         
         if (!response.ok) throw new Error("Failed to fetch prayer times");
         
         const data = await response.json();
+        
+        console.log("Aladhan API response:", data);
         
         if (!data.data || !data.data.timings) {
           throw new Error("Invalid API response");
@@ -48,13 +50,18 @@ export function usePrayerTimes(latitude?: number, longitude?: number) {
         
         const timings = data.data.timings;
         
+        const formatTime = (time: string) => {
+          if (!time) return "00:00";
+          return time.substring(0, 5);
+        };
+        
         setPrayerTimes({
-          Fajr: timings.Fajr || "05:10",
-          Sunrise: timings.Sunrise || "06:22",
-          Dhuhr: timings.Dhuhr || "12:32",
-          Asr: timings.Asr || "15:50",
-          Maghrib: timings.Maghrib || "18:34",
-          Isha: timings.Isha || "19:45",
+          Fajr: formatTime(timings.Fajr),
+          Sunrise: formatTime(timings.Sunrise),
+          Dhuhr: formatTime(timings.Dhuhr),
+          Asr: formatTime(timings.Asr),
+          Maghrib: formatTime(timings.Maghrib),
+          Isha: formatTime(timings.Isha),
         });
         
         setError(null);
