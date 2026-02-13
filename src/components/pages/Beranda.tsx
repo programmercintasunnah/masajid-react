@@ -2,36 +2,12 @@ import { SectionLabel } from "../ui/SectionLabel";
 import { MasjidCard } from "../ui/MasjidCard";
 import { KajianCard } from "../ui/KajianCard";
 import { Header } from "../layout/Header";
-import { PRAYER_TIMES, MENUS, MASJID_NEARBY, KAJIAN_LIST } from "../../data/mockData";
+import { MENUS, MASJID_NEARBY, KAJIAN_LIST } from "../../data/mockData";
 
 export function PageBeranda() {
   return (
     <>
       <Header userName="Ahmad Fauzan" userPhoto="https://lh3.googleusercontent.com/a/default" />
-      <div className="relative overflow-hidden flex-shrink-0" style={{ background: "linear-gradient(160deg,#0b3d2e 0%,#1a6b4a 55%,#1f8a5e 100%)" }}>
-        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 85% 15%,rgba(201,148,58,0.2) 0%,transparent 55%)" }} />
-        <div className="relative z-10 px-5 pt-5 pb-5">
-          <div className="flex justify-between text-[12px] text-white/60 font-medium mb-3">
-            <span>Kamis, 12 Februari 2026</span>
-            <span>24 Sha'ban 1447H</span>
-          </div>
-          <div className="text-center mb-1.5">
-            <span className="text-[64px] font-black text-white leading-none tracking-[-3px]" style={{ textShadow: "0 4px 20px rgba(0,0,0,0.3)" }}>14:17</span>
-          </div>
-          <div className="text-center text-[12px] text-white/60 mb-4">
-            ± 1 jam 32 menit lagi menuju waktu <strong className="text-amber-300">Ashar</strong>
-          </div>
-          <div className="flex justify-between items-center bg-black/20 backdrop-blur-sm rounded-2xl px-3 py-2.5 border border-white/10">
-            {PRAYER_TIMES.map((p, i) => (
-              <div key={i} className={`flex flex-col items-center gap-1 flex-1 ${i > 0 ? "border-l border-white/10" : ""}`}>
-                <span className="text-[17px]">{p.icon}</span>
-                <span className={`text-[10px] font-medium ${p.active ? "text-amber-300" : "text-white/55"}`}>{p.name}</span>
-                <span className={`text-[12px] font-bold ${p.active ? "text-amber-300" : "text-white"}`}>{p.time}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
 
       <div className="text-[11px] text-white/50 px-5 pt-2 pb-0 flex-shrink-0" style={{ background: "linear-gradient(160deg,#0b3d2e,#1a6b4a 60%)" }}>
         📍 Kota Pekanbaru, Riau
