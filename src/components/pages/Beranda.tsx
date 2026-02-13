@@ -3,11 +3,12 @@ import { MasjidCard } from "../ui/MasjidCard";
 import { KajianCard } from "../ui/KajianCard";
 import { Header } from "../layout/Header";
 import { MENUS, MASJID_NEARBY, KAJIAN_LIST } from "../../data/mockData";
+import profileAvatar from "../../../dist/assets/men.png"
 
 export function PageBeranda() {
   return (
     <>
-      <Header userName="Ahmad Fauzan" userPhoto="https://lh3.googleusercontent.com/a/default" />
+      <Header userName="Ahmad Fauzan" userPhoto={profileAvatar} />
 
       <div className="text-[11px] text-white/50 px-5 pt-2 pb-0 flex-shrink-0" style={{ background: "linear-gradient(160deg,#0b3d2e,#1a6b4a 60%)" }}>
         📍 Kota Pekanbaru, Riau

@@ -17,10 +17,9 @@ export function Header({ userName, userPhoto }: HeaderProps) {
       <div className="relative z-10 flex items-center justify-between px-5 pt-6 pb-3">
         <div className="flex flex-col leading-none gap-0.5">
           <div className="flex items-center gap-1.5">
-            <span className="text-[14px] font-black px-2 py-0.5 rounded-md" style={{ background: "#fff", color: "#0b3d2e" }}>Masajid</span>
+            <span className="text-[14px] font-black px-2 py-0.5 rounded-md" style={{ background: "#fff", color: "#0b3d2e" }}>مساجد</span>
             <span className="text-[14px] font-black text-white">App</span>
           </div>
-          <span className="text-[11px] text-white/70 text-right pr-0.5" style={{ fontFamily: "'FreeSerif','Times New Roman',serif" }}>مساجد</span>
         </div>
         
         <div className="flex items-center gap-2">
