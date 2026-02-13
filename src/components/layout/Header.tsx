@@ -9,32 +9,73 @@ const HEADER_BG = "linear-gradient(160deg,#0b3d2e 0%,#1a6b4a 55%,#1f8a5e 100%)";
 
 const HIJRI_MONTHS = [
   "Muharram", "Safar", "Rabi'ul Awal", "Rabi'ul Akhir",
-  "Jumadil Awal", "Jumadil Akhir", "Rajab", "Sha'ban",
-  "Ramadhan", "Syawwal", "Dzulqa'dah", "Dzulhijjah"
+  "Jumadil Awal", "Jumadil Akhir", "Rajab", "Ramadhan",
+  "Syawwal", "Dzulqa'dah", "Dzulhijjah", "Sha'ban"
+];
+
+const PRAYER_TIMES = [
+  { name: "Subuh", time: "05:10" },
+  { name: "Dzuhur", time: "12:32" },
+  { name: "Ashar", time: "15:50" },
+  { name: "Maghrib", time: "18:34" },
+  { name: "Isya", time: "19:45" },
 ];
 
 function getHijriDate(date: Date): { day: number; month: string; year: number } {
-  const offset = 7 * 24 * 60 * 60 * 1000;
-  const hijriMs = date.getTime() + date.getTimezoneOffset() * 60 * 1000 + offset;
-  const day = Math.floor(hijriMs / (24 * 60 * 60 * 1000)) % 30 + 1;
-  const monthIndex = Math.floor(((hijriMs / (24 * 60 * 60 * 1000)) % 354) / 29.5);
-  const year = 1446 + Math.floor((date.getTime() - new Date("2024-07-07").getTime()) / (354 * 24 * 60 * 60 * 1000));
-  return { day, month: HIJRI_MONTHS[monthIndex] || "Sha'ban", year };
+  const baseDate = new Date("2024-07-07T00:00:00Z");
+  const daysDiff = Math.floor((date.getTime() - baseDate.getTime()) / (24 * 60 * 60 * 1000));
+  const hijriDays = daysDiff + 1948440;
+  const year = Math.floor((hijriDays - 1) / 354) + 1;
+  const dayOfYear = ((hijriDays - 1) % 354) + 1;
+  const month = Math.ceil(dayOfYear / 29.5) - 1;
+  const day = dayOfYear - Math.floor(month * 29.5);
+  return {
+    day: Math.max(1, Math.min(day, 29)),
+    month: HIJRI_MONTHS[Math.min(month, 11)],
+    year: 1445 + year
+  };
 }
 
 function getGregorianDate(date: Date): string {
-  const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+  const days = ["Ahad", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
   const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
   return `${days[date.getDay()]}, ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+}
+
+function getNextPrayer(): { name: string; minutesLeft: number } {
+  const now = new Date();
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+  
+  const prayerMinutes = PRAYER_TIMES.map(p => {
+    const [h, m] = p.time.split(":").map(Number);
+    return h * 60 + m;
+  });
+
+  for (let i = 0; i < prayerMinutes.length; i++) {
+    if (currentMinutes < prayerMinutes[i]) {
+      return { name: PRAYER_TIMES[i].name, minutesLeft: prayerMinutes[i] - currentMinutes };
+    }
+  }
+  return { name: "Subuh", minutesLeft: (24 * 60 - currentMinutes) + prayerMinutes[0] };
+}
+
+function formatCountdown(minutes: number): string {
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  if (hours > 0) {
+    return `${hours} jam ${mins} menit`;
+  }
+  return `${mins} menit`;
 }
 
 export function Header({ userName, userPhoto }: HeaderProps) {
   const [time, setTime] = useState(new Date());
   const hijri = getHijriDate(time);
   const gregorian = getGregorianDate(time);
+  const nextPrayer = getNextPrayer();
 
   useEffect(() => {
-    const timer = setInterval(() => setTime(new Date()), 1000);
+    const timer = setInterval(() => setTime(new Date()), 60000);
     return () => clearInterval(timer);
   }, []);
 
@@ -84,22 +125,19 @@ export function Header({ userName, userPhoto }: HeaderProps) {
           <span className="text-[64px] font-black text-white leading-none tracking-[-3px]" style={{ textShadow: "0 4px 20px rgba(0,0,0,0.3)" }}>{hours}:{minutes}</span>
         </div>
         <div className="text-center text-[12px] text-white/60 mb-4">
-          ± 1 jam 32 menit lagi menuju waktu <strong className="text-amber-300">Ashar</strong>
+          ± {formatCountdown(nextPrayer.minutesLeft)} lagi menuju waktu <strong className="text-amber-300">{nextPrayer.name}</strong>
         </div>
         <div className="flex justify-between items-center bg-black/20 backdrop-blur-sm rounded-2xl px-3 py-2.5 border border-white/10">
-          {[
-            { name: "Subuh", time: "05:10", icon: "🌅" },
-            { name: "Dzuhur", time: "12:32", icon: "☀️" },
-            { name: "Ashar", time: "15:50", icon: "🌤", active: true },
-            { name: "Maghrib", time: "18:34", icon: "🌆" },
-            { name: "Isya", time: "19:45", icon: "🌙" },
-          ].map((p, i) => (
-            <div key={i} className={`flex flex-col items-center gap-1 flex-1 ${i > 0 ? "border-l border-white/10" : ""}`}>
-              <span className="text-[17px]">{p.icon}</span>
-              <span className={`text-[10px] font-medium ${p.active ? "text-amber-300" : "text-white/55"}`}>{p.name}</span>
-              <span className={`text-[12px] font-bold ${p.active ? "text-amber-300" : "text-white"}`}>{p.time}</span>
-            </div>
-          ))}
+          {PRAYER_TIMES.map((p, i) => {
+            const isActive = nextPrayer.name === p.name;
+            return (
+              <div key={i} className={`flex flex-col items-center gap-1 flex-1 ${i > 0 ? "border-l border-white/10" : ""}`}>
+                <span className="text-[17px]">{p.name === "Subuh" ? "🌅" : p.name === "Dzuhur" ? "☀️" : p.name === "Ashar" ? "🌤" : p.name === "Maghrib" ? "🌆" : "🌙"}</span>
+                <span className={`text-[10px] font-medium ${isActive ? "text-amber-300" : "text-white/55"}`}>{p.name}</span>
+                <span className={`text-[12px] font-bold ${isActive ? "text-amber-300" : "text-white"}`}>{p.time}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
