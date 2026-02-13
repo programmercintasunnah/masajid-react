@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Bell, Sunrise, Sun, Cloud, Sunset, Moon, MapPin, Loader2 } from "lucide-react";
 import { useLocation } from "../../hooks/useLocation";
 import { usePrayerTimes, getNextPrayer } from "../../hooks/usePrayerTimes";
-
+import masajidLogo from "../../assets/masajid_logo.png"
 interface HeaderProps {
   userName?: string;
   userPhoto?: string;
@@ -68,19 +68,19 @@ export function Header({ userName, userPhoto }: HeaderProps) {
   const isLoading = locationLoading || prayerLoading;
 
   return (
-    <div 
+    <div
       className="relative overflow-hidden flex-shrink-0"
       style={{ background: HEADER_BG }}
     >
       <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 85% 15%,rgba(201,148,58,0.2) 0%,transparent 55%)" }} />
-      
+
       {/* Header Content */}
       <div className="relative z-10 flex items-center justify-between px-5 pt-6 pb-3">
         <div className="flex flex-col leading-none gap-0.5">
           <div className="flex items-center gap-1.5">
-            <img 
-              src="/masajid_logo_landscape.png" 
-              alt="MasajidApp" 
+            <img
+              src={masajidLogo}
+              alt="MasajidApp"
               className="h-8 w-auto object-contain"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = 'none';
@@ -92,7 +92,7 @@ export function Header({ userName, userPhoto }: HeaderProps) {
             />
           </div>
         </div>
-        
+
         <div className="flex items-center gap-2">
           <button className="relative w-8 h-8 rounded-xl flex items-center justify-center transition-all active:scale-90" style={{ background: "rgba(255,255,255,0.13)", border: "1px solid rgba(255,255,255,0.18)" }}>
             <Bell className="w-4 h-4 text-white" />
@@ -116,17 +116,7 @@ export function Header({ userName, userPhoto }: HeaderProps) {
           <span>{gregorian}</span>
           <span>{hijriDate.day} {hijriDate.month} {hijriDate.year}H</span>
         </div>
-        <div className="flex justify-start text-[11px] text-white/50 mb-2">
-          {location ? (
-            <span className="flex items-center gap-1">
-              <MapPin className="w-3 h-3" />
-              {location.city}
-            </span>
-          ) : (
-            <span>Kota Pekanbaru</span>
-          )}
-        </div>
-        
+
         {isLoading ? (
           <div className="flex items-center justify-center py-8">
             <Loader2 className="w-8 h-8 text-white/60 animate-spin" />
@@ -153,6 +143,16 @@ export function Header({ userName, userPhoto }: HeaderProps) {
               })}
             </div>
           </>
+        )}
+      </div>
+      <div className="text-[11px] text-white/50 px-5 pt-1 pb-1 flex-shrink-0" style={{ background: "linear-gradient(160deg,#0b3d2e,#1a6b4a 60%)" }}>
+        {location ? (
+          <span className="flex items-center gap-1">
+            <MapPin className="w-3 h-3" />
+            {location.city}
+          </span>
+        ) : (
+          <span>Kota Pekanbaru</span>
         )}
       </div>
     </div>
