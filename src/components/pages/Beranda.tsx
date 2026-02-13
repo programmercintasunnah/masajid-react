@@ -2,18 +2,26 @@ import { SectionLabel } from "../ui/SectionLabel";
 import { MasjidCard } from "../ui/MasjidCard";
 import { KajianCard } from "../ui/KajianCard";
 import { Header } from "../layout/Header";
-import { Landmark, BookOpen, GraduationCap, ScrollText, HeartHandshake, Banknote, Mic, MoreHorizontal } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { Landmark } from "lucide-react";
 
-const MENUS: { icon: LucideIcon; label: string; bg: string }[] = [
-  { icon: BookOpen, label: "Al-Qur'an", bg: "from-emerald-100 to-teal-200" },
-  { icon: GraduationCap, label: "Kajian", bg: "from-blue-100 to-blue-200" },
-  { icon: ScrollText, label: "Hadits", bg: "from-amber-100 to-yellow-200" },
-  { icon: HeartHandshake, label: "Dzikir & Doa", bg: "from-purple-100 to-purple-200" },
-  { icon: Banknote, label: "Infaq", bg: "from-teal-100 to-emerald-200" },
-  { icon: Mic, label: "Tahsin", bg: "from-pink-100 to-pink-200" },
-  { icon: Landmark, label: "Masjid", bg: "from-yellow-100 to-amber-200" },
-  { icon: MoreHorizontal, label: "Lainnya", bg: "from-slate-100 to-slate-200" },
+import quranImg from "../../assets/quran.png";
+import manuscriptImg from "../../assets/manuscript.png";
+import studyImg from "../../assets/study.png";
+import prayImg from "../../assets/pray.png";
+import infaqImg from "../../assets/infaq.png";
+import iqroImg from "../../assets/iqro.png";
+import mosqueImg from "../../assets/prophets-mosque.png";
+import moreImg from "../../assets/more.png";
+
+const MENUS: { img: string; label: string; bg: string }[] = [
+  { img: quranImg, label: "Al-Qur'an", bg: "from-emerald-100 to-teal-200" },
+  { img: manuscriptImg, label: "Hadits", bg: "from-amber-100 to-yellow-200" },
+  { img: studyImg, label: "Kajian", bg: "from-blue-100 to-blue-200" },
+  { img: iqroImg, label: "Tahsin", bg: "from-pink-100 to-pink-200" },
+  { img: prayImg, label: "Dzikir & Doa", bg: "from-purple-100 to-purple-200" },
+  { img: infaqImg, label: "Infaq", bg: "from-teal-100 to-emerald-200" },
+  { img: mosqueImg, label: "Masjid", bg: "from-yellow-100 to-amber-200" },
+  { img: moreImg, label: "Lainnya", bg: "from-slate-100 to-slate-200" },
 ];
 
 const MASJID_NEARBY = [
@@ -36,17 +44,14 @@ export function PageBeranda() {
       <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-none bg-[#f5f7f5]">
         <SectionLabel>Menu</SectionLabel>
         <div className="grid grid-cols-4 gap-3 px-5">
-          {MENUS.map((m, i) => {
-            const Icon = m.icon;
-            return (
-              <div key={i} className="flex flex-col items-center gap-1.5 cursor-pointer group">
-                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${m.bg} flex items-center justify-center group-hover:scale-105 transition-transform`}>
-                  <Icon className="w-6 h-6" />
-                </div>
-                <span className="text-[10px] font-semibold text-gray-600 text-center leading-tight">{m.label}</span>
+          {MENUS.map((m, i) => (
+            <div key={i} className="flex flex-col items-center gap-1.5 cursor-pointer group">
+              <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${m.bg} flex items-center justify-center group-hover:scale-105 transition-transform`}>
+                <img src={m.img} alt={m.label} className="w-7 h-7" />
               </div>
-            );
-          })}
+              <span className="text-[10px] font-semibold text-gray-600 text-center leading-tight">{m.label}</span>
+            </div>
+          ))}
         </div>
 
         <SectionLabel extra="Lihat semua →">Masjid Terdekat</SectionLabel>
