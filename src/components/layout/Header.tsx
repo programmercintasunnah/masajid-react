@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import islamic from "islamic-date";
+import islamicDate from "islamic-date";
 
 interface HeaderProps {
   userName?: string;
@@ -17,15 +17,8 @@ const PRAYER_TIMES = [
 ];
 
 function getHijriDate(date: Date): { day: number; month: string; year: number } {
-  const hijriStr = islamic(date, "dd MMMM yyyy");
-  const match = hijriStr.match(/(\d+)\s+(\w+)\s+(\d+)/);
-  if (match) {
-    const day = parseInt(match[1]);
-    const month = match[2];
-    const year = parseInt(match[3]);
-    return { day, month, year };
-  }
-  return { day: 1, month: "Muharram", year: 1447 };
+  const hijri = islamicDate.getCurrentHijriDate(date);
+  return { day: hijri.day, month: hijri.month, year: hijri.year };
 }
 
 function getGregorianDate(date: Date): string {
