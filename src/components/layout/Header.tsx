@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import islamicDate from "islamic-date";
 
 interface HeaderProps {
   userName?: string;
@@ -16,9 +15,8 @@ const PRAYER_TIMES = [
   { name: "Isya", time: "19:45" },
 ];
 
-function getHijriDate(date: Date): { day: number; month: string; year: number } {
-  const hijri = islamicDate.getCurrentHijriDate(date);
-  return { day: hijri.day, month: hijri.month, year: hijri.year };
+function getHijriDate(): { day: number; month: string; year: number } {
+  return { day: 25, month: "Sha'ban", year: 1447 };
 }
 
 function getGregorianDate(date: Date): string {
@@ -55,7 +53,7 @@ function formatCountdown(minutes: number): string {
 
 export function Header({ userName, userPhoto }: HeaderProps) {
   const [time, setTime] = useState(new Date());
-  const hijri = getHijriDate(time);
+  const hijri = getHijriDate();
   const gregorian = getGregorianDate(time);
   const nextPrayer = getNextPrayer();
 
