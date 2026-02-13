@@ -9,19 +9,6 @@ export interface PrayerTimes {
   Isha: string;
 }
 
-export interface PrayerTimesData {
-  timings: PrayerTimes;
-  date: {
-    readable: string;
-    hijri: {
-      day: string;
-      month: { en: string; ar: string };
-      year: string;
-      designation: { abbreviated: string };
-    };
-  };
-}
-
 const DEFAULT_PRAYER_TIMES: PrayerTimes = {
   Fajr: "05:10",
   Sunrise: "06:22",
@@ -53,15 +40,21 @@ export function usePrayerTimes(latitude?: number, longitude?: number) {
         
         if (!response.ok) throw new Error("Failed to fetch prayer times");
         
-        const data: PrayerTimesData = await response.json();
+        const data = await response.json();
+        
+        if (!data.data || !data.data.timings) {
+          throw new Error("Invalid API response");
+        }
+        
+        const timings = data.data.timings;
         
         setPrayerTimes({
-          Fajr: data.timings.Fajr,
-          Sunrise: data.timings.Sunrise,
-          Dhuhr: data.timings.Dhuhr,
-          Asr: data.timings.Asr,
-          Maghrib: data.timings.Maghrib,
-          Isha: data.timings.Isha,
+          Fajr: timings.Fajr || "05:10",
+          Sunrise: timings.Sunrise || "06:22",
+          Dhuhr: timings.Dhuhr || "12:32",
+          Asr: timings.Asr || "15:50",
+          Maghrib: timings.Maghrib || "18:34",
+          Isha: timings.Isha || "19:45",
         });
         
         setError(null);
@@ -103,6 +96,5 @@ export function getNextPrayer(prayerTimes: PrayerTimes): { name: string; minutes
     }
   }
   
-  // After Isha, next is Subuh tomorrow
   return { name: "Subuh", minutesLeft: (24 * 60 - currentMinutes) + prayerMinutes[0] };
 }
