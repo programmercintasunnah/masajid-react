@@ -30,58 +30,58 @@ const DEFAULT_HIJRI: HijriDate = {
   year: 1447,
 };
 
-export function usePrayerTimes(latitude?: number, longitude?: number) {
+const CITY_CODE = "0412"; // Pekanbaru
+
+export function usePrayerTimes(_latitude?: number, _longitude?: number) {
   const [prayerTimes, setPrayerTimes] = useState<PrayerTimes>(DEFAULT_PRAYER_TIMES);
   const [hijriDate, setHijriDate] = useState<HijriDate>(DEFAULT_HIJRI);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (latitude === undefined || longitude === undefined) {
-      setLoading(false);
-      return;
-    }
-
     const fetchPrayerTimes = async () => {
       try {
         const today = new Date();
-        const dateStr = today.toISOString().split('T')[0];
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, "0");
+        const day = String(today.getDate()).padStart(2, "0");
         
         const response = await fetch(
-          `https://api.aladhan.com/v1/timings/${dateStr}?latitude=${latitude}&longitude=${longitude}&method=2&timezone=Asia/Jakarta`
+          `https://api.myquran.com/v1/sholat/jadwal/${CITY_CODE}/${year}/${month}/${day}`
         );
         
         if (!response.ok) throw new Error("Failed to fetch prayer times");
         
         const data = await response.json();
         
-        if (!data.data || !data.data.timings) {
+        if (!data.status || !data.data || !data.data.jadwal) {
           throw new Error("Invalid API response");
         }
         
-        const timings = data.data.timings;
-        const hijri = data.data.date.hijri;
-        
-        const formatTime = (time: string) => {
-          if (!time) return "00:00";
-          return time.substring(0, 5);
-        };
+        const jadwal = data.data.jadwal;
         
         setPrayerTimes({
-          Fajr: formatTime(timings.Fajr),
-          Sunrise: formatTime(timings.Sunrise),
-          Dhuhr: formatTime(timings.Dhuhr),
-          Asr: formatTime(timings.Asr),
-          Maghrib: formatTime(timings.Maghrib),
-          Isha: formatTime(timings.Isha),
+          Fajr: jadwal.subuh,
+          Sunrise: jadwal.terbit,
+          Dhuhr: jadwal.dzuhur,
+          Asr: jadwal.ashar,
+          Maghrib: jadwal.maghrib,
+          Isha: jadwal.isya,
         });
         
-        if (hijri) {
-          setHijriDate({
-            day: parseInt(hijri.day),
-            month: hijri.month.en,
-            year: parseInt(hijri.year),
-          });
+        const hijriResponse = await fetch(
+          `https://api.myquran.com/v1/hijri/gToH/${day}-${month}-${year}`
+        );
+        
+        if (hijriResponse.ok) {
+          const hijriData = await hijriResponse.json();
+          if (hijriData.status && hijriData.data) {
+            setHijriDate({
+              day: hijriData.data.hijri.hari,
+              month: hijriData.data.hijri.bulan,
+              year: hijriData.data.hijri.tahun,
+            });
+          }
         }
         
         setError(null);
@@ -96,7 +96,7 @@ export function usePrayerTimes(latitude?: number, longitude?: number) {
     };
 
     fetchPrayerTimes();
-  }, [latitude, longitude]);
+  }, []);
 
   return { prayerTimes, hijriDate, loading, error };
 }
