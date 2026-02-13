@@ -1,14 +1,16 @@
 import { SectionLabel } from "../ui/SectionLabel";
 import { MasjidCard } from "../ui/MasjidCard";
 import { KajianCard } from "../ui/KajianCard";
+import { Header } from "../layout/Header";
 import { PRAYER_TIMES, MENUS, MASJID_NEARBY, KAJIAN_LIST } from "../../data/mockData";
 
 export function PageBeranda() {
   return (
     <>
+      <Header userName="Ahmad Fauzan" userPhoto="https://lh3.googleusercontent.com/a/default" />
       <div className="relative overflow-hidden flex-shrink-0" style={{ background: "linear-gradient(160deg,#0b3d2e 0%,#1a6b4a 55%,#1f8a5e 100%)" }}>
         <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 85% 15%,rgba(201,148,58,0.2) 0%,transparent 55%)" }} />
-        <div className="relative z-10 px-5 pt-9 pb-5">
+        <div className="relative z-10 px-5 pt-5 pb-5">
           <div className="flex justify-between text-[12px] text-white/60 font-medium mb-3">
             <span>Kamis, 12 Februari 2026</span>
             <span>24 Sha'ban 1447H</span>
