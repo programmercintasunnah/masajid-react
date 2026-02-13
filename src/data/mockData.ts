@@ -1,6 +1,5 @@
 import type {
   PrayerTime,
-  MenuItem,
   MasjidNearby,
   Kajian,
   FavMasjid,
@@ -17,17 +16,6 @@ export const PRAYER_TIMES: PrayerTime[] = [
   { name: "Ashar", time: "15:50", icon: "🌤", active: true },
   { name: "Maghrib", time: "18:34", icon: "🌆" },
   { name: "Isya", time: "19:45", icon: "🌙" },
-];
-
-export const MENUS: MenuItem[] = [
-  { icon: "📖", label: "Al-Qur'an", bg: "from-emerald-100 to-teal-200" },
-  { icon: "🎓", label: "Kajian", bg: "from-blue-100 to-blue-200" },
-  { icon: "📜", label: "Hadits", bg: "from-amber-100 to-yellow-200" },
-  { icon: "📿", label: "Dzikir & Doa", bg: "from-purple-100 to-purple-200" },
-  { icon: "🪙", label: "Infaq", bg: "from-teal-100 to-emerald-200" },
-  { icon: "🗣️", label: "Tahsin", bg: "from-pink-100 to-pink-200" },
-  { icon: "🕌", label: "Masjid", bg: "from-yellow-100 to-amber-200" },
-  { icon: "⋯", label: "Lainnya", bg: "from-slate-100 to-slate-200" },
 ];
 
 export const MASJID_NEARBY: MasjidNearby[] = [

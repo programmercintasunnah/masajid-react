@@ -1,89 +1,30 @@
 import { useState, useEffect } from "react";
+import { PrayerTimes, HijriDate, NextPrayer } from "@/types";
+import { getPrayerTimes } from "@/services/prayerApi";
+import { getHijriDate } from "@/services/hijriApi";
+import { formatDateForApi, formatDateForApiHijri } from "@/utils";
+import { CITY_CODE, DEFAULT_PRAYER_TIMES, DEFAULT_HIJRI } from "@/config";
 
-export interface PrayerTimes {
-  Fajr: string;
-  Sunrise: string;
-  Dhuhr: string;
-  Asr: string;
-  Maghrib: string;
-  Isha: string;
-}
-
-export interface HijriDate {
-  day: number;
-  month: string;
-  year: number;
-}
-
-const DEFAULT_PRAYER_TIMES: PrayerTimes = {
-  Fajr: "05:10",
-  Sunrise: "06:22",
-  Dhuhr: "12:32",
-  Asr: "15:50",
-  Maghrib: "18:34",
-  Isha: "19:45",
-};
-
-const DEFAULT_HIJRI: HijriDate = {
-  day: 25,
-  month: "Sha'ban",
-  year: 1447,
-};
-
-const CITY_CODE = "0412"; // Pekanbaru
-
-export function usePrayerTimes(_latitude?: number, _longitude?: number) {
+export function usePrayerTimes() {
   const [prayerTimes, setPrayerTimes] = useState<PrayerTimes>(DEFAULT_PRAYER_TIMES);
   const [hijriDate, setHijriDate] = useState<HijriDate>(DEFAULT_HIJRI);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchPrayerTimes = async () => {
+    const fetchData = async () => {
       try {
         const today = new Date();
-        const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2, "0");
-        const day = String(today.getDate()).padStart(2, "0");
-        
-        const response = await fetch(
-          `https://api.myquran.com/v1/sholat/jadwal/${CITY_CODE}/${year}/${month}/${day}`
-        );
-        
-        if (!response.ok) throw new Error("Failed to fetch prayer times");
-        
-        const data = await response.json();
-        
-        if (!data.status || !data.data || !data.data.jadwal) {
-          throw new Error("Invalid API response");
-        }
-        
-        const jadwal = data.data.jadwal;
-        
-        setPrayerTimes({
-          Fajr: jadwal.subuh,
-          Sunrise: jadwal.terbit,
-          Dhuhr: jadwal.dzuhur,
-          Asr: jadwal.ashar,
-          Maghrib: jadwal.maghrib,
-          Isha: jadwal.isya,
-        });
-        
-        const hijriResponse = await fetch(
-          `https://api.myquran.com/v1/hijri/gToH/${day}-${month}-${year}`
-        );
-        
-        if (hijriResponse.ok) {
-          const hijriData = await hijriResponse.json();
-          if (hijriData.status && hijriData.data) {
-            setHijriDate({
-              day: hijriData.data.hijri.hari,
-              month: hijriData.data.hijri.bulan,
-              year: hijriData.data.hijri.tahun,
-            });
-          }
-        }
-        
+        const dateForApi = formatDateForApi(today);
+        const dateForHijri = formatDateForApiHijri(today);
+
+        const [times, hijri] = await Promise.all([
+          getPrayerTimes(CITY_CODE, dateForApi),
+          getHijriDate(dateForHijri),
+        ]);
+
+        setPrayerTimes(times);
+        setHijriDate(hijri);
         setError(null);
       } catch (err) {
         console.error("Prayer times error:", err);
@@ -95,13 +36,13 @@ export function usePrayerTimes(_latitude?: number, _longitude?: number) {
       }
     };
 
-    fetchPrayerTimes();
+    fetchData();
   }, []);
 
   return { prayerTimes, hijriDate, loading, error };
 }
 
-export function getNextPrayer(prayerTimes: PrayerTimes): { name: string; minutesLeft: number } {
+export function getNextPrayer(prayerTimes: PrayerTimes): NextPrayer {
   const now = new Date();
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
   

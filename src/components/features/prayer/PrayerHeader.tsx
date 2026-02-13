@@ -1,42 +1,29 @@
 import { useState, useEffect } from "react";
-import { Bell, Sunrise, Sun, Cloud, Sunset, Moon, MapPin, Loader2 } from "lucide-react";
-import { useLocation } from "../../hooks/useLocation";
-import { usePrayerTimes, getNextPrayer } from "../../hooks/usePrayerTimes";
-import masajidLogo from "../../assets/masajid_logo.png"
-interface HeaderProps {
+import { Sunrise, Sun, Cloud, Sunset, Moon, Loader2 } from "lucide-react";
+import { usePrayer } from "@/contexts/PrayerContext";
+import { formatTime, formatCountdown, getGregorianDate } from "@/utils";
+import { HEADER_BG } from "@/config";
+import masajidLogo from "@/assets/masajid_logo.png";
+import { Bell } from "lucide-react";
+
+interface PrayerHeaderProps {
   userName?: string;
   userPhoto?: string;
 }
 
-const HEADER_BG = "linear-gradient(160deg,#0b3d2e 0%,#1a6b4a 55%,#1f8a5e 100%)";
+const prayerIcons: Record<string, typeof Sunrise> = {
+  Subuh: Sunrise,
+  Dzuhur: Sun,
+  Ashar: Cloud,
+  Maghrib: Sunset,
+  Isya: Moon,
+};
 
-function formatTime(time: string): string {
-  const [hours, minutes] = time.split(":");
-  return `${hours}:${minutes}`;
-}
-
-function getGregorianDate(date: Date): string {
-  const days = ["Ahad", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-  const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-  return `${days[date.getDay()]}, ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
-}
-
-function formatCountdown(minutes: number): string {
-  const hours = Math.floor(minutes / 60);
-  const mins = minutes % 60;
-  if (hours > 0) {
-    return `${hours} jam ${mins} menit`;
-  }
-  return `${mins} menit`;
-}
-
-export function Header({ userName, userPhoto }: HeaderProps) {
+export function PrayerHeader({ userName, userPhoto }: PrayerHeaderProps) {
   const [time, setTime] = useState(new Date());
-  const { location, loading: locationLoading } = useLocation();
-  const { prayerTimes, hijriDate, loading: prayerLoading } = usePrayerTimes();
+  const { prayerTimes, hijriDate, loading, nextPrayer } = usePrayer();
 
   const gregorian = getGregorianDate(time);
-  const nextPrayer = getNextPrayer(prayerTimes);
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
@@ -46,14 +33,6 @@ export function Header({ userName, userPhoto }: HeaderProps) {
   const hours = time.getHours().toString().padStart(2, "0");
   const minutes = time.getMinutes().toString().padStart(2, "0");
 
-  const prayerIcons: Record<string, any> = {
-    Subuh: Sunrise,
-    Dzuhur: Sun,
-    Ashar: Cloud,
-    Maghrib: Sunset,
-    Isya: Moon,
-  };
-
   const prayerList = [
     { name: "Subuh", time: formatTime(prayerTimes.Fajr) },
     { name: "Dzuhur", time: formatTime(prayerTimes.Dhuhr) },
@@ -62,31 +41,14 @@ export function Header({ userName, userPhoto }: HeaderProps) {
     { name: "Isya", time: formatTime(prayerTimes.Isha) },
   ];
 
-  const isLoading = locationLoading || prayerLoading;
-
   return (
-    <div
-      className="relative overflow-hidden flex-shrink-0"
-      style={{ background: HEADER_BG }}
-    >
+    <div className="relative overflow-hidden flex-shrink-0" style={{ background: HEADER_BG }}>
       <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 85% 15%,rgba(201,148,58,0.2) 0%,transparent 55%)" }} />
 
-      {/* Header Content */}
       <div className="relative z-10 flex items-center justify-between px-5 pt-6 pb-3">
         <div className="flex flex-col leading-none gap-0.5">
           <div className="flex items-center gap-1.5">
-            <img
-              src={masajidLogo}
-              alt="MasajidApp"
-              className="h-8 w-auto object-contain"
-              onError={(e) => {
-                (e.target as HTMLImageElement).style.display = 'none';
-                const parent = (e.target as HTMLImageElement).parentElement;
-                if (parent) {
-                  parent.innerHTML = `<span class="text-[14px] font-black px-2 py-0.5 rounded-md" style="background:#fff;color:#0b3d2e">مساجد</span><span class="text-[14px] font-black text-white">App</span>`;
-                }
-              }}
-            />
+            <img src={masajidLogo} alt="MasajidApp" className="h-8 w-auto object-contain" />
           </div>
         </div>
 
@@ -107,14 +69,13 @@ export function Header({ userName, userPhoto }: HeaderProps) {
         </div>
       </div>
 
-      {/* Prayer Time Info */}
       <div className="relative z-10 px-5 pb-5">
         <div className="flex justify-between text-[12px] text-white/60 font-medium mb-3">
           <span>{gregorian}</span>
           <span>{hijriDate.day} {hijriDate.month} {hijriDate.year}H</span>
         </div>
 
-        {isLoading ? (
+        {loading ? (
           <div className="flex items-center justify-center py-8">
             <Loader2 className="w-8 h-8 text-white/60 animate-spin" />
           </div>
@@ -140,16 +101,6 @@ export function Header({ userName, userPhoto }: HeaderProps) {
               })}
             </div>
           </>
-        )}
-      </div>
-      <div className="text-[11px] text-white/50 px-5 pt-1 pb-1 flex-shrink-0" style={{ background: "linear-gradient(160deg,#0b3d2e,#1a6b4a 60%)" }}>
-        {location ? (
-          <span className="flex items-center gap-1">
-            <MapPin className="w-3 h-3" />
-            {location.city}
-          </span>
-        ) : (
-          <span>Kota Pekanbaru</span>
         )}
       </div>
     </div>
