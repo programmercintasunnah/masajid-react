@@ -1,18 +1,18 @@
 import { useState } from "react";
 import type { Page } from "./types";
 import { MobileContainer } from "./components/layout/MobileContainer";
-import { PageBeranda, PageFavorit, PageInfaq, PageAmal, PageProfil } from "./components/pages";
+import { PageHome, PageFavorites, PageInfaq, PageAmal, PageProfile } from "./components/pages";
 import { AppProvider } from "./contexts";
 
 export default function App() {
-  const [page, setPage] = useState<Page>("beranda");
+  const [page, setPage] = useState<Page>("home");
 
   const pages: Record<Page, React.ReactNode> = {
-    beranda: <PageBeranda />,
-    favorit: <PageFavorit />,
+    home: <PageHome />,
+    favorites: <PageFavorites />,
     infaq: <PageInfaq />,
     amal: <PageAmal />,
-    profil: <PageProfil />,
+    profile: <PageProfile />,
   };
 
   return (

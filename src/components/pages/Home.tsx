@@ -36,7 +36,7 @@ const KAJIAN_LIST = [
   { icon: "🧒", bg: "bg-pink-50", title: "Tahsin Al-Qur'an Anak (Usia 6–12)", tags: ["kids", "tahsin"], date: "Sabtu, 15 Feb", time: "08:00" },
 ];
 
-export function PageBeranda() {
+export function PageHome() {
   return (
     <>
       <Header userName="Ahmad Fauzan" />

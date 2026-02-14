@@ -15,7 +15,7 @@ const PROFILE_SETTINGS = [
   { icon: LogOut, bg: "bg-red-50", label: "Keluar", sub: "Logout dari akun" },
 ];
 
-export function PageProfil() {
+export function PageProfile() {
   return (
     <>
       <div className="flex-shrink-0 text-center px-5 pt-10 pb-6" style={{ background: "linear-gradient(160deg,#0b3d2e 0%,#1a6b4a 70%)" }}>

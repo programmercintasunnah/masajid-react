@@ -23,8 +23,8 @@ const FAV_KAJIAN = [
   { icon: "🎓", bg: "bg-indigo-50", title: "Dauroh Ulumul Hadits", tags: ["dauroh"], date: "1–3 Maret", time: "08:00" },
 ];
 
-export function PageFavorit() {
-  const [tab, setTab] = useState<FavTab>("masjid");
+export function PageFavorites() {
+  const [tab, setTab] = useState<FavTab>("mosque");
 
   return (
     <>
@@ -38,9 +38,9 @@ export function PageFavorit() {
 
       <div className="flex bg-white border-b border-black/[0.07] flex-shrink-0">
         {[
-          { id: "masjid" as FavTab, icon: Landmark, label: "Masjid (3)" },
-          { id: "ustadz" as FavTab, icon: User, label: "Ustadz (4)" },
-          { id: "kajian" as FavTab, icon: BookOpen, label: "Kajian (3)" },
+          { id: "mosque" as FavTab, icon: Landmark, label: "Masjid (3)" },
+          { id: "teacher" as FavTab, icon: User, label: "Ustadz (4)" },
+          { id: "study" as FavTab, icon: BookOpen, label: "Kajian (3)" },
         ].map(t => {
           const Icon = t.icon;
           return (
@@ -57,7 +57,7 @@ export function PageFavorit() {
       </div>
 
       <div className="flex-1 overflow-y-auto bg-[#f5f7f5]">
-        {tab === "masjid" && (
+        {tab === "mosque" && (
           <>
             <SectionLabel>Update Terbaru</SectionLabel>
             {FAV_MASJID.map((m, i) => (
@@ -82,7 +82,7 @@ export function PageFavorit() {
           </>
         )}
 
-        {tab === "ustadz" && (
+        {tab === "teacher" && (
           <>
             <SectionLabel>Ustadz Diikuti</SectionLabel>
             {FAV_USTADZ.map((u, i) => (
@@ -103,7 +103,7 @@ export function PageFavorit() {
           </>
         )}
 
-        {tab === "kajian" && (
+        {tab === "study" && (
           <>
             <SectionLabel>Kajian Tersimpan</SectionLabel>
             {FAV_KAJIAN.map((k, i) => <KajianCard key={i} item={k} />)}

@@ -33,7 +33,7 @@ export async function getCityFromCoordinates(
 export function getCurrentLocation(): Promise<GeolocationPosition> {
   return new Promise((resolve, reject) => {
     if (!navigator.geolocation) {
-      reject(new Error("Geolocation tidak didukung"));
+      reject(new Error("Geolocation is not supported"));
       return;
     }
     

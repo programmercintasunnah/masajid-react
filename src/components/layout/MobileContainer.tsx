@@ -2,11 +2,11 @@ import type { Page } from "../../types";
 import { Home, Heart, Banknote, CheckSquare, User } from "lucide-react";
 
 const NAV_ITEMS = [
-  { id: "beranda" as Page, icon: Home, label: "Beranda" },
-  { id: "favorit" as Page, icon: Heart, label: "Favorit" },
+  { id: "home" as Page, icon: Home, label: "Beranda" },
+  { id: "favorites" as Page, icon: Heart, label: "Favorit" },
   { id: "infaq" as Page, icon: Banknote, label: "Infaq" },
   { id: "amal" as Page, icon: CheckSquare, label: "Amal" },
-  { id: "profil" as Page, icon: User, label: "Profil" },
+  { id: "profile" as Page, icon: User, label: "Profil" },
 ];
 
 interface MobileContainerProps {

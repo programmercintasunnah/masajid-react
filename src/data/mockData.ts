@@ -86,11 +86,11 @@ export const AMAL_SECTIONS: AmalSection[] = [
 ];
 
 export const NAV_ITEMS: NavItem[] = [
-  { id: "beranda", icon: "🏠", label: "Beranda" },
-  { id: "favorit", icon: "❤️", label: "Favorit" },
+  { id: "home", icon: "🏠", label: "Beranda" },
+  { id: "favorites", icon: "❤️", label: "Favorit" },
   { id: "infaq", icon: "🪙", label: "Infaq" },
   { id: "amal", icon: "☑️", label: "Amal" },
-  { id: "profil", icon: "👤", label: "Profil" },
+  { id: "profile", icon: "👤", label: "Profil" },
 ];
 
 export const PROFILE_ACTIVITY: ProfileActivity[] = [

@@ -14,7 +14,7 @@ export async function getAllCities(): Promise<City[]> {
   const response = await apiClient<CitiesResponse>("/sholat/kota/semua");
   
   if (!response.status || !response.data) {
-    throw new Error("Gagal mengambil daftar kota");
+    throw new Error("Failed to fetch cities list");
   }
   
   return response.data;

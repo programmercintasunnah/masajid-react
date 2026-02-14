@@ -1,5 +1,5 @@
-export { PageBeranda } from "./Beranda";
-export { PageFavorit } from "./Favorit";
+export { PageHome } from "./Home";
+export { PageFavorites } from "./Favorites";
 export { PageInfaq } from "./Infaq";
 export { PageAmal } from "./Amal";
-export { PageProfil } from "./Profil";
+export { PageProfile } from "./Profile";

@@ -54,7 +54,7 @@ export function usePrayerTimes() {
         setError(null);
       } catch (err) {
         console.error("Prayer times error:", err);
-        setError("Gagal mengambil jadwal solat");
+        setError("Failed to fetch prayer schedule");
         setPrayerTimes(EMPTY_PRAYER_TIMES);
         setHijriDate(EMPTY_HIJRI);
       } finally {
