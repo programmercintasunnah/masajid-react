@@ -12,14 +12,14 @@ export function MasjidCard({ item }: MasjidCardProps) {
         <Landmark className="w-8 h-8 text-white/80" />
         <span className="absolute top-2 right-2 bg-emerald-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full flex items-center gap-0.5">
           <MapPin className="w-2.5 h-2.5" />
-          {item.jarak}
+          {item.distance}
         </span>
       </div>
       <div className="p-2.5">
         <div className="text-[11px] font-bold text-gray-900 mb-0.5">{item.name}</div>
         <div className="text-[10px] text-gray-400 flex items-center gap-1">
           <Star className="w-3 h-3 fill-amber-300 text-amber-300" />
-          4.8 · {item.kajian} kajian aktif
+          4.8 · {item.study} kajian aktif
         </div>
       </div>
     </div>

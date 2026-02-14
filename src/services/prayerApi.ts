@@ -1,7 +1,7 @@
 import { apiClient } from "./apiClient";
 import { PrayerTimes } from "@/types";
 
-// Response shape dari api.myquran.com/v2/sholat/jadwal/{cityCode}/{date}
+// Response shape from api.myquran.com/v2/sholat/jadwal/{cityCode}/{date}
 interface PrayerApiResponse {
   status: boolean;
   data: {
@@ -35,7 +35,7 @@ export async function getPrayerTimes(
 
   const jadwal = response.data.jadwal;
 
-  // Validasi field penting tidak kosong
+  // Validate important fields are not empty
   if (!jadwal.subuh || !jadwal.dzuhur) {
     throw new Error("Prayer times data incomplete");
   }

@@ -5,9 +5,9 @@ import { KajianCard } from "../ui/KajianCard";
 import { Heart, Landmark, User, BookOpen, MapPin, Check } from "lucide-react";
 
 const FAV_MASJID = [
-  { name: "Masjid Al-Ikhlas", alamat: "Jl. Sudirman No.12", bg: "from-emerald-200 to-teal-300", chips: ["📚 2 Kajian", "🗣️ Tahsin", "🪙 Infaq"] },
-  { name: "Masjid Ar-Rahman", alamat: "Jl. Imam Bonjol No.5", bg: "from-blue-200 to-blue-300", chips: ["🎓 5 Kajian", "🌙 I'tikaf"] },
-  { name: "Masjid Nurul Iman", alamat: "Jl. Hang Tuah No.8", bg: "from-amber-200 to-yellow-300", chips: ["📖 Al-Qur'an", "🧒 Kajian Anak"] },
+  { name: "Masjid Al-Ikhlas", address: "Jl. Sudirman No.12", bg: "from-emerald-200 to-teal-300", chips: ["📚 2 Kajian", "🗣️ Tahsin", "🪙 Infaq"] },
+  { name: "Masjid Ar-Rahman", address: "Jl. Imam Bonjol No.5", bg: "from-blue-200 to-blue-300", chips: ["🎓 5 Kajian", "🌙 I'tikaf"] },
+  { name: "Masjid Nurul Iman", address: "Jl. Hang Tuah No.8", bg: "from-amber-200 to-yellow-300", chips: ["📖 Al-Qur'an", "🧒 Kajian Anak"] },
 ];
 
 const FAV_USTADZ = [
@@ -69,7 +69,7 @@ export function PageFavorites() {
                   <div className="text-[14px] font-black text-gray-900 mb-1">{m.name}</div>
                   <div className="text-[11px] text-gray-400 mb-2.5 flex items-center gap-1">
                     <MapPin className="w-3 h-3" />
-                    {m.alamat}
+                    {m.address}
                   </div>
                   <div className="flex gap-1.5 flex-wrap">
                     {m.chips.map((c, j) => (

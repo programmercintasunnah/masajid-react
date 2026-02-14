@@ -23,7 +23,7 @@ interface AlAdhanHijriResponse {
 
 export async function getHijriDate(date: string): Promise<HijriDate> {
   try {
-    // Format dari formatDateForApiHijri: DD-MM-YYYY
+    // Format from formatDateForApiHijri: DD-MM-YYYY
     const parts = date.split("-");
     const day = parts[0];
     const month = parts[1];

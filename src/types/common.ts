@@ -13,8 +13,8 @@ export interface MenuItem {
 
 export interface MasjidNearby {
   name: string;
-  jarak: string;
-  kajian: number;
+  distance: string;
+  study: number;
   bg: string;
 }
 
@@ -41,7 +41,7 @@ export interface Campaign {
 
 export interface FavMasjid {
   name: string;
-  alamat: string;
+  address: string;
   bg: string;
   chips: string[];
 }

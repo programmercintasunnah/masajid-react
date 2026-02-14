@@ -1,28 +1,28 @@
 /**
- * Format tanggal ke "YYYY-MM-DD" menggunakan local time.
+ * Format date to "YYYY-MM-DD" using local time.
  *
- * ⚠️ JANGAN pakai date.toISOString().split("T")[0] — di timezone WIB (UTC+7),
- * sebelum jam 07:00 pagi toISOString() akan mengembalikan tanggal KEMARIN
- * karena mengkonversi ke UTC terlebih dahulu.
+ * ⚠️ DO NOT use date.toISOString().split("T")[0] — in WIB timezone (UTC+7),
+ * before 07:00 AM toISOString() will return YESTERDAY
+ * because it converts to UTC first.
  *
- * Digunakan untuk: getHijriDate (format YYYY-MM-DD)
+ * Used for: getHijriDate (format YYYY-MM-DD)
  */
 export function formatDateForApiHijri(date: Date): string {
     const y = date.getFullYear();
     const m = String(date.getMonth() + 1).padStart(2, "0");
     const d = String(date.getDate()).padStart(2, "0");
-    return `${y}-${m}-${d}`; // contoh: "2026-02-14"
+    return `${y}-${m}-${d}`; // example: "2026-02-14"
 }
 
 /**
- * Format tanggal ke "YYYY/MM/DD" menggunakan local time.
+ * Format date to "YYYY/MM/DD" using local time.
  *
- * Digunakan untuk: getPrayerTimes — endpoint myquran.com memakai slash
- * contoh: /sholat/jadwal/0412/2026/02/14
+ * Used for: getPrayerTimes — myquran.com endpoint uses slash
+ * example: /sholat/jadwal/0412/2026/02/14
  */
 export function formatDateForApi(date: Date): string {
     const y = date.getFullYear();
     const m = String(date.getMonth() + 1).padStart(2, "0");
     const d = String(date.getDate()).padStart(2, "0");
-    return `${y}/${m}/${d}`; // contoh: "2026/02/14"
+    return `${y}/${m}/${d}`; // example: "2026/02/14"
 }

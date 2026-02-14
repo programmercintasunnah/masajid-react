@@ -25,9 +25,9 @@ const MENUS: { img: string; label: string; bg: string }[] = [
 ];
 
 const MASJID_NEARBY = [
-  { name: "Masjid Al-Ikhlas", jarak: "340m", kajian: 2, bg: "from-emerald-200 to-teal-300" },
-  { name: "Masjid Ar-Rahman", jarak: "800m", kajian: 5, bg: "from-blue-200 to-blue-300" },
-  { name: "Masjid Nurul Iman", jarak: "1.2km", kajian: 3, bg: "from-amber-200 to-yellow-300" },
+  { name: "Masjid Al-Ikhlas", distance: "340m", study: 2, bg: "from-emerald-200 to-teal-300" },
+  { name: "Masjid Ar-Rahman", distance: "800m", study: 5, bg: "from-blue-200 to-blue-300" },
+  { name: "Masjid Nurul Iman", distance: "1.2km", study: 3, bg: "from-amber-200 to-yellow-300" },
 ];
 
 const KAJIAN_LIST = [

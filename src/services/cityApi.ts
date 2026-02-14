@@ -38,12 +38,12 @@ export async function findCityCodeByName(
   const normalizedCityName = normalizeCityName(cityName);
   
   for (const city of cities) {
-    const normalizedLokasi = normalizeCityName(city.lokasi);
+    const normalizedLocation = normalizeCityName(city.lokasi);
     
     if (
-      normalizedLokasi.includes(normalizedCityName) ||
-      normalizedCityName.includes(normalizedLokasi) ||
-      normalizedLokasi === normalizedCityName
+      normalizedLocation.includes(normalizedCityName) ||
+      normalizedCityName.includes(normalizedLocation) ||
+      normalizedLocation === normalizedCityName
     ) {
       return city.id;
     }

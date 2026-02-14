@@ -19,9 +19,9 @@ export const PRAYER_TIMES: PrayerTime[] = [
 ];
 
 export const MASJID_NEARBY: MasjidNearby[] = [
-  { name: "Masjid Al-Ikhlas", jarak: "340m", kajian: 2, bg: "from-emerald-200 to-teal-300" },
-  { name: "Masjid Ar-Rahman", jarak: "800m", kajian: 5, bg: "from-blue-200 to-blue-300" },
-  { name: "Masjid Nurul Iman", jarak: "1.2km", kajian: 3, bg: "from-amber-200 to-yellow-300" },
+  { name: "Masjid Al-Ikhlas", distance: "340m", study: 2, bg: "from-emerald-200 to-teal-300" },
+  { name: "Masjid Ar-Rahman", distance: "800m", study: 5, bg: "from-blue-200 to-blue-300" },
+  { name: "Masjid Nurul Iman", distance: "1.2km", study: 3, bg: "from-amber-200 to-yellow-300" },
 ];
 
 export const KAJIAN_LIST: Kajian[] = [
@@ -31,9 +31,9 @@ export const KAJIAN_LIST: Kajian[] = [
 ];
 
 export const FAV_MASJID: FavMasjid[] = [
-  { name: "Masjid Al-Ikhlas", alamat: "Jl. Sudirman No.12", bg: "from-emerald-200 to-teal-300", chips: ["📚 2 Kajian", "🗣️ Tahsin", "🪙 Infaq"] },
-  { name: "Masjid Ar-Rahman", alamat: "Jl. Imam Bonjol No.5", bg: "from-blue-200 to-blue-300", chips: ["🎓 5 Kajian", "🌙 I'tikaf"] },
-  { name: "Masjid Nurul Iman", alamat: "Jl. Hang Tuah No.8", bg: "from-amber-200 to-yellow-300", chips: ["📖 Al-Qur'an", "🧒 Kajian Anak"] },
+  { name: "Masjid Al-Ikhlas", address: "Jl. Sudirman No.12", bg: "from-emerald-200 to-teal-300", chips: ["📚 2 Kajian", "🗣️ Tahsin", "🪙 Infaq"] },
+  { name: "Masjid Ar-Rahman", address: "Jl. Imam Bonjol No.5", bg: "from-blue-200 to-blue-300", chips: ["🎓 5 Kajian", "🌙 I'tikaf"] },
+  { name: "Masjid Nurul Iman", address: "Jl. Hang Tuah No.8", bg: "from-amber-200 to-yellow-300", chips: ["📖 Al-Qur'an", "🧒 Kajian Anak"] },
 ];
 
 export const FAV_USTADZ: FavUstadz[] = [

@@ -18,7 +18,7 @@ interface LocationState {
 }
 
 const CACHE_KEY = "masajid_location_cache";
-const CACHE_TTL_MS = 30 * 60 * 1000; // 30 menit
+const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes
 
 interface LocationCache {
   data: Location;
@@ -38,7 +38,7 @@ function loadLocationCache(): Location | null {
     if (!raw) return null;
     const cache: LocationCache = JSON.parse(raw);
     
-    // Validasi cache - hanya terima jika cityCode valid
+    // Validate cache - only accept if cityCode is valid
     if (!cache.data?.cityCode) {
       localStorage.removeItem(CACHE_KEY);
       return null;
@@ -54,14 +54,14 @@ function loadLocationCache(): Location | null {
   }
 }
 
-// ─── City loading dengan proper mutex ────────────────────────────────────────
+// City loading with proper mutex
 let cachedCities: City[] | null = null;
 let citiesPromise: Promise<City[]> | null = null;
 
 async function loadCities(): Promise<City[]> {
   if (cachedCities) return cachedCities;
 
-  // Pakai satu promise yang di-share — tidak pakai polling loop
+  // Use shared promise - no polling loop
   if (!citiesPromise) {
     citiesPromise = getAllCities()
       .then((cities) => {
@@ -70,7 +70,7 @@ async function loadCities(): Promise<City[]> {
       })
       .catch((error) => {
         console.error("[Location] Failed to load cities:", error);
-        citiesPromise = null; // reset supaya bisa retry
+        citiesPromise = null; // reset to allow retry
         return [];
       });
   }
@@ -78,7 +78,7 @@ async function loadCities(): Promise<City[]> {
   return citiesPromise;
 }
 
-// ─── Normalisasi nama ─────────────────────────────────────────────────────────
+// Normalize city name
 function normalizeName(name: string): string {
   return name
     .toLowerCase()
@@ -91,11 +91,11 @@ function normalizeName(name: string): string {
     .trim();
 }
 
-// Hitung similarity sederhana untuk fuzzy matching
+// Calculate simple similarity for fuzzy matching
 function similarity(a: string, b: string): number {
   if (a === b) return 1;
   if (a.includes(b) || b.includes(a)) return 0.9;
-  // Hitung karakter yang sama
+  // Calculate matching characters
   const longer = a.length > b.length ? a : b;
   const shorter = a.length > b.length ? b : a;
   let matches = 0;
@@ -126,34 +126,34 @@ async function findBestCityCode(
   const normDistrict = normalizeName(districtName);
   const normState = normalizeName(stateName);
 
-  // 1. Special map (Jakarta, dll)
+  // 1. Special map (Jakarta, etc)
   if (SPECIAL_CITY_MAP[normCity]) return SPECIAL_CITY_MAP[normCity];
 
-  // 2. Exact / substring match pada nama kota
+  // 2. Exact / substring match on city name
   for (const city of cities) {
-    const normLokasi = normalizeName(city.lokasi);
-    if (normLokasi === normCity || normLokasi.includes(normCity) || normCity.includes(normLokasi)) {
+    const normalizedCity = normalizeName(city.lokasi);
+    if (normalizedCity === normCity || normalizedCity.includes(normCity) || normCity.includes(normalizedCity)) {
       return city.id;
     }
   }
 
-  // 3. Fallback ke district name
+  // 3. Fallback to district name
   if (normDistrict) {
     for (const city of cities) {
-      const normLokasi = normalizeName(city.lokasi);
-      if (normLokasi.includes(normDistrict) || normDistrict.includes(normLokasi)) {
+      const normalizedCity = normalizeName(city.lokasi);
+      if (normalizedCity.includes(normDistrict) || normDistrict.includes(normalizedCity)) {
         return city.id;
       }
     }
   }
 
-  // 4. Fallback ke state/province (ambil yang paling mirip)
+  // 4. Fallback to state/province (take the most similar)
   if (normState) {
     let bestScore = 0;
     let bestId: string | null = null;
     for (const city of cities) {
-      const normLokasi = normalizeName(city.lokasi);
-      const score = similarity(normState, normLokasi);
+      const normalizedCity = normalizeName(city.lokasi);
+      const score = similarity(normState, normalizedCity);
       if (score > bestScore && score > 0.7) {
         bestScore = score;
         bestId = city.id;
@@ -165,7 +165,7 @@ async function findBestCityCode(
   return null;
 }
 
-// ─── Nominatim reverse geocode dengan CORS proxy ─────────────────────────────────
+// Nominatim reverse geocode with CORS proxy
 async function getCityCodeFromCoordinates(
   latitude: number,
   longitude: number
@@ -221,10 +221,10 @@ async function getCityCodeFromCoordinates(
   }
 }
 
-// ─── Hook utama ───────────────────────────────────────────────────────────────
+// Main hook
 export function useLocation() {
   const [state, setState] = useState<LocationState>(() => {
-    // Inisialisasi dari cache supaya tidak flash loading di setiap mount
+    // Initialize from cache to avoid loading flash on each mount
     const cached = loadLocationCache();
     if (cached) {
       return { location: cached, loading: false, permissionDenied: false };
@@ -251,7 +251,7 @@ export function useLocation() {
       const { city, district, cityCode } = await getCityCodeFromCoordinates(latitude, longitude);
 
       if (!cityCode) {
-        // cityCode tidak ketemu - hapus cache lama dan request ulang
+        // cityCode not found - delete old cache and request again
         console.warn("[Location] cityCode not found for", city, district);
         localStorage.removeItem(CACHE_KEY);
         setState({
@@ -270,7 +270,7 @@ export function useLocation() {
     } catch (error: unknown) {
       console.error("[Location] Geolocation error:", error);
 
-      // Bedakan error permission denied vs error lainnya
+      // Differentiate permission denied error vs other errors
       const isPermissionDenied =
         error instanceof GeolocationPositionError &&
         error.code === GeolocationPositionError.PERMISSION_DENIED;
@@ -287,7 +287,7 @@ export function useLocation() {
     if (hasRequestedRef.current) return;
     hasRequestedRef.current = true;
 
-    // Kalau sudah ada cache valid, tidak perlu request ulang
+    // If cache exists, no need to request again
     const cached = loadLocationCache();
     if (cached) {
       console.log("[Location] Using cached location:", cached.city);
