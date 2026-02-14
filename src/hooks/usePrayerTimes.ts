@@ -3,15 +3,19 @@ import { PrayerTimes, HijriDate, NextPrayer } from "@/types";
 import { getPrayerTimes } from "@/services/prayerApi";
 import { getHijriDate } from "@/services/hijriApi";
 import { formatDateForApi, formatDateForApiHijri } from "@/utils";
-import { CITY_CODE, DEFAULT_PRAYER_TIMES, DEFAULT_HIJRI } from "@/config";
+import { useLocation } from "./useLocation";
+import { DEFAULT_PRAYER_TIMES, DEFAULT_HIJRI } from "@/config/constants";
 
 export function usePrayerTimes() {
+  const { location } = useLocation();
   const [prayerTimes, setPrayerTimes] = useState<PrayerTimes>(DEFAULT_PRAYER_TIMES);
   const [hijriDate, setHijriDate] = useState<HijriDate>(DEFAULT_HIJRI);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!location) return;
+
     const fetchData = async () => {
       try {
         const today = new Date();
@@ -19,7 +23,7 @@ export function usePrayerTimes() {
         const dateForHijri = formatDateForApiHijri(today);
 
         const [times, hijri] = await Promise.all([
-          getPrayerTimes(CITY_CODE, dateForApi),
+          getPrayerTimes(location.cityCode, dateForApi),
           getHijriDate(dateForHijri),
         ]);
 
@@ -36,8 +40,9 @@ export function usePrayerTimes() {
       }
     };
 
+    setLoading(true);
     fetchData();
-  }, []);
+  }, [location?.cityCode]);
 
   return { prayerTimes, hijriDate, loading, error };
 }

@@ -41,7 +41,7 @@ export function getCurrentLocation(): Promise<GeolocationPosition> {
   });
 }
 
-export function createLocationFromPosition(position: GeolocationPosition): Omit<Location, "city"> {
+export function createLocationFromPosition(position: GeolocationPosition): Omit<Location, "city" | "cityCode"> {
   return {
     latitude: position.coords.latitude,
     longitude: position.coords.longitude,

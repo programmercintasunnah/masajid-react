@@ -9,5 +9,6 @@ export interface Location {
   latitude: number;
   longitude: number;
   city: string;
+  cityCode: string;
   error?: string;
 }
