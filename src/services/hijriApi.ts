@@ -23,8 +23,11 @@ interface AlAdhanHijriResponse {
 
 export async function getHijriDate(date: string): Promise<HijriDate> {
   try {
-    // Format: DD-MM-YYYY
-    const [year, month, day] = date.split("/");
+    // Format dari formatDateForApiHijri: DD-MM-YYYY
+    const parts = date.split("-");
+    const day = parts[0];
+    const month = parts[1];
+    const year = parts[2];
     const formattedDate = `${day}-${month}-${year}`;
     
     const response = await fetch(
