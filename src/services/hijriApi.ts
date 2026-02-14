@@ -1,4 +1,3 @@
-import { apiClient } from "./apiClient";
 import { HijriDate } from "@/types";
 
 const DEFAULT_HIJRI: HijriDate = {
@@ -7,41 +6,48 @@ const DEFAULT_HIJRI: HijriDate = {
   year: 0,
 };
 
-// Response shape dari api.myquran.com/v2/hijri/gToH/{date}
-interface HijriApiResponse {
-  status: boolean;
+interface AlAdhanHijriResponse {
+  code: number;
+  status: string;
   data: {
-    result: {
-      tanggal: string | number; // tanggal Hijri (bukan hari dalam minggu!)
-      bulan: {
-        angka: number;
-        nama: string;
-        arab: string;
+    hijri: {
+      date: string;
+      month: {
+        number: number;
+        en: string;
       };
-      tahun: number;
-      hari: {
-        angka: number; // ini hari dalam minggu (1=Ahad, dst), BUKAN tanggal
-        nama: string;
-      };
+      year: string;
     };
   };
 }
 
 export async function getHijriDate(date: string): Promise<HijriDate> {
   try {
-    const response = await apiClient<HijriApiResponse>(`/hijri/gToH/${date}`);
+    // Format: DD-MM-YYYY
+    const [year, month, day] = date.split("/");
+    const formattedDate = `${day}-${month}-${year}`;
+    
+    const response = await fetch(
+      `https://api.aladhan.com/v1/gToH?date=${formattedDate}`
+    );
 
-    if (!response?.status || !response?.data?.result) {
-      console.warn("[Hijri] Invalid API response, using default");
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const data: AlAdhanHijriResponse = await response.json();
+
+    if (data.code !== 200 || !data.data?.hijri) {
+      console.warn("[Hijri] Invalid API response");
       return DEFAULT_HIJRI;
     }
 
-    const hijri = response.data.result;
+    const hijri = data.data.hijri;
 
     return {
-      day: Number(hijri.tanggal),
-      month: hijri.bulan.nama,
-      year: hijri.tahun,
+      day: parseInt(hijri.date.split("-")[0], 10),
+      month: hijri.month.en,
+      year: parseInt(hijri.year, 10),
     };
   } catch (error) {
     console.error("[Hijri] Error fetching hijri date:", error);
