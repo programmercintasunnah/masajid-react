@@ -16,6 +16,8 @@ export function usePrayerTimes() {
   useEffect(() => {
     if (!location) return;
 
+    console.log("[PrayerTimes] Using cityCode:", location.cityCode, "for city:", location.city);
+
     const fetchData = async () => {
       try {
         const today = new Date();
@@ -27,6 +29,7 @@ export function usePrayerTimes() {
           getHijriDate(dateForHijri),
         ]);
 
+        console.log("[PrayerTimes] Got prayer times:", times);
         setPrayerTimes(times);
         setHijriDate(hijri);
         setError(null);

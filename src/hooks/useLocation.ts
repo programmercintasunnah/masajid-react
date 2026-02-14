@@ -18,6 +18,29 @@ const DEFAULT_LOCATION: Location = {
 };
 
 let cachedCities: City[] | null = null;
+let citiesLoading = false;
+
+async function loadCities(): Promise<City[]> {
+  if (cachedCities) return cachedCities;
+  if (citiesLoading) {
+    while (citiesLoading) {
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    return cachedCities || [];
+  }
+  
+  citiesLoading = true;
+  try {
+    cachedCities = await getAllCities();
+    console.log("[Location] Loaded cities:", cachedCities.length);
+    return cachedCities;
+  } catch (error) {
+    console.error("[Location] Failed to load cities:", error);
+    return [];
+  } finally {
+    citiesLoading = false;
+  }
+}
 
 async function getCityCodeFromCoordinates(
   latitude: number,
@@ -36,17 +59,25 @@ async function getCityCodeFromCoordinates(
       data.address.county ||
       "Unknown";
 
-    if (!cachedCities) {
-      cachedCities = await getAllCities();
+    console.log("[Location] Nominatim city:", city);
+
+    const cities = await loadCities();
+    
+    if (!cities.length) {
+      console.warn("[Location] No cities loaded, using default");
+      return { city, cityCode: DEFAULT_LOCATION.cityCode };
     }
 
-    const cityCode = await findCityCodeByName(city, cachedCities);
+    const cityCode = await findCityCodeByName(city, cities);
+    
+    console.log("[Location] Matched cityCode:", cityCode, "for city:", city);
     
     return {
       city,
       cityCode: cityCode || DEFAULT_LOCATION.cityCode,
     };
-  } catch {
+  } catch (error) {
+    console.error("[Location] Error getting city code:", error);
     return {
       city: DEFAULT_LOCATION.city,
       cityCode: DEFAULT_LOCATION.cityCode,
@@ -61,6 +92,7 @@ export function useLocation() {
   useEffect(() => {
     const fetchLocation = async () => {
       if (!navigator.geolocation) {
+        console.warn("[Location] Geolocation not supported");
         setLocation({ ...DEFAULT_LOCATION, error: "Geolocation tidak didukung" });
         setLoading(false);
         return;
@@ -69,12 +101,14 @@ export function useLocation() {
       try {
         const position = await getCurrentLocation();
         const { latitude, longitude } = position.coords;
+        console.log("[Location] Got position:", latitude, longitude);
         
         const { city, cityCode } = await getCityCodeFromCoordinates(latitude, longitude);
+        console.log("[Location] Final result:", { city, cityCode });
         
         setLocation({ latitude, longitude, city, cityCode });
       } catch (error) {
-        console.log("Geolocation error, using default:", error);
+        console.error("[Location] Geolocation error:", error);
         setLocation(DEFAULT_LOCATION);
       } finally {
         setLoading(false);

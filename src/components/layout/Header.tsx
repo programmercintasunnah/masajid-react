@@ -146,7 +146,7 @@ export function Header({ userName, userPhoto }: HeaderProps) {
         {location ? (
           <span className="flex items-center gap-1">
             <MapPin className="w-3 h-3" />
-            {location.city}
+            {location.city} ({location.cityCode})
           </span>
         ) : (
           <span>Kota Pekanbaru</span>

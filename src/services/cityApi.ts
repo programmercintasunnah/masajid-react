@@ -20,20 +20,30 @@ export async function getAllCities(): Promise<City[]> {
   return response.data;
 }
 
+function normalizeCityName(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/kota\s+/i, "")
+    .replace(/kab\.?\s*/i, "")
+    .replace(/kabupaten\s+/i, "")
+    .trim();
+}
+
 export async function findCityCodeByName(
   cityName: string,
   cities: City[]
 ): Promise<string | null> {
   if (!cityName || !cities.length) return null;
 
-  const normalizedCityName = cityName.toLowerCase().replace(/kota\s+/i, "").trim();
+  const normalizedCityName = normalizeCityName(cityName);
   
   for (const city of cities) {
-    const normalizedLokasi = city.lokasi.toLowerCase().replace(/kota\s+/i, "").trim();
+    const normalizedLokasi = normalizeCityName(city.lokasi);
     
     if (
       normalizedLokasi.includes(normalizedCityName) ||
-      normalizedCityName.includes(normalizedLokasi)
+      normalizedCityName.includes(normalizedLokasi) ||
+      normalizedLokasi === normalizedCityName
     ) {
       return city.id;
     }
