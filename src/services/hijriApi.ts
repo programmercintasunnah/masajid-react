@@ -1,6 +1,12 @@
 import { apiClient } from "./apiClient";
 import { HijriDate } from "@/types";
 
+const DEFAULT_HIJRI: HijriDate = {
+  day: 0,
+  month: "-",
+  year: 0,
+};
+
 // Response shape dari api.myquran.com/v2/hijri/gToH/{date}
 interface HijriApiResponse {
   status: boolean;
@@ -22,17 +28,23 @@ interface HijriApiResponse {
 }
 
 export async function getHijriDate(date: string): Promise<HijriDate> {
-  const response = await apiClient<HijriApiResponse>(`/hijri/gToH/${date}`);
+  try {
+    const response = await apiClient<HijriApiResponse>(`/hijri/gToH/${date}`);
 
-  if (!response?.status || !response?.data?.result) {
-    throw new Error("Invalid API response");
+    if (!response?.status || !response?.data?.result) {
+      console.warn("[Hijri] Invalid API response, using default");
+      return DEFAULT_HIJRI;
+    }
+
+    const hijri = response.data.result;
+
+    return {
+      day: Number(hijri.tanggal),
+      month: hijri.bulan.nama,
+      year: hijri.tahun,
+    };
+  } catch (error) {
+    console.error("[Hijri] Error fetching hijri date:", error);
+    return DEFAULT_HIJRI;
   }
-
-  const hijri = response.data.result;
-
-  return {
-    day: Number(hijri.tanggal),   // ← field yang benar untuk tanggal Hijri
-    month: hijri.bulan.nama,
-    year: hijri.tahun,
-  };
 }

@@ -37,6 +37,13 @@ function loadLocationCache(): Location | null {
     const raw = localStorage.getItem(CACHE_KEY);
     if (!raw) return null;
     const cache: LocationCache = JSON.parse(raw);
+    
+    // Validasi cache - hanya terima jika cityCode valid
+    if (!cache.data?.cityCode) {
+      localStorage.removeItem(CACHE_KEY);
+      return null;
+    }
+    
     if (Date.now() - cache.timestamp > CACHE_TTL_MS) {
       localStorage.removeItem(CACHE_KEY);
       return null;
@@ -244,13 +251,13 @@ export function useLocation() {
       const { city, district, cityCode } = await getCityCodeFromCoordinates(latitude, longitude);
 
       if (!cityCode) {
-        // cityCode tidak ketemu bukan berarti permission denied!
-        // Tetap simpan koordinat mentah supaya bisa retry atau ditampilkan sebagian
+        // cityCode tidak ketemu - hapus cache lama dan request ulang
         console.warn("[Location] cityCode not found for", city, district);
+        localStorage.removeItem(CACHE_KEY);
         setState({
           location: null,
           loading: false,
-          permissionDenied: false, // ← FIX: bukan permission denied, tapi kota tidak ditemukan
+          permissionDenied: false,
         });
         return;
       }
