@@ -1,7 +1,7 @@
 import { useState } from "react";
-import type { FavTab } from "../../types";
-import { SectionLabel } from "../ui/SectionLabel";
-import { KajianCard } from "../ui/KajianCard";
+import type { FavTab } from "../types";
+import { SectionLabel } from "../components/ui/SectionLabel";
+import { KajianCard } from "../components/ui/KajianCard";
 import { Heart, Landmark, User, BookOpen, MapPin, Check } from "lucide-react";
 
 const FAV_MASJID = [

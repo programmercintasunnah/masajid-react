@@ -2,7 +2,7 @@ import { apiClient } from "./apiClient";
 
 export interface City {
   id: string;
-  lokasi: string;
+  location: string;
 }
 
 interface CitiesResponse {
@@ -38,7 +38,7 @@ export async function findCityCodeByName(
   const normalizedCityName = normalizeCityName(cityName);
   
   for (const city of cities) {
-    const normalizedLocation = normalizeCityName(city.lokasi);
+    const normalizedLocation = normalizeCityName(city.location);
     
     if (
       normalizedLocation.includes(normalizedCityName) ||

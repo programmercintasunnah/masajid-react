@@ -1,17 +1,17 @@
-import { SectionLabel } from "../ui/SectionLabel";
-import { MasjidCard } from "../ui/MasjidCard";
-import { KajianCard } from "../ui/KajianCard";
-import { Header } from "../layout/Header";
+import { SectionLabel } from "../components/ui/SectionLabel";
+import { MasjidCard } from "../components/ui/MasjidCard";
+import { KajianCard } from "../components/ui/KajianCard";
+import { Header } from "../components/layout/Header";
 import { Landmark } from "lucide-react";
 
-import quranImg from "../../assets/quran.png";
-import manuscriptImg from "../../assets/manuscript.png";
-import studyImg from "../../assets/study.png";
-import prayImg from "../../assets/pray.png";
-import infaqImg from "../../assets/infaq.png";
-import iqroImg from "../../assets/iqro.png";
-import mosqueImg from "../../assets/prophets-mosque.png";
-import moreImg from "../../assets/more.png";
+import quranImg from "../assets/quran.png";
+import manuscriptImg from "../assets/manuscript.png";
+import studyImg from "../assets/study.png";
+import prayImg from "../assets/pray.png";
+import infaqImg from "../assets/infaq.png";
+import iqroImg from "../assets/iqro.png";
+import mosqueImg from "../assets/prophets-mosque.png";
+import moreImg from "../assets/more.png";
 
 const MENUS: { img: string; label: string; bg: string }[] = [
   { img: quranImg, label: "Al-Qur'an", bg: "from-emerald-100 to-teal-200" },

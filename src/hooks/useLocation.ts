@@ -37,13 +37,13 @@ function loadLocationCache(): Location | null {
     const raw = localStorage.getItem(CACHE_KEY);
     if (!raw) return null;
     const cache: LocationCache = JSON.parse(raw);
-    
+
     // Validate cache - only accept if cityCode is valid
     if (!cache.data?.cityCode) {
       localStorage.removeItem(CACHE_KEY);
       return null;
     }
-    
+
     if (Date.now() - cache.timestamp > CACHE_TTL_MS) {
       localStorage.removeItem(CACHE_KEY);
       return null;
@@ -131,7 +131,7 @@ async function findBestCityCode(
 
   // 2. Exact / substring match on city name
   for (const city of cities) {
-    const normalizedCity = normalizeName(city.lokasi);
+    const normalizedCity = normalizeName(city.location);
     if (normalizedCity === normCity || normalizedCity.includes(normCity) || normCity.includes(normalizedCity)) {
       return city.id;
     }
@@ -140,7 +140,7 @@ async function findBestCityCode(
   // 3. Fallback to district name
   if (normDistrict) {
     for (const city of cities) {
-      const normalizedCity = normalizeName(city.lokasi);
+      const normalizedCity = normalizeName(city.location);
       if (normalizedCity.includes(normDistrict) || normDistrict.includes(normalizedCity)) {
         return city.id;
       }
@@ -152,7 +152,7 @@ async function findBestCityCode(
     let bestScore = 0;
     let bestId: string | null = null;
     for (const city of cities) {
-      const normalizedCity = normalizeName(city.lokasi);
+      const normalizedCity = normalizeName(city.location);
       const score = similarity(normState, normalizedCity);
       if (score > bestScore && score > 0.7) {
         bestScore = score;

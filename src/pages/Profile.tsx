@@ -1,4 +1,4 @@
-import { SectionLabel } from "../ui/SectionLabel";
+import { SectionLabel } from "../components/ui/SectionLabel";
 import { Flame, ChevronRight, BookOpen, Award, Coins, CheckSquare, Bell, MapPin, User, LogOut } from "lucide-react";
 
 const PROFILE_ACTIVITY = [

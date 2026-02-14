@@ -20,11 +20,11 @@ export function CampaignCard({ item }: CampaignCardProps) {
       <div className="p-3.5">
         <div className="text-[10px] font-bold text-emerald-700 mb-1 flex items-center gap-1">
           <Landmark className="w-3 h-3" />
-          {item.Masjid}
+          {item.mosque}
         </div>
         <div className="text-[13px] font-black text-gray-900 mb-2 leading-snug">{item.title}</div>
         <div className="h-1.5 bg-gray-100 rounded-full mb-2">
-          <div className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full" style={{ width: `${item.pct}%` }} />
+          <div className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full" style={{ width: `${item.percentage}%` }} />
         </div>
         <div className="flex justify-between items-center">
           <div>
