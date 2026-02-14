@@ -4,17 +4,36 @@ import { getPrayerTimes } from "@/services/prayerApi";
 import { getHijriDate } from "@/services/hijriApi";
 import { formatDateForApi, formatDateForApiHijri } from "@/utils";
 import { useLocation } from "./useLocation";
-import { DEFAULT_PRAYER_TIMES, DEFAULT_HIJRI } from "@/config/constants";
+
+const EMPTY_PRAYER_TIMES: PrayerTimes = {
+  Fajr: "-",
+  Sunrise: "-",
+  Dhuhr: "-",
+  Asr: "-",
+  Maghrib: "-",
+  Isha: "-",
+};
+
+const EMPTY_HIJRI: HijriDate = {
+  day: 0,
+  month: "-",
+  year: 0,
+};
 
 export function usePrayerTimes() {
   const { location } = useLocation();
-  const [prayerTimes, setPrayerTimes] = useState<PrayerTimes>(DEFAULT_PRAYER_TIMES);
-  const [hijriDate, setHijriDate] = useState<HijriDate>(DEFAULT_HIJRI);
+  const [prayerTimes, setPrayerTimes] = useState<PrayerTimes>(EMPTY_PRAYER_TIMES);
+  const [hijriDate, setHijriDate] = useState<HijriDate>(EMPTY_HIJRI);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!location) return;
+    if (!location?.cityCode) {
+      setPrayerTimes(EMPTY_PRAYER_TIMES);
+      setHijriDate(EMPTY_HIJRI);
+      setLoading(false);
+      return;
+    }
 
     console.log("[PrayerTimes] Using cityCode:", location.cityCode, "for city:", location.city);
 
@@ -36,8 +55,8 @@ export function usePrayerTimes() {
       } catch (err) {
         console.error("Prayer times error:", err);
         setError("Gagal mengambil jadwal solat");
-        setPrayerTimes(DEFAULT_PRAYER_TIMES);
-        setHijriDate(DEFAULT_HIJRI);
+        setPrayerTimes(EMPTY_PRAYER_TIMES);
+        setHijriDate(EMPTY_HIJRI);
       } finally {
         setLoading(false);
       }

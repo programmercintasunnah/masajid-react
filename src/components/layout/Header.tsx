@@ -10,11 +10,6 @@ interface HeaderProps {
 
 const HEADER_BG = "linear-gradient(160deg,#0b3d2e 0%,#1a6b4a 55%,#1f8a5e 100%)";
 
-function formatTime(time: string): string {
-  const [hours, minutes] = time.split(":");
-  return `${hours}:${minutes}`;
-}
-
 function getGregorianDate(date: Date): string {
   const days = ["Ahad", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
   const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
@@ -32,11 +27,12 @@ function formatCountdown(minutes: number): string {
 
 export function Header({ userName, userPhoto }: HeaderProps) {
   const [time, setTime] = useState(new Date());
-  const { location, loading: locationLoading } = useLocation();
+  const { location, loading: locationLoading, requestLocation } = useLocation();
   const { prayerTimes, hijriDate, loading: prayerLoading } = usePrayerTimes();
 
   const gregorian = getGregorianDate(time);
-  const nextPrayer = getNextPrayer(prayerTimes);
+  const hasValidLocation = location?.cityCode && prayerTimes.Fajr !== "-";
+  const nextPrayer = hasValidLocation ? getNextPrayer(prayerTimes) : null;
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
@@ -55,14 +51,53 @@ export function Header({ userName, userPhoto }: HeaderProps) {
   };
 
   const prayerList = [
-    { name: "Subuh", time: formatTime(prayerTimes.Fajr) },
-    { name: "Dzuhur", time: formatTime(prayerTimes.Dhuhr) },
-    { name: "Ashar", time: formatTime(prayerTimes.Asr) },
-    { name: "Maghrib", time: formatTime(prayerTimes.Maghrib) },
-    { name: "Isya", time: formatTime(prayerTimes.Isha) },
+    { name: "Subuh", time: prayerTimes.Fajr },
+    { name: "Dzuhur", time: prayerTimes.Dhuhr },
+    { name: "Ashar", time: prayerTimes.Asr },
+    { name: "Maghrib", time: prayerTimes.Maghrib },
+    { name: "Isya", time: prayerTimes.Isha },
   ];
 
   const isLoading = locationLoading || prayerLoading;
+
+  const handleLocationClick = () => {
+    if (!location) {
+      requestLocation();
+    }
+  };
+
+  const renderLocation = () => {
+    if (locationLoading) {
+      return (
+        <span className="flex items-center gap-1">
+          <Loader2 className="w-3 h-3 animate-spin" />
+          Mengambil lokasi...
+        </span>
+      );
+    }
+
+    if (location?.cityCode) {
+      const locationText = location.district 
+        ? `${location.district}, ${location.city}`
+        : location.city;
+      return (
+        <span className="flex items-center gap-1">
+          <MapPin className="w-3 h-3" />
+          {locationText} ({location.cityCode})
+        </span>
+      );
+    }
+
+    return (
+      <button 
+        onClick={handleLocationClick}
+        className="flex items-center gap-1 hover:text-white/70 transition-colors"
+      >
+        <MapPin className="w-3 h-3" />
+        Klik untuk aktifkan lokasi
+      </button>
+    );
+  };
 
   return (
     <div
@@ -123,18 +158,25 @@ export function Header({ userName, userPhoto }: HeaderProps) {
             <div className="text-center mb-1.5">
               <span className="text-[64px] font-black text-white leading-none tracking-[-3px]" style={{ textShadow: "0 4px 20px rgba(0,0,0,0.3)" }}>{hours}:{minutes}</span>
             </div>
-            <div className="text-center text-[12px] text-white/60 mb-4">
-              ± {formatCountdown(nextPrayer.minutesLeft)} lagi menuju waktu <strong className="text-amber-300">{nextPrayer.name}</strong>
-            </div>
+            {hasValidLocation ? (
+              <div className="text-center text-[12px] text-white/60 mb-4">
+                ± {formatCountdown(nextPrayer!.minutesLeft)} lagi menuju waktu <strong className="text-amber-300">{nextPrayer!.name}</strong>
+              </div>
+            ) : (
+              <div className="text-center text-[12px] text-white/60 mb-4">
+                Aktifkan lokasi untuk melihat jadwal solat
+              </div>
+            )}
             <div className="flex justify-between items-center bg-black/20 backdrop-blur-sm rounded-2xl px-3 py-2.5 border border-white/10">
               {prayerList.map((p, i) => {
-                const isActive = nextPrayer.name === p.name;
+                const isActive = nextPrayer?.name === p.name;
                 const Icon = prayerIcons[p.name];
+                const isDash = p.time === "-";
                 return (
                   <div key={i} className={`flex flex-col items-center gap-1 flex-1 ${i > 0 ? "border-l border-white/10" : ""}`}>
                     <Icon className={`w-[17px] h-[17px] ${isActive ? "text-amber-300" : "text-white/70"}`} />
                     <span className={`text-[10px] font-medium ${isActive ? "text-amber-300" : "text-white/55"}`}>{p.name}</span>
-                    <span className={`text-[12px] font-bold ${isActive ? "text-amber-300" : "text-white"}`}>{p.time}</span>
+                    <span className={`text-[12px] font-bold ${isActive ? "text-amber-300" : isDash ? "text-white/30" : "text-white"}`}>{p.time}</span>
                   </div>
                 );
               })}
@@ -143,14 +185,7 @@ export function Header({ userName, userPhoto }: HeaderProps) {
         )}
       </div>
       <div className="text-[11px] text-white/50 px-5 pt-1 pb-1 flex-shrink-0" style={{ background: "linear-gradient(160deg,#0b3d2e,#1a6b4a 60%)" }}>
-        {location ? (
-          <span className="flex items-center gap-1">
-            <MapPin className="w-3 h-3" />
-            {location.city} ({location.cityCode})
-          </span>
-        ) : (
-          <span>Kota Pekanbaru</span>
-        )}
+        {renderLocation()}
       </div>
     </div>
   );
