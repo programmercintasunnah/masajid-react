@@ -30,7 +30,7 @@ const MASJID_NEARBY = [
 ];
 
 const KAJIAN_LIVE = [
-  { id: 1, mosque: "Masjid Al-Ikhlas", title: "Kajian Kitab Tauhid", ustadz: "Ust. Abdurrahman, Lc.", youtubeId: "dQw4w9WgXcQ", isLive: true, viewers: 124, bg: "from-emerald-200 to-teal-300" },
+  { id: 1, mosque: "Masjid Al-Ikhlas", title: "Kajian Kitab Tauhid", ustadz: "Ust. Abdurrahman, Lc.", youtubeId: "X9CEm2ZTK-8", isLive: false, viewers: 124, bg: "from-emerald-200 to-teal-300" },
   { id: 2, mosque: "Masjid Nurul Iman", title: "Tafsir Al-Quran", ustadz: "Ust. Ahmad", youtubeId: "", isLive: true, viewers: 45, bg: "from-amber-200 to-yellow-300" },
   { id: 3, mosque: "Masjid Al-Ikhsan", title: "Fiqih Shalat", ustadz: "Ust. Yazid", youtubeId: "", isLive: false, viewers: 0, bg: "from-blue-200 to-blue-300" },
 ];
@@ -64,25 +64,25 @@ export function PageHome() {
           {MASJID_NEARBY.map((m, i) => <MosqueCard key={i} item={m} />)}
         </div>
 
-        <SectionLabel>Kajian Live</SectionLabel>
+        <SectionLabel extra="Lihat semua →">Kajian Live</SectionLabel>
         <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-1">
           {KAJIAN_LIVE.map((k) => (
-            <div key={k.id} className="min-w-[200px] bg-white rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] flex-shrink-0 cursor-pointer">
-              <div className={`h-24 bg-gradient-to-br ${k.bg} flex items-center justify-center relative`}>
+            <div key={k.id} className="min-w-[240px] bg-white rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] flex-shrink-0 cursor-pointer">
+              <div className="relative pt-[56.25%] bg-black">
                 {k.youtubeId ? (
                   <iframe
-                    className="w-full h-full"
+                    className="absolute top-0 left-0 w-full h-full"
                     src={`https://www.youtube.com/embed/${k.youtubeId}`}
                     title={k.title}
                     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-black/20">
+                  <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-300 to-gray-400">
                     <span className="text-white/80 text-xs font-medium px-2 text-center">Tidak ada stream</span>
                   </div>
                 )}
-                {k.isLive && k.youtubeId && (
+                {k.isLive && (
                   <div className="absolute top-2 left-2 bg-red-600 text-white text-[9px] font-bold px-2 py-0.5 rounded flex items-center gap-1">
                     <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                     LIVE
