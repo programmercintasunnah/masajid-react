@@ -25,11 +25,13 @@ export interface FeedItem {
   };
   content: string;
   image?: string;
+  images?: string[];
   likes: number;
   comments: number;
   shares: number;
   timestamp: string;
   tags?: string[];
+  mentionedUstadz?: string[];
 }
 
 export type UserRole = "jamaah" | "mosque_admin" | "kajian_admin" | "tahsin_admin" | "super_admin";

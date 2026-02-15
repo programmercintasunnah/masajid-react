@@ -34,7 +34,7 @@ export function MobileContainer({ children, currentPage, onNavigate }: MobileCon
         {/* Desktop Sidebar */}
         <aside className="w-56 bg-white border-r border-gray-200 flex flex-col flex-shrink-0">
           <div className="p-4 border-b border-gray-100">
-            <h1 className="text-lg font-bold text-[#0b3d2e]">Masajid</h1>
+            <h1 className="text-lg font-bold text-[#0b3d2e]">Masajid<span className="text-gray-300">App</span></h1>
           </div>
           <nav className="flex-1 p-3">
             {NAV_ITEMS.map((n) => {
