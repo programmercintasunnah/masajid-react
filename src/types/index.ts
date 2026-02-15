@@ -111,7 +111,8 @@ export interface Mosque {
 export interface MasjidNearby {
   name: string;
   distance: string;
-  study: number;
+  address: string;
+  kajianToday?: string;
   bg: string;
 }
 

@@ -1,5 +1,5 @@
 import type { MasjidNearby } from "../../types";
-import { MapPin, Star } from "lucide-react";
+import { MapPin, Navigation } from "lucide-react";
 import mosqueImg from "../../assets/mosque.png";
 
 interface MosqueCardProps {
@@ -18,9 +18,14 @@ export function MosqueCard({ item }: MosqueCardProps) {
       </div>
       <div className="p-2.5 lg:p-4">
         <div className="text-[11px] font-bold text-gray-900 mb-0.5 lg:text-sm">{item.name}</div>
-        <div className="text-[10px] text-gray-400 flex items-center gap-1 lg:text-xs">
-          <Star className="w-3 h-3 fill-amber-300 text-amber-300 lg:w-4 lg:h-4" />
-          4.8 · {item.study} kajian aktif
+        <div className="text-[10px] text-gray-400 mb-1 lg:text-xs truncate">{item.address}</div>
+        <div className="flex items-center justify-between">
+          <div className="text-[10px] text-[#0b3d2e] font-medium lg:text-xs">
+            📚 {item.kajianToday || "Kajian Hari Ini"}
+          </div>
+          <button className="text-[#0b3d2e] hover:opacity-70">
+            <Navigation className="w-4 h-4 lg:w-5 lg:h-5" />
+          </button>
         </div>
       </div>
     </div>

@@ -24,11 +24,11 @@ const MENUS: { img: string; label: string; bg: string }[] = [
 ];
 
 const MASJID_NEARBY = [
-  { name: "Masjid Al-Hijrah", distance: "340m", study: 2, bg: "from-emerald-200 to-teal-300", youtubeLive: "erjeTV" },
-  { name: "Masjid Abu Darda", distance: "800m", study: 5, bg: "from-blue-200 to-blue-300", youtubeLive: "" },
-  { name: "Masjid Umar bin Khattab", distance: "1.2km", study: 3, bg: "from-amber-200 to-yellow-300", youtubeLive: "" },
-  { name: "Masjid Al-Mansur", distance: "2.1km", study: 4, bg: "from-purple-200 to-purple-300", youtubeLive: "" },
-  { name: "Masjid Baiturrahman", distance: "3.5km", study: 6, bg: "from-pink-200 to-pink-300", youtubeLive: "" },
+  { name: "Masjid Al-Hijrah", distance: "340m", address: "Jl. Sudirman No. 12, Pekanbaru", kajianToday: "19.30 - Tafsir", bg: "from-emerald-200 to-teal-300", youtubeLive: "erjeTV" },
+  { name: "Masjid Abu Darda", distance: "800m", address: "Jl. Imam Bonjol No. 5", kajianToday: "08.00 - Subuh", bg: "from-blue-200 to-blue-300", youtubeLive: "" },
+  { name: "Masjid Umar bin Khattab", distance: "1.2km", address: "Jl. Hang Tuah No. 8, Sukajadi", kajianToday: "16.00 - Akbar", bg: "from-amber-200 to-yellow-300", youtubeLive: "" },
+  { name: "Masjid Al-Mansur", distance: "2.1km", address: "Jl. Pattimura No. 23", kajianToday: "20.00 - Doa", bg: "from-purple-200 to-purple-300", youtubeLive: "" },
+  { name: "Masjid Baiturrahman", distance: "3.5km", address: "Jl. Ahmad Yani No. 100, Harapan Raya", kajianToday: "", bg: "from-pink-200 to-pink-300", youtubeLive: "" },
 ];
 
 const KAJIAN_LIVE = [
@@ -39,18 +39,19 @@ const KAJIAN_LIVE = [
   { id: 5, mosque: "Masjid RJ", title: "Sirah Nabawiyah", ustadz: "Ust. Khalid", youtubeId: "QB8CoT7XMmU", isLive: false, bg: "from-pink-200 to-pink-300" },
 ];
 
-const MASJID_SUCIPRAY = [
+const MASJID_HARAMAIN = [
   { id: 1, name: "Masjidil Haram", youtubeId: "vcO5boQBTdg", isLive: true },
   { id: 2, name: "Masjid Nabawi", youtubeId: "3L7Gf0BD0gc", isLive: true },
   { id: 3, name: "Kajian Masjid Nabawi (ID)", youtubeId: "bXVOv5WDRkg", isLive: true },
 ];
 
-const YOUTUBE_SHORTS = [
+const VIDEO_SHORTS = [
   { id: 1, title: "3 Amalan Agar Diterima di Bulan Ramadhan", author: "Ust. Abdurrahman", youtubeId: "8dHpL_sFwoM" },
-  { id: 2, title: "Keutamaan Shalat Subuh Berjamaah", author: "Ust. Ahmad Faiz", youtubeId: "74oRlKJkJHo" },
+  { id: 2, title: "Keutamaan Shalat Subuh Berjamaah", author: "Ust. Izzuddin Abdissalam", youtubeId: "74oRlKJkJHo" },
   { id: 3, title: "Cara Menghilangkan Sifat Riya", author: "Ust. Yazid", youtubeId: "KWkftxVeRZI" },
   { id: 4, title: "Niat Puasa: Ini yang Benar!", author: "Ust. Khalid", youtubeId: "zyUU-GPYWeo" },
-  { id: 5, title: "Doa Agar Dimudahkan Rezeki", author: "Ust. Faiz", youtubeId: "Fvcd3QrsAUE" },
+  { id: 5, title: "Doa Agar Dimudahkan Rezeki", author: "Ust. El Khuzaimah", youtubeId: "13aBa0jI090" },
+  { id: 6, title: "Keutamaan Memiliki Anak Perempuan", author: "Ust. Al Muzani", youtubeId: "Fvcd3QrsAUE" },
 ];
 
 const KAJIAN_LIST = [
@@ -124,9 +125,9 @@ export function PageHome() {
         <SectionLabel extra="Lihat semua →">Kajian Mendatang</SectionLabel>
         {KAJIAN_LIST.map((k, i) => <KajianCard key={i} item={k} />)}
 
-        <SectionLabel extra="Lihat semua →">YouTube Shorts</SectionLabel>
+        <SectionLabel extra="Lihat semua →">Video Pendek</SectionLabel>
         <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-1 lg:overflow-x-auto">
-          {YOUTUBE_SHORTS.map((s) => (
+          {VIDEO_SHORTS.map((s) => (
             <div key={s.id} className="w-[140px] lg:w-[180px] bg-white rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] flex-shrink-0 cursor-pointer">
               <div className="pt-[177%] bg-black relative">
                 <iframe
@@ -147,7 +148,7 @@ export function PageHome() {
 
         <SectionLabel>Live Haramain</SectionLabel>
         <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-1 lg:grid lg:grid-cols-3 lg:gap-4">
-          {MASJID_SUCIPRAY.map((m) => (
+          {MASJID_HARAMAIN.map((m) => (
             <div key={m.id} className="min-w-[280px] lg:min-w-0 lg:flex-1 bg-white rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] cursor-pointer">
               <div className="relative pt-[56.25%] bg-black">
                 <iframe

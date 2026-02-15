@@ -14,7 +14,8 @@ export interface MenuItem {
 export interface MasjidNearby {
   name: string;
   distance: string;
-  study: number;
+  address: string;
+  kajianToday?: string;
   bg: string;
   youtubeLive?: string;
 }
