@@ -32,6 +32,11 @@ export interface FeedItem {
   timestamp: string;
   tags?: string[];
   mentionedUstadz?: string[];
+  suggestedToFollow?: {
+    name: string;
+    username: string;
+    type: "masjid" | "ustadz";
+  }[];
 }
 
 export type UserRole = "jamaah" | "mosque_admin" | "kajian_admin" | "tahsin_admin" | "super_admin";

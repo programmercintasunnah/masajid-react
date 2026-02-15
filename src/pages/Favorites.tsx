@@ -2,6 +2,8 @@ import { useState } from "react";
 import type { FavTab, FeedItem } from "../types";
 import { Heart, Repeat2, Share2, MoreHorizontal, User, Landmark, Check } from "lucide-react";
 
+const FOLLOWED_USERS = ["masjid_rj", "masjid_alikhlas", "ust_adagustian", "ahmad_fauzan"];
+
 const FEED_DATA: FeedItem[] = [
   {
     id: "1",
@@ -31,6 +33,9 @@ Barakallahufiikum`,
     shares: 3,
     timestamp: "2 jam yang lalu",
     mentionedUstadz: ["Ustadz Ade Agustian"],
+    suggestedToFollow: [
+      { name: "Ustadz Ade Agustian", username: "ust_adagustian", type: "ustadz" },
+    ],
   },
   {
     id: "2",
@@ -88,15 +93,21 @@ Jangan lewatkan kesempatan emas untuk menimba ilmu agama langsung di Masjid Raud
 
 📍Lokasi: Masjid Raudhatul Jannah, Pekanbaru
 📡 Live: YouTube erje.tv
- umum
 
-✅ Terbuka untuk🤍 Yuk, ikut ambil bagian dalam kebaikan Ramadhan.`,
+✅ Terbuka untuk umum
+
+🤍 Yuk, ikut ambil bagian dalam kebaikan Ramadhan.`,
     image: "/photo_2026-02-15_11-23-53.jpg",
     likes: 67,
     comments: 23,
     shares: 12,
     timestamp: "1 hari yang lalu",
     mentionedUstadz: ["Ustadz Samsurijal", "Ustadz Maududi Abdullah", "Ustadz Khailid Abdus Shamad"],
+    suggestedToFollow: [
+      { name: "Ustadz Samsurijal", username: "ust_samsurijal", type: "ustadz" },
+      { name: "Ustadz Maududi Abdullah", username: "ust_maududi", type: "ustadz" },
+      { name: "Ustadz Khailid Abdus Shamad", username: "ust_khailid", type: "ustadz" },
+    ],
   },
   {
     id: "4",
@@ -140,12 +151,38 @@ Jangan lewatkan kesempatan emas untuk menimba ilmu agama langsung di Masjid Raud
     comments: 1,
     shares: 0,
     timestamp: "1 hari yang lalu",
+    suggestedToFollow: [
+      { name: "Masjid Raudhatul Jannah", username: "masjid_rj", type: "masjid" },
+    ],
+  },
+  {
+    id: "8",
+    type: "jamaah",
+    author: { name: "Muhammad Rijal", username: "muh_rijal" },
+    repostedBy: { name: "Masjid Al-Ikhlas", username: "masjid_alikhlas" },
+    content: "Subhanallah kajian tadi malam begitu menggetarkan hati. Terus semangat menuntut ilmu! 📚",
+    likes: 15,
+    comments: 3,
+    shares: 2,
+    timestamp: "2 hari yang lalu",
+    suggestedToFollow: [
+      { name: "Masjid Al-Ikhlas", username: "masjid_alikhlas", type: "masjid" },
+    ],
   },
 ];
 
 export function PageFavorites() {
   const [tab, setTab] = useState<FavTab>("all");
   const [feeds] = useState<FeedItem[]>(FEED_DATA);
+  const [followedUsers, setFollowedUsers] = useState<string[]>(FOLLOWED_USERS);
+
+  const isFollowed = (username: string) => followedUsers.includes(username);
+
+  const handleFollow = (username: string) => {
+    if (!followedUsers.includes(username)) {
+      setFollowedUsers([...followedUsers, username]);
+    }
+  };
 
   const filteredFeeds = feeds.filter(f => {
     if (tab === "all") return true;
@@ -184,7 +221,12 @@ export function PageFavorites() {
 
       <div className="flex-1 overflow-y-auto bg-[#f5f7f5]">
         {filteredFeeds.map((feed) => (
-          <ThreadCard key={feed.id} feed={feed} />
+          <ThreadCard 
+            key={feed.id} 
+            feed={feed} 
+            isFollowed={isFollowed}
+            onFollow={handleFollow}
+          />
         ))}
         <div className="h-6" />
       </div>
@@ -192,10 +234,13 @@ export function PageFavorites() {
   );
 }
 
-function ThreadCard({ feed }: { feed: FeedItem }) {
+function ThreadCard({ feed, isFollowed, onFollow }: { 
+  feed: FeedItem; 
+  isFollowed: (username: string) => boolean;
+  onFollow: (username: string) => void;
+}) {
   const [liked, setLiked] = useState(false);
   const [reposted, setReposted] = useState(false);
-  const [followed, setFollowed] = useState(false);
 
   const hasImage = feed.image || (feed.images && feed.images.length > 0);
   const isMasjid = feed.type === "masjid";
@@ -233,23 +278,6 @@ function ThreadCard({ feed }: { feed: FeedItem }) {
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[12px] text-gray-400">{feed.timestamp}</span>
-                <button
-                  onClick={() => setFollowed(!followed)}
-                  className={`text-[11px] font-bold px-3 py-1 rounded-full transition-colors ${
-                    followed 
-                      ? "bg-gray-100 text-gray-600 border border-gray-300" 
-                      : "bg-[#0b3d2e] text-white hover:bg-[#0a3528]"
-                  }`}
-                >
-                  {followed ? (
-                    <span className="flex items-center gap-1">
-                      <Check className="w-3 h-3" />
-                      Mengikuti
-                    </span>
-                  ) : (
-                    "Ikuti"
-                  )}
-                </button>
                 <button className="text-gray-400">
                   <MoreHorizontal className="w-4 h-4" />
                 </button>
@@ -287,6 +315,46 @@ function ThreadCard({ feed }: { feed: FeedItem }) {
               <div className="flex gap-2 flex-wrap mb-3">
                 {feed.tags.map((tag, i) => (
                   <span key={i} className="text-[13px] text-black font-medium">{tag}</span>
+                ))}
+              </div>
+            )}
+
+            {feed.suggestedToFollow && feed.suggestedToFollow.length > 0 && (
+              <div className="mb-3 p-3 bg-gray-50 rounded-xl">
+                <div className="text-[11px] text-gray-400 mb-2">Suggested to follow</div>
+                {feed.suggestedToFollow.map((suggestion, i) => (
+                  <div key={i} className="flex items-center justify-between mb-2 last:mb-0">
+                    <div className="flex items-center gap-2">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${suggestion.type === 'masjid' ? 'bg-emerald-100' : 'bg-purple-100'}`}>
+                        {suggestion.type === 'masjid' ? (
+                          <Landmark className="w-4 h-4 text-[#0b3d2e]" />
+                        ) : (
+                          <User className="w-4 h-4 text-purple-600" />
+                        )}
+                      </div>
+                      <div>
+                        <div className="text-[13px] font-medium text-gray-900">{suggestion.name}</div>
+                        <div className="text-[11px] text-gray-400">@{suggestion.username}</div>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => onFollow(suggestion.username)}
+                      className={`text-[11px] font-bold px-3 py-1 rounded-full transition-colors ${
+                        isFollowed(suggestion.username)
+                          ? "bg-gray-100 text-gray-600 border border-gray-300" 
+                          : "bg-[#0b3d2e] text-white hover:bg-[#0a3528]"
+                      }`}
+                    >
+                      {isFollowed(suggestion.username) ? (
+                        <span className="flex items-center gap-1">
+                          <Check className="w-3 h-3" />
+                          Mengikuti
+                        </span>
+                      ) : (
+                        "Ikuti"
+                      )}
+                    </button>
+                  </div>
                 ))}
               </div>
             )}
