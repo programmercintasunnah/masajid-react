@@ -6,7 +6,26 @@ export interface NavItem {
   label: string;
 }
 
-export type FavTab = "mosque" | "teacher" | "study";
+export type FavTab = "all" | "kajian" | "twitter" | "facebook" | "threads";
+
+export type FeedType = "kajian" | "twitter" | "facebook" | "threads";
+
+export interface FeedItem {
+  id: string;
+  type: FeedType;
+  author: {
+    name: string;
+    avatar?: string;
+    username?: string;
+  };
+  content: string;
+  image?: string;
+  likes: number;
+  comments: number;
+  shares: number;
+  timestamp: string;
+  tags?: string[];
+}
 
 export type UserRole = "jamaah" | "mosque_admin" | "kajian_admin" | "tahsin_admin" | "super_admin";
 
