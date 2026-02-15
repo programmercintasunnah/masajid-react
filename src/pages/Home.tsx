@@ -49,6 +49,8 @@ const KAJIAN_LIST = [
   { icon: "📚", bg: "bg-emerald-50", title: "Fiqih Puasa Ramadhan — Ust. Abdurrahman", tags: ["free", "online"], date: "Jum'at, 14 Feb", time: "19:30" },
   { icon: "🎓", bg: "bg-amber-50", title: "Dauroh Aqidah Intensif 3 Hari", tags: ["paid", "dauroh", "quiz"], date: "15–17 Feb", harga: "Rp 150k" },
   { icon: "🧒", bg: "bg-pink-50", title: "Tahsin Al-Qur'an Anak (Usia 6–12)", tags: ["kids", "tahsin"], date: "Sabtu, 15 Feb", time: "08:00" },
+  { icon: "📖", bg: "bg-blue-50", title: "Kajian Tafsir Al-Baqarah", tags: ["free"], date: "Minggu, 16 Feb", time: "16:00" },
+  { icon: "🕌", bg: "bg-purple-50", title: "Kajian Sirah Nabawiyah", tags: ["free", "online"], date: "Senin, 17 Feb", time: "20:00" },
 ];
 
 export function PageHome() {
