@@ -45,6 +45,14 @@ const MASJID_SUCIPRAY = [
   { id: 3, name: "Kajian Masjid Nabawi (ID)", youtubeId: "bXVOv5WDRkg", isLive: true },
 ];
 
+const YOUTUBE_SHORTS = [
+  { id: 1, title: "3 Amalan Agar Diterima di Bulan Ramadhan", author: "Ust. Abdurrahman", youtubeId: "dQw4w9WgXcQ", views: "125RB" },
+  { id: 2, title: "Keutamaan Shalat Subuh Berjamaah", author: "Ust. Ahmad Faiz", youtubeId: "dQw4w9WgXcQ", views: "89RB" },
+  { id: 3, title: "Cara Menghilangkan Sifat Riya", author: "Ust. Yazid", youtubeId: "dQw4w9WgXcQ", views: "67RB" },
+  { id: 4, title: "Niat Puasa: Ini yang Benar!", author: "Ust. Khalid", youtubeId: "dQw4w9WgXcQ", views: "156RB" },
+  { id: 5, title: "Doa Agar Dimudahkan Rezeki", author: "Ust. Faiz", youtubeId: "dQw4w9WgXcQ", views: "234RB" },
+];
+
 const KAJIAN_LIST = [
   { icon: "📚", bg: "bg-emerald-50", title: "Fiqih Puasa Ramadhan — Ust. Abdurrahman", tags: ["free", "online"], date: "Jum'at, 14 Feb", time: "19:30" },
   { icon: "🎓", bg: "bg-amber-50", title: "Dauroh Aqidah Intensif 3 Hari", tags: ["paid", "dauroh", "quiz"], date: "15–17 Feb", harga: "Rp 150k" },
@@ -140,6 +148,27 @@ export function PageHome() {
                   <span className="text-[10px] font-bold text-[#0b3d2e]">{m.name}</span>
                 </div>
                 <div className="text-[10px] text-gray-500">Live Streaming</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <SectionLabel extra="Lihat semua →">YouTube Shorts</SectionLabel>
+        <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-1 lg:overflow-x-auto">
+          {YOUTUBE_SHORTS.map((s) => (
+            <div key={s.id} className="min-w-[140px] lg:min-w-[180px] bg-white rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] flex-shrink-0 cursor-pointer">
+              <div className="relative pt-[177%] bg-black">
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full"
+                  src={`https://www.youtube.com/embed/${s.youtubeId}`}
+                  title={s.title}
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+              <div className="p-2">
+                <div className="text-[10px] font-bold text-gray-900 mb-0.5 line-clamp-2">{s.title}</div>
+                <div className="text-[9px] text-gray-400">{s.views} views</div>
               </div>
             </div>
           ))}
