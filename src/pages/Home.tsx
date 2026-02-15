@@ -1,6 +1,8 @@
 import { SectionLabel } from "../components/ui/SectionLabel";
 import { MosqueCard } from "../components/ui/MosqueCard";
 import { Header } from "../components/layout/Header";
+import abudardaMosque from "../assets/abudarda-mosque.jpeg"
+import albadrMosque from "../assets/albadr-mosque.jpeg"
 
 import quranImg from "../assets/quran.png";
 import manuscriptImg from "../assets/manuscript.png";
@@ -23,10 +25,10 @@ const MENUS: { img: string; label: string; bg: string }[] = [
 ];
 
 const MASJID_NEARBY = [
-  { name: "Masjid Al-Hijrah", distance: "340m", address: "Jl. Sudirman No. 12, Pekanbaru", kajianToday: "19.30 - Tafsir", bg: "from-emerald-200 to-teal-300", youtubeLive: "erjeTV" },
-  { name: "Masjid Abu Darda", distance: "800m", address: "Jl. Imam Bonjol No. 5", kajianToday: "08.00 - Subuh", bg: "from-blue-200 to-blue-300", youtubeLive: "" },
-  { name: "Masjid Umar bin Khattab", distance: "1.2km", address: "Jl. Hang Tuah No. 8, Sukajadi", kajianToday: "16.00 - Akbar", bg: "from-amber-200 to-yellow-300", youtubeLive: "" },
-  { name: "Masjid Al-Mansur", distance: "2.1km", address: "Jl. Pattimura No. 23", kajianToday: "20.00 - Doa", bg: "from-purple-200 to-purple-300", youtubeLive: "" },
+  { name: "Masjid Al-Badr", distance: "340m", address: "Jl. Sudirman No. 12, Pekanbaru", kajianToday: "19.30 - Tafsir", image: { albadrMosque }, bg: "from-emerald-200 to-teal-300", youtubeLive: "erjeTV" },
+  { name: "Masjid Abu Darda", distance: "800m", address: "Jl. Imam Bonjol No. 5", kajianToday: "08.00 - Subuh", image: { abudardaMosque }, bg: "from-blue-200 to-blue-300", youtubeLive: "" },
+  { name: "Masjid Umar bin Khattab", distance: "1.2km", address: "Jl. Hang Tuah No. 8, Sukajadi", kajianToday: "16.00 - Akbar", image: "/albadr-mosque.jpeg", bg: "from-amber-200 to-yellow-300", youtubeLive: "" },
+  { name: "Masjid Al-Hijrah", distance: "2.1km", address: "Jl. Pattimura No. 23", kajianToday: "20.00 - Doa", bg: "from-purple-200 to-purple-300", youtubeLive: "" },
   { name: "Masjid Baiturrahman", distance: "3.5km", address: "Jl. Ahmad Yani No. 100, Harapan Raya", kajianToday: "", bg: "from-pink-200 to-pink-300", youtubeLive: "" },
 ];
 

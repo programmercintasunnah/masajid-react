@@ -113,6 +113,7 @@ export interface MasjidNearby {
   distance: string;
   address: string;
   kajianToday?: string;
+  image?: string;
   bg: string;
 }
 
