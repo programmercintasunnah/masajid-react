@@ -245,6 +245,34 @@ function ThreadCard({ feed, isFollowed, onFollow }: {
   const hasImage = feed.image || (feed.images && feed.images.length > 0);
   const isMasjid = feed.type === "masjid";
 
+  const suggestedToFollow = (() => {
+    const suggestions: { name: string; username: string; type: "masjid" | "ustadz" }[] = [];
+    
+    if (feed.repostedBy && !isFollowed(feed.repostedBy.username)) {
+      const type = feed.repostedBy.username.includes("masjid") ? "masjid" : "ustadz";
+      suggestions.push({
+        name: feed.repostedBy.name,
+        username: feed.repostedBy.username,
+        type,
+      });
+    }
+    
+    if (feed.mentionedUstadz && feed.mentionedUstadz.length > 0) {
+      feed.mentionedUstadz.forEach((ustadzName) => {
+        const ustadzUsername = `ust_${ustadzName.toLowerCase().replace(/\s+/g, "_")}`;
+        if (!isFollowed(ustadzUsername)) {
+          suggestions.push({
+            name: ustadzName,
+            username: ustadzUsername,
+            type: "ustadz",
+          });
+        }
+      });
+    }
+    
+    return suggestions;
+  })();
+
   return (
     <div className="mx-0 sm:mx-5 my-3 bg-white rounded-none sm:rounded-2xl shadow-sm border-b sm:border border-black/[0.04]">
       <div className="p-4">
@@ -319,10 +347,10 @@ function ThreadCard({ feed, isFollowed, onFollow }: {
               </div>
             )}
 
-            {feed.suggestedToFollow && feed.suggestedToFollow.length > 0 && (
+            {suggestedToFollow && suggestedToFollow.length > 0 && (
               <div className="mb-3 p-3 bg-gray-50 rounded-xl">
                 <div className="text-[11px] text-gray-400 mb-2">Suggested to follow</div>
-                {feed.suggestedToFollow.map((suggestion, i) => (
+                {suggestedToFollow.map((suggestion, i) => (
                   <div key={i} className="flex items-center justify-between mb-2 last:mb-0">
                     <div className="flex items-center gap-2">
                       <div className={`w-8 h-8 rounded-full flex items-center justify-center ${suggestion.type === 'masjid' ? 'bg-emerald-100' : 'bg-purple-100'}`}>
