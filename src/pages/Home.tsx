@@ -33,6 +33,8 @@ const KAJIAN_LIVE = [
   { id: 1, mosque: "Masjid Al-Ikhlas", title: "Kajian Kitab Tauhid", ustadz: "Ust. Abdurrahman, Lc.", youtubeId: "X9CEm2ZTK-8", isLive: false, viewers: 124, bg: "from-emerald-200 to-teal-300" },
   { id: 2, mosque: "Masjid Nurul Iman", title: "Tafsir Al-Quran", ustadz: "Ust. Ahmad", youtubeId: "", isLive: true, viewers: 45, bg: "from-amber-200 to-yellow-300" },
   { id: 3, mosque: "Masjid Al-Ikhsan", title: "Fiqih Shalat", ustadz: "Ust. Yazid", youtubeId: "", isLive: false, viewers: 0, bg: "from-blue-200 to-blue-300" },
+  { id: 4, mosque: "Masjid Al-Munawwaroh", title: "Kajian Akhlaq", ustadz: "Ust. Faiz", youtubeId: "", isLive: true, viewers: 28, bg: "from-purple-200 to-purple-300" },
+  { id: 5, mosque: "Masjid At-Taqwa", title: "Sirah Nabawiyah", ustadz: "Ust. Khalid", youtubeId: "", isLive: false, viewers: 0, bg: "from-pink-200 to-pink-300" },
 ];
 
 const MASJID_SUCIPRAY = [
