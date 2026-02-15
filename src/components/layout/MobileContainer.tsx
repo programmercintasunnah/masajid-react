@@ -31,12 +31,12 @@ export function MobileContainer({ children, currentPage, onNavigate }: MobileCon
       <div className="flex min-h-screen bg-gray-100" style={{ fontFamily: "'Plus Jakarta Sans',sans-serif" }}>
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
         
-        {/* Desktop Sidebar */}
-        <aside className="w-56 bg-white border-r border-gray-200 flex flex-col flex-shrink-0">
+        {/* Desktop Sidebar - fixed, no scroll */}
+        <aside className="w-56 h-screen bg-white border-r border-gray-200 flex flex-col flex-shrink-0 sticky top-0">
           <div className="p-4 border-b border-gray-100">
             <h1 className="text-lg font-bold text-[#0b3d2e]">Masajid<span className="text-gray-300">App</span></h1>
           </div>
-          <nav className="flex-1 p-3">
+          <nav className="flex-1 p-3 overflow-y-auto">
             {NAV_ITEMS.map((n) => {
               const Icon = n.icon;
               const isActive = currentPage === n.id;
