@@ -1,63 +1,86 @@
 import { useState } from "react";
 import type { FavTab, FeedItem } from "../types";
-import { Heart, Landmark, User, MessageCircle, Share2, MoreHorizontal, Smile } from "lucide-react";
+import { Heart, MessageCircle, Repeat2, Share2, MoreHorizontal, User, Landmark } from "lucide-react";
 
 const FEED_DATA: FeedItem[] = [
   {
     id: "1",
-    type: "kajian",
-    author: { name: "Masjid Al-Ikhlas", avatar: undefined },
-    content: "Kajian Kitab Tauhid\nSabtu, 22 Februari 2026\n08:00 - 10:00 WIB\n\n Bersama Ust. Abdurrahman, Lc.",
+    type: "masjid",
+    author: { name: "Masjid Al-Ikhlas", username: "masjid_alikhlas", isVerified: true },
+    content: "Assalamu'alaikum Jamaah...\n\nAkan mengadakan kajian kitab Tauhid tomorrow night. Yuk ramaikan! 🔥\n\n📅 Sabtu, 22 Februari 2026\n⏰ 19.30 WIB\n📍 Masjid Al-Ikhlas",
     image: "https://images.unsplash.com/photo-1564769624456-ddd98b816dbb?w=800&h=400&fit=crop",
     likes: 24,
     comments: 8,
     shares: 3,
     timestamp: "2 jam yang lalu",
-    tags: ["#Tauhid", "#Kajian"],
+    tags: ["#Kajian", "#Tauhid"],
   },
   {
     id: "2",
-    type: "twitter",
-    author: { name: "Ust. Abdurrahman", username: "@ust_abdurrahman" },
-    content: "Barangsiapa yang menginginkan dunia maka harus dengan ilmu, dan siapa yang menginginkan akhirat maka harus dengan ilmu, dan siapa yang menginginkan keduanya maka harus dengan ilmu. — Imam Malik",
-    likes: 156,
-    comments: 23,
-    shares: 45,
+    type: "masjid",
+    author: { name: "Masjid Ar-Rahman", username: "masjid_arrahman", isVerified: true },
+    content: "Alhamdulillah kajian kita kemaren berhasil! Jazakumullah khairal jaza всем yang sudah hadir 🙏\n\nMinggu depan kita akan bahas Fiqih Puasa. Stay tuned!",
+    likes: 45,
+    comments: 12,
+    shares: 5,
     timestamp: "5 jam yang lalu",
-    tags: ["#Ilmu", "#Hikmah"],
+    tags: ["#Fiqih", "#Puasa"],
   },
   {
     id: "3",
-    type: "facebook",
-    author: { name: "Komunitas Muslim Pekanbaru" },
-    content: "Alhamdulillah yesterday kita successfully ngadain pengajian umum di Masjid At-Taqwa. Terima kasih buat semua Jamaah yang hadir! Matur suwun 🙏\n\nSemangat menuntut ilmu yaa南京天课清真寺",
-    likes: 342,
-    comments: 67,
-    shares: 28,
+    type: "ustadz",
+    author: { name: "Masjid Al-Ikhlas", username: "masjid_alikhlas", isVerified: true },
+    content: "Kajian Kitab Tauhid bersama Ust. Abdurrahman, Lc. besok malam!\n\nJangan sampai missed yaa 南京天课清真寺",
+    likes: 32,
+    comments: 15,
+    shares: 8,
     timestamp: "1 hari yang lalu",
+    tags: ["#UstAbdurrahman", "#Tauhid"],
   },
   {
     id: "4",
-    type: "threads",
-    author: { name: "Ustadzah Fatimah", username: "ustadzah.fatimah" },
-    content: "Nahwu itu pintu gerbang belajar agama. Tanpa nahwu, kita akan kesulitan memahami Al-Quran dan hadits. Yuk sama-sama belajar! 📚\n\nSiap join kelas nahwu dasar bulan depan?",
-    likes: 89,
-    comments: 15,
+    type: "ustadz",
+    author: { name: "Masjid Nurul Iman", username: "masjid_nurul_iman", isVerified: true },
+    content: "Dauroh Al-Quran 3 hari bersama Ust. Muhammad Faiz\n\n15-17 Maret 2026\nCP: 0812-xxxx-xxxx",
+    image: "https://images.unsplash.com/photo-1548048026-5a1a941d93d3?w=800&h=400&fit=crop",
+    likes: 67,
+    comments: 23,
     shares: 12,
     timestamp: "2 hari yang lalu",
-    tags: ["#Nahwu", "#BahasaArab"],
+    tags: ["#UstMuhammadFaiz", "#Dauroh"],
   },
   {
     id: "5",
-    type: "kajian",
-    author: { name: "Masjid Ar-Rahman" },
-    content: "Dauroh Al-Quran 3 Hari\n15-17 Maret 2026\nMeng Khatam Al-Quran & Tilawah\n\n ust. Muhammad Faiz",
-    image: "https://images.unsplash.com/photo-1548048026-5a1a941d93d3?w=800&h=400&fit=crop",
-    likes: 56,
-    comments: 12,
-    shares: 8,
-    timestamp: "3 hari yang lalu",
-    tags: ["#Dauroh", "#AlQuran"],
+    type: "jamaah",
+    author: { name: "Ahmad Fauzan", username: "ahmad_fauzan" },
+    repostedBy: { name: "Ust. Abdurrahman", username: "ust_abdurrahman" },
+    content: "Kajian yang sangat bermanfaat sekali. Thank you ustadz 🙏",
+    likes: 12,
+    comments: 2,
+    shares: 1,
+    timestamp: "3 jam yang lalu",
+  },
+  {
+    id: "6",
+    type: "jamaah",
+    author: { name: "Fatimah Zahra", username: "fatimah_zahra" },
+    repostedBy: { name: "Ustadzah Fatimah", username: "ustadzah_fatimah" },
+    content: "Alhamdulillah habis ngikut dauroh yesterday. Ilmu yang sangat bernilai!",
+    likes: 8,
+    comments: 1,
+    shares: 0,
+    timestamp: "1 hari yang lalu",
+  },
+  {
+    id: "7",
+    type: "jamaah",
+    author: { name: "Muhammad Rijal", username: "muh_rijal" },
+    repostedBy: { name: "Masjid Al-Ikhlas", username: "masjid_alikhlas" },
+    content: "Subhanallah kajian tadi malam begitu menggetarkan hati. Terus semangat menuntut ilmu! 📚",
+    likes: 15,
+    comments: 3,
+    shares: 2,
+    timestamp: "2 hari yang lalu",
   },
 ];
 
@@ -76,16 +99,15 @@ export function PageFavorites() {
           <Heart className="w-5 h-5" />
           Favorit
         </h2>
-        <p className="text-[12px] text-white/55">Update kajian & status terbaru</p>
+        <p className="text-[12px] text-white/55">Update terbaru dari Masjid & Ustadz</p>
       </div>
 
       <div className="flex bg-white border-b border-black/[0.07] flex-shrink-0 overflow-x-auto">
         {[
           { id: "all" as FavTab, label: "Semua" },
-          { id: "kajian" as FavTab, label: "Kajian" },
-          { id: "twitter" as FavTab, label: "Twitter" },
-          { id: "facebook" as FavTab, label: "Facebook" },
-          { id: "threads" as FavTab, label: "Threads" },
+          { id: "masjid" as FavTab, label: "Masjid" },
+          { id: "ustadz" as FavTab, label: "Ustadz" },
+          { id: "jamaah" as FavTab, label: "Jamaah" },
         ].map(t => (
           <button
             key={t.id}
@@ -99,7 +121,7 @@ export function PageFavorites() {
 
       <div className="flex-1 overflow-y-auto bg-[#f5f7f5]">
         {filteredFeeds.map((feed) => (
-          <FeedCard key={feed.id} feed={feed} />
+          <ThreadCard key={feed.id} feed={feed} />
         ))}
         <div className="h-6" />
       </div>
@@ -107,191 +129,112 @@ export function PageFavorites() {
   );
 }
 
-function FeedCard({ feed }: { feed: FeedItem }) {
+function ThreadCard({ feed }: { feed: FeedItem }) {
+  const [liked, setLiked] = useState(false);
+  const [reposted, setReposted] = useState(false);
+
   return (
     <div className="mx-0 sm:mx-5 my-3 bg-white rounded-none sm:rounded-2xl shadow-sm border-b sm:border border-black/[0.04]">
-      {feed.type === "kajian" && (
-        <KajianFeed feed={feed} />
-      )}
-      {feed.type === "twitter" && (
-        <TwitterFeed feed={feed} />
-      )}
-      {feed.type === "facebook" && (
-        <FacebookFeed feed={feed} />
-      )}
-      {feed.type === "threads" && (
-        <ThreadsFeed feed={feed} />
-      )}
-    </div>
-  );
-}
-
-function KajianFeed({ feed }: { feed: FeedItem }) {
-  return (
-    <>
       {feed.image && (
         <div className="relative">
-          <img src={feed.image} alt="Poster" className="w-full h-48 object-cover" />
-          <div className="absolute top-2 left-2 bg-[#0b3d2e] text-white text-[10px] font-bold px-2 py-1 rounded-lg">
-            KAJIAN
-          </div>
+          <img src={feed.image} alt="Post" className="w-full h-48 object-cover" />
+          {feed.type === "masjid" && (
+            <div className="absolute top-2 left-2 bg-[#0b3d2e] text-white text-[10px] font-bold px-2 py-1 rounded-lg flex items-center gap-1">
+              <Landmark className="w-3 h-3" />
+              Masjid
+            </div>
+          )}
+          {feed.type === "ustadz" && (
+            <div className="absolute top-2 left-2 bg-purple-600 text-white text-[10px] font-bold px-2 py-1 rounded-lg flex items-center gap-1">
+              <User className="w-3 h-3" />
+              Ustadz
+            </div>
+          )}
         </div>
       )}
+
       <div className="p-4">
-        <div className="flex items-center gap-2 mb-2">
-          <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
-            <Landmark className="w-4 h-4 text-[#0b3d2e]" />
-          </div>
-          <div>
-            <div className="text-[13px] font-bold text-gray-900">{feed.author.name}</div>
-            <div className="text-[11px] text-gray-400">{feed.timestamp}</div>
-          </div>
-        </div>
-        <div className="text-[13px] text-gray-700 whitespace-pre-line mb-3">{feed.content}</div>
-        {feed.tags && (
-          <div className="flex gap-2 flex-wrap mb-3">
-            {feed.tags.map((tag, i) => (
-              <span key={i} className="text-[11px] text-[#0b3d2e] font-medium">{tag}</span>
-            ))}
-          </div>
-        )}
-        <FeedActions likes={feed.likes} comments={feed.comments} shares={feed.shares} />
-      </div>
-    </>
-  );
-}
-
-function TwitterFeed({ feed }: { feed: FeedItem }) {
-  return (
-    <div className="p-4">
-      <div className="flex gap-3">
-        <div className="w-10 h-10 rounded-full bg-gray-200 flex-shrink-0 flex items-center justify-center">
-          <User className="w-5 h-5 text-gray-500" />
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-1 mb-0.5">
-            <span className="text-[14px] font-bold text-gray-900 truncate">{feed.author.name}</span>
-            <span className="text-[12px] text-gray-400 truncate">{feed.author.username}</span>
-            <span className="text-[12px] text-gray-400">· {feed.timestamp}</span>
-          </div>
-          <div className="text-[15px] text-gray-800 whitespace-pre-line mb-3 leading-normal">{feed.content}</div>
-          {feed.tags && (
-            <div className="flex gap-2 flex-wrap mb-3">
-              {feed.tags.map((tag, i) => (
-                <span key={i} className="text-[13px] text-[#0b3d2e]">{tag}</span>
-              ))}
+        <div className="flex gap-3">
+          <div className="flex flex-col items-center">
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center ${feed.type === 'masjid' ? 'bg-emerald-100' : feed.type === 'ustadz' ? 'bg-purple-100' : 'bg-gray-200'}`}>
+              {feed.type === 'masjid' ? (
+                <Landmark className="w-5 h-5 text-[#0b3d2e]" />
+              ) : (
+                <User className="w-5 h-5 text-gray-500" />
+              )}
             </div>
-          )}
-          <FeedActions likes={feed.likes} comments={feed.comments} shares={feed.shares} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function FacebookFeed({ feed }: { feed: FeedItem }) {
-  return (
-    <div className="p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
-          <span className="text-lg">👍</span>
-        </div>
-        <div>
-          <div className="text-[14px] font-bold text-gray-900">{feed.author.name}</div>
-          <div className="text-[11px] text-gray-400">{feed.timestamp} · 🌎</div>
-        </div>
-        <button className="ml-auto text-gray-400">
-          <MoreHorizontal className="w-5 h-5" />
-        </button>
-      </div>
-      <div className="text-[14px] text-gray-800 whitespace-pre-line mb-3 leading-relaxed">{feed.content}</div>
-      <div className="flex items-center justify-between text-[12px] text-gray-400 mb-2 pb-2 border-b border-gray-100">
-        <span>{feed.likes} suka</span>
-        <span>{feed.comments} komentar · {feed.shares} dibagikan</span>
-      </div>
-      <div className="flex justify-around pt-1">
-        <button className="flex items-center gap-1.5 px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-lg">
-          <Smile className="w-4 h-4" />
-          <span className="text-[13px] font-semibold">Suka</span>
-        </button>
-        <button className="flex items-center gap-1.5 px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-lg">
-          <MessageCircle className="w-4 h-4" />
-          <span className="text-[13px] font-semibold">Komentar</span>
-        </button>
-        <button className="flex items-center gap-1.5 px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-lg">
-          <Share2 className="w-4 h-4" />
-          <span className="text-[13px] font-semibold">Bagikan</span>
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function ThreadsFeed({ feed }: { feed: FeedItem }) {
-  return (
-    <div className="p-4">
-      <div className="flex gap-3">
-        <div className="flex flex-col items-center">
-          <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center">
-            <User className="w-5 h-5 text-pink-600" />
+            {feed.repostedBy && (
+              <>
+                <div className="w-0.5 flex-1 bg-gray-200 mt-2" />
+                <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center mt-2">
+                  <Repeat2 className="w-3 h-3 text-gray-500" />
+                </div>
+              </>
+            )}
           </div>
-          <div className="w-0.5 flex-1 bg-gray-200 mt-2" />
-          <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center mt-2">
-            <Smile className="w-3 h-3 text-gray-500" />
-          </div>
-        </div>
-        <div className="flex-1 pb-3">
-          <div className="flex items-center justify-between mb-1">
-            <div>
-              <span className="text-[14px] font-bold text-gray-900">{feed.author.name}</span>
-              <span className="text-[12px] text-gray-400 ml-1">@{feed.author.username}</span>
+
+          <div className="flex-1 pb-3">
+            <div className="flex items-center justify-between mb-1">
+              <div>
+                <span className="text-[14px] font-bold text-gray-900">{feed.author.name}</span>
+                {feed.author.isVerified && (
+                  <span className="text-[12px] text-blue-400 ml-1">✓</span>
+                )}
+                <span className="text-[12px] text-gray-400 ml-1">@{feed.author.username}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-[12px] text-gray-400">{feed.timestamp}</span>
+                <button className="text-gray-400">
+                  <MoreHorizontal className="w-4 h-4" />
+                </button>
+              </div>
             </div>
-            <span className="text-[12px] text-gray-400">{feed.timestamp}</span>
-          </div>
-          <div className="text-[14px] text-gray-800 whitespace-pre-line mb-3 leading-relaxed">{feed.content}</div>
-          {feed.tags && (
-            <div className="flex gap-2 flex-wrap mb-3">
-              {feed.tags.map((tag, i) => (
-                <span key={i} className="text-[13px] text-black">{tag}</span>
-              ))}
+
+            {feed.repostedBy && (
+              <div className="text-[12px] text-gray-400 mb-1">
+                <Repeat2 className="w-3 h-3 inline mr-1" />
+                Reposted by @{feed.repostedBy.username}
+              </div>
+            )}
+
+            <div className="text-[14px] text-gray-800 whitespace-pre-line mb-3 leading-relaxed">{feed.content}</div>
+
+            {feed.tags && (
+              <div className="flex gap-2 flex-wrap mb-3">
+                {feed.tags.map((tag, i) => (
+                  <span key={i} className="text-[13px] text-black font-medium">{tag}</span>
+                ))}
+              </div>
+            )}
+
+            <div className="flex items-center justify-between text-gray-500 pt-2 border-t border-gray-100">
+              <button 
+                onClick={() => setLiked(!liked)}
+                className={`flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-gray-100 ${liked ? 'text-red-500' : ''}`}
+              >
+                <Heart className={`w-4 h-4 ${liked ? 'fill-current' : ''}`} />
+                <span className="text-[12px]">{feed.likes}</span>
+              </button>
+              
+              <button className="flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-gray-100">
+                <MessageCircle className="w-4 h-4" />
+                <span className="text-[12px]">{feed.comments}</span>
+              </button>
+              
+              <button 
+                onClick={() => setReposted(!reposted)}
+                className={`flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-gray-100 ${reposted ? 'text-green-500' : ''}`}
+              >
+                <Repeat2 className={`w-4 h-4 ${reposted ? 'fill-current' : ''}`} />
+                <span className="text-[12px]">{feed.shares}</span>
+              </button>
+              
+              <button className="flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-gray-100">
+                <Share2 className="w-4 h-4" />
+              </button>
             </div>
-          )}
-          <div className="flex items-center gap-6 text-gray-500">
-            <button className="flex items-center gap-1.5">
-              <Heart className="w-4 h-4" />
-              <span className="text-[12px]">{feed.likes}</span>
-            </button>
-            <button className="flex items-center gap-1.5">
-              <MessageCircle className="w-4 h-4" />
-              <span className="text-[12px]">{feed.comments}</span>
-            </button>
-            <button className="flex items-center gap-1.5">
-              <Share2 className="w-4 h-4" />
-              <span className="text-[12px]">{feed.shares}</span>
-            </button>
           </div>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function FeedActions({ likes, comments, shares }: { likes: number; comments: number; shares: number }) {
-  return (
-    <div className="flex items-center justify-between text-gray-400 text-[12px] pt-2 border-t border-gray-100">
-      <div className="flex items-center gap-1">
-        <Heart className="w-4 h-4" />
-        <span>{likes}</span>
-      </div>
-      <div className="flex items-center gap-3">
-        <span className="flex items-center gap-1">
-          <MessageCircle className="w-4 h-4" />
-          {comments}
-        </span>
-        <span className="flex items-center gap-1">
-          <Share2 className="w-4 h-4" />
-          {shares}
-        </span>
       </div>
     </div>
   );

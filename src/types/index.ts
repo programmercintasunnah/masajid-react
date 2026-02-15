@@ -6,9 +6,9 @@ export interface NavItem {
   label: string;
 }
 
-export type FavTab = "all" | "kajian" | "twitter" | "facebook" | "threads";
+export type FavTab = "all" | "masjid" | "ustadz" | "jamaah";
 
-export type FeedType = "kajian" | "twitter" | "facebook" | "threads";
+export type FeedType = "masjid" | "ustadz" | "jamaah";
 
 export interface FeedItem {
   id: string;
@@ -17,6 +17,11 @@ export interface FeedItem {
     name: string;
     avatar?: string;
     username?: string;
+    isVerified?: boolean;
+  };
+  repostedBy?: {
+    name: string;
+    username: string;
   };
   content: string;
   image?: string;
