@@ -2,7 +2,6 @@ import { SectionLabel } from "../components/ui/SectionLabel";
 import { MosqueCard } from "../components/ui/MosqueCard";
 import { KajianCard } from "../components/ui/KajianCard";
 import { Header } from "../components/layout/Header";
-import { Landmark } from "lucide-react";
 
 import quranImg from "../assets/quran.png";
 import manuscriptImg from "../assets/manuscript.png";
@@ -25,10 +24,19 @@ const MENUS: { img: string; label: string; bg: string }[] = [
 ];
 
 const MASJID_NEARBY = [
-  { name: "Masjid Al-Ikhlas", distance: "340m", study: 2, bg: "from-emerald-200 to-teal-300" },
-  { name: "Masjid Ar-Rahman", distance: "800m", study: 5, bg: "from-blue-200 to-blue-300" },
-  { name: "Masjid Nurul Iman", distance: "1.2km", study: 3, bg: "from-amber-200 to-yellow-300" },
+  { name: "Masjid Al-Ikhlas", distance: "340m", study: 2, bg: "from-emerald-200 to-teal-300", youtubeLive: "erjeTV" },
+  { name: "Masjid Ar-Rahman", distance: "800m", study: 5, bg: "from-blue-200 to-blue-300", youtubeLive: "" },
+  { name: "Masjid Nurul Iman", distance: "1.2km", study: 3, bg: "from-amber-200 to-yellow-300", youtubeLive: "" },
 ];
+
+const KAJIAN_LIVE = {
+  mosque: "Masjid Al-Ikhlas",
+  title: "Kajian Kitab Tauhid - Bab Asmaul Husna",
+  ustadz: "Ust. Abdurrahman, Lc.",
+  youtubeId: "dQw4w9WgXcQ",
+  isLive: true,
+  viewers: 124,
+};
 
 const KAJIAN_LIST = [
   { icon: "📚", bg: "bg-emerald-50", title: "Fiqih Puasa Ramadhan — Ust. Abdurrahman", tags: ["free", "online"], date: "Jum'at, 14 Feb", time: "19:30" },
@@ -59,20 +67,32 @@ export function PageHome() {
           {MASJID_NEARBY.map((m, i) => <MosqueCard key={i} item={m} />)}
         </div>
 
-        <SectionLabel>Infaq Terkini</SectionLabel>
-        <div className="mx-5 mb-2.5 rounded-2xl p-4 flex justify-between items-center relative overflow-hidden" style={{ background: "linear-gradient(130deg,#0b3d2e,#1a6b4a)" }}>
-          <div className="absolute right-4 bottom-[-6px] opacity-10">
-            <Landmark className="w-[50px] h-[50px] text-white" />
+        <SectionLabel>Kajian Live</SectionLabel>
+        <div className="mx-5 mb-4 rounded-2xl overflow-hidden bg-white shadow-sm border border-black/[0.04]">
+          <div className="relative pt-[56.25%] bg-black">
+            <iframe
+              className="absolute top-0 left-0 w-full h-full"
+              src={`https://www.youtube.com/embed/${KAJIAN_LIVE.youtubeId}?autoplay=1&mute=1`}
+              title="Kajian Live"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+            {KAJIAN_LIVE.isLive && (
+              <div className="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded flex items-center gap-1">
+                <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                LIVE
+              </div>
+            )}
           </div>
-          <div className="relative z-10">
-            <div className="text-[13px] font-bold text-white mb-1">Pembangunan Masjid At-Taqwa</div>
-            <div className="text-[10px] text-white/60 mb-2">Bantu selesaikan pembangunan lantai 2</div>
-            <div className="w-40 h-[3px] bg-white/20 rounded-full mb-1.5">
-              <div className="h-full w-[68%] bg-amber-300 rounded-full" />
+          <div className="p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-[11px] font-bold text-[#0b3d2e]">{KAJIAN_LIVE.mosque}</span>
+              <span className="text-[10px] text-gray-400">•</span>
+              <span className="text-[10px] text-gray-400">{KAJIAN_LIVE.viewers} penonton</span>
             </div>
-            <div className="text-[9px] text-amber-300">68% · Rp 340jt dari Rp 500jt</div>
+            <div className="text-[14px] font-bold text-gray-900 mb-1">{KAJIAN_LIVE.title}</div>
+            <div className="text-[12px] text-gray-500">{KAJIAN_LIVE.ustadz}</div>
           </div>
-          <button className="relative z-10 bg-amber-500 text-white text-[12px] font-bold px-4 py-2 rounded-xl">Infaq</button>
         </div>
 
         <SectionLabel extra="Lihat semua →">Kajian Mendatang</SectionLabel>

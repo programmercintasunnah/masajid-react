@@ -16,6 +16,7 @@ export interface MasjidNearby {
   distance: string;
   study: number;
   bg: string;
+  youtubeLive?: string;
 }
 
 export interface Kajian {
