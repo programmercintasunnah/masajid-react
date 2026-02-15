@@ -3,6 +3,12 @@ export const API_BASE_URL = "https://api.myquran.com/v1";
 export const CITY_CODE = "0412"; // Pekanbaru
 export const CITY_NAME = "Kota Pekanbaru";
 
+export const DESKTOP_ROUTES = ["/login", "/register", "/forgot-password"];
+
+export const IS_UI_MOBILE = (pathname: string) => {
+  return !DESKTOP_ROUTES.some(route => pathname.startsWith(route));
+};
+
 export const DEFAULT_PRAYER_TIMES = {
   Fajr: "05:10",
   Sunrise: "06:22",
