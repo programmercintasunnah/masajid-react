@@ -8,7 +8,7 @@ interface MosqueCardProps {
 
 export function MosqueCard({ item }: MosqueCardProps) {
   return (
-    <div className="min-w-[150px] bg-white rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] flex-shrink-0 cursor-pointer hover:-translate-y-0.5 transition-transform lg:min-w-0 lg:flex-1">
+    <div className="min-w-[150px] bg-white rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] flex-shrink-0 cursor-pointer hover:-translate-y-0.5 transition-transform lg:min-w-[240px]">
       <div className={`h-20 lg:h-28 bg-gradient-to-br ${item.bg} flex items-center justify-center relative`}>
         <img src={mosqueImg} alt="Mosque" className="w-10 h-10 lg:w-14 lg:h-14" />
         <span className="absolute top-2 right-2 bg-emerald-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full flex items-center gap-0.5 lg:text-xs">

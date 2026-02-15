@@ -27,6 +27,8 @@ const MASJID_NEARBY = [
   { name: "Masjid Al-Hijrah", distance: "340m", study: 2, bg: "from-emerald-200 to-teal-300", youtubeLive: "erjeTV" },
   { name: "Masjid Abu Darda", distance: "800m", study: 5, bg: "from-blue-200 to-blue-300", youtubeLive: "" },
   { name: "Masjid Umar bin Khattab", distance: "1.2km", study: 3, bg: "from-amber-200 to-yellow-300", youtubeLive: "" },
+  { name: "Masjid Al-Mansur", distance: "2.1km", study: 4, bg: "from-purple-200 to-purple-300", youtubeLive: "" },
+  { name: "Masjid Baiturrahman", distance: "3.5km", study: 6, bg: "from-pink-200 to-pink-300", youtubeLive: "" },
 ];
 
 const KAJIAN_LIVE = [
@@ -68,14 +70,14 @@ export function PageHome() {
         </div>
 
         <SectionLabel extra="Lihat semua →">Masjid Terdekat</SectionLabel>
-        <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-1 lg:px-0 lg:grid lg:grid-cols-3 lg:gap-4 lg:overflow-visible">
+        <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-1 lg:overflow-x-auto">
           {MASJID_NEARBY.map((m, i) => <MosqueCard key={i} item={m} />)}
         </div>
 
         <SectionLabel extra="Lihat semua →">Kajian Live</SectionLabel>
-        <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-1 lg:px-0 lg:grid lg:grid-cols-5 lg:gap-4 lg:overflow-visible">
+        <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-1 lg:overflow-x-auto">
           {KAJIAN_LIVE.map((k) => (
-            <div key={k.id} className="min-w-[240px] lg:min-w-0 bg-white rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] flex-shrink-0 cursor-pointer">
+            <div key={k.id} className="min-w-[240px] lg:min-w-[280px] bg-white rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] flex-shrink-0 cursor-pointer">
               <div className="relative pt-[56.25%] bg-black">
                 {k.youtubeId ? (
                   <iframe
