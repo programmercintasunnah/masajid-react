@@ -206,7 +206,7 @@ function ThreadCard({ feed }: { feed: FeedItem }) {
           <img 
             src={feed.image || feed.images?.[0]} 
             alt="Post" 
-            className="w-full h-48 sm:h-56 object-cover" 
+            className="w-full h-auto" 
           />
           {isMasjid && (
             <div className="absolute top-2 left-2 bg-[#0b3d2e] text-white text-[10px] font-bold px-2 py-1 rounded-lg flex items-center gap-1">
