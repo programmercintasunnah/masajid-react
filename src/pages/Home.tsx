@@ -35,6 +35,11 @@ const KAJIAN_LIVE = [
   { id: 3, mosque: "Masjid Al-Ikhsan", title: "Fiqih Shalat", ustadz: "Ust. Yazid", youtubeId: "", isLive: false, viewers: 0, bg: "from-blue-200 to-blue-300" },
 ];
 
+const MASJID_SUCIPRAY = [
+  { id: 1, name: "Masjidil Haram", youtubeId: "2i8kfZcW8Eo", isLive: true, viewers: 15420 },
+  { id: 2, name: "Masjid Nabawi", youtubeId: "2i8kfZcW8Eo", isLive: true, viewers: 8750 },
+];
+
 const KAJIAN_LIST = [
   { icon: "📚", bg: "bg-emerald-50", title: "Fiqih Puasa Ramadhan — Ust. Abdurrahman", tags: ["free", "online"], date: "Jum'at, 14 Feb", time: "19:30" },
   { icon: "🎓", bg: "bg-amber-50", title: "Dauroh Aqidah Intensif 3 Hari", tags: ["paid", "dauroh", "quiz"], date: "15–17 Feb", harga: "Rp 150k" },
@@ -103,6 +108,37 @@ export function PageHome() {
 
         <SectionLabel extra="Lihat semua →">Kajian Mendatang</SectionLabel>
         {KAJIAN_LIST.map((k, i) => <KajianCard key={i} item={k} />)}
+
+        <SectionLabel>Kajian Masjid Suci</SectionLabel>
+        <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-1">
+          {MASJID_SUCIPRAY.map((m) => (
+            <div key={m.id} className="min-w-[240px] bg-white rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] flex-shrink-0 cursor-pointer">
+              <div className="relative pt-[56.25%] bg-black">
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full"
+                  src={`https://www.youtube.com/embed/${m.youtubeId}`}
+                  title={m.name}
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+                {m.isLive && (
+                  <div className="absolute top-2 left-2 bg-red-600 text-white text-[9px] font-bold px-2 py-0.5 rounded flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                    LIVE
+                  </div>
+                )}
+              </div>
+              <div className="p-2.5">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-[10px] font-bold text-[#0b3d2e]">{m.name}</span>
+                  {m.isLive && <span className="text-[9px] text-gray-400">• {m.viewers.toLocaleString()} penonton</span>}
+                </div>
+                <div className="text-[10px] text-gray-500">Live Streaming</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
         <div className="h-6" />
       </div>
     </>
