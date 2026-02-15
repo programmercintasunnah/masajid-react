@@ -207,14 +207,14 @@ export function PageFavorites() {
           <Heart className="w-5 h-5" />
           Favorit
         </h2>
-        <p className="text-[12px] text-white/55">Update terbaru dari Masjid & Ustadz</p>
+        <p className="text-[12px] text-white/55">Update terbaru dari Masjid & Asatidz</p>
       </div>
 
       <div className="flex bg-white border-b border-black/[0.07] flex-shrink-0 overflow-x-auto">
         {[
           { id: "all" as FavTab, label: "Semua" },
           { id: "masjid" as FavTab, label: "Masjid" },
-          { id: "ustadz" as FavTab, label: "Ustadz" },
+          { id: "ustadz" as FavTab, label: "Asatidz" },
           { id: "jamaah" as FavTab, label: "Jamaah" },
         ].map(t => (
           <button
