@@ -6,7 +6,7 @@ export interface NavItem {
   label: string;
 }
 
-export type FavTab = "all" | "masjid" | "ustadz" | "jamaah";
+export type FavTab = "all" | "masjid" | "asatidz" | "jamaah";
 
 export type FeedType = "masjid" | "ustadz" | "jamaah";
 

@@ -195,7 +195,7 @@ export function PageFavorites() {
   const filteredFeeds = feeds.filter(f => {
     if (tab === "all") return true;
     if (tab === "masjid") return f.type === "masjid";
-    if (tab === "ustadz") return f.type === "masjid" && f.mentionedUstadz && f.mentionedUstadz.length > 0;
+    if (tab === "asatidz") return f.type === "masjid" && f.mentionedUstadz && f.mentionedUstadz.length > 0;
     if (tab === "jamaah") return f.type === "jamaah";
     return false;
   });
@@ -214,7 +214,7 @@ export function PageFavorites() {
         {[
           { id: "all" as FavTab, label: "Semua" },
           { id: "masjid" as FavTab, label: "Masjid" },
-          { id: "ustadz" as FavTab, label: "Asatidz" },
+          { id: "asatidz" as FavTab, label: "Asatidz" },
           { id: "jamaah" as FavTab, label: "Jamaah" },
         ].map(t => (
           <button
