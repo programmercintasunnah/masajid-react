@@ -33,9 +33,6 @@ Barakallahufiikum`,
     shares: 3,
     timestamp: "2 jam yang lalu",
     mentionedUstadz: ["Ustadz Ade Agustian"],
-    suggestedToFollow: [
-      { name: "Ustadz Ade Agustian", username: "ust_adagustian", type: "ustadz" },
-    ],
   },
   {
     id: "2",
@@ -103,11 +100,6 @@ Jangan lewatkan kesempatan emas untuk menimba ilmu agama langsung di Masjid Raud
     shares: 12,
     timestamp: "1 hari yang lalu",
     mentionedUstadz: ["Ustadz Samsurijal", "Ustadz Maududi Abdullah", "Ustadz Khailid Abdus Shamad"],
-    suggestedToFollow: [
-      { name: "Ustadz Samsurijal", username: "ust_samsurijal", type: "ustadz" },
-      { name: "Ustadz Maududi Abdullah", username: "ust_maududi", type: "ustadz" },
-      { name: "Ustadz Khailid Abdus Shamad", username: "ust_khailid", type: "ustadz" },
-    ],
   },
   {
     id: "4",
@@ -151,9 +143,6 @@ Jangan lewatkan kesempatan emas untuk menimba ilmu agama langsung di Masjid Raud
     comments: 1,
     shares: 0,
     timestamp: "1 hari yang lalu",
-    suggestedToFollow: [
-      { name: "Masjid Raudhatul Jannah", username: "masjid_rj", type: "masjid" },
-    ],
   },
   {
     id: "8",
@@ -165,9 +154,28 @@ Jangan lewatkan kesempatan emas untuk menimba ilmu agama langsung di Masjid Raud
     comments: 3,
     shares: 2,
     timestamp: "2 hari yang lalu",
-    suggestedToFollow: [
-      { name: "Masjid Al-Ikhlas", username: "masjid_alikhlas", type: "masjid" },
-    ],
+  },
+  {
+    id: "9",
+    type: "jamaah",
+    author: { name: "Siti Aminah", username: "siti_aminah" },
+    repostedBy: { name: "Masjid An-Nur", username: "masjid_annur" },
+    content: "Kajian yesterday luar biasa! Jazakallah ustadz 📚",
+    likes: 5,
+    comments: 1,
+    shares: 0,
+    timestamp: "4 jam yang lalu",
+  },
+  {
+    id: "10",
+    type: "jamaah",
+    author: { name: "Budiman", username: "budiman_s" },
+    repostedBy: { name: "Ustadz Yazid", username: "ust_yazid" },
+    content: "Ilmu yang sangat bermanfaat. Thank you ustadz! 🙏",
+    likes: 3,
+    comments: 0,
+    shares: 0,
+    timestamp: "5 jam yang lalu",
   },
 ];
 
