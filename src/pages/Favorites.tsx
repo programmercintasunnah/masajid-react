@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { FavTab, FeedItem } from "../types";
-import { Heart, MessageCircle, Repeat2, Share2, MoreHorizontal, User, Landmark } from "lucide-react";
+import { Heart, Repeat2, Share2, MoreHorizontal, User, Landmark } from "lucide-react";
 
 const FEED_DATA: FeedItem[] = [
   {
@@ -279,18 +279,13 @@ function ThreadCard({ feed }: { feed: FeedItem }) {
               </div>
             )}
 
-            <div className="flex items-center justify-between text-gray-500 pt-2 border-t border-gray-100">
+            <div className="flex items-center gap-1 text-gray-500 pt-2 border-t border-gray-100">
               <button 
                 onClick={() => setLiked(!liked)}
                 className={`flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-gray-100 ${liked ? 'text-red-500' : ''}`}
               >
                 <Heart className={`w-4 h-4 ${liked ? 'fill-current' : ''}`} />
                 <span className="text-[12px]">{feed.likes}</span>
-              </button>
-              
-              <button className="flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-gray-100">
-                <MessageCircle className="w-4 h-4" />
-                <span className="text-[12px]">{feed.comments}</span>
               </button>
               
               <button 
