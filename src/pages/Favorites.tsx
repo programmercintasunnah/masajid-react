@@ -201,22 +201,6 @@ function ThreadCard({ feed }: { feed: FeedItem }) {
 
   return (
     <div className="mx-0 sm:mx-5 my-3 bg-white rounded-none sm:rounded-2xl shadow-sm border-b sm:border border-black/[0.04]">
-      {hasImage && (
-        <div className="relative">
-          <img 
-            src={feed.image || feed.images?.[0]} 
-            alt="Post" 
-            className="w-full h-auto" 
-          />
-          {isMasjid && (
-            <div className="absolute top-2 left-2 bg-[#0b3d2e] text-white text-[10px] font-bold px-2 py-1 rounded-lg flex items-center gap-1">
-              <Landmark className="w-3 h-3" />
-              Masjid
-            </div>
-          )}
-        </div>
-      )}
-
       <div className="p-4">
         <div className="flex gap-3">
           <div className="flex flex-col items-center">
@@ -266,6 +250,16 @@ function ThreadCard({ feed }: { feed: FeedItem }) {
                 🎙 Mentioned: {feed.mentionedUstadz.map((ustadz, i) => (
                   <span key={i} className="font-medium">@{ustadz}</span>
                 ))}
+              </div>
+            )}
+
+            {hasImage && (
+              <div className="relative mb-3">
+                <img 
+                  src={feed.image || feed.images?.[0]} 
+                  alt="Post" 
+                  className="w-full h-auto rounded-xl" 
+                />
               </div>
             )}
 
