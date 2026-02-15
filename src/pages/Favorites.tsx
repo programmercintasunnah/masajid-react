@@ -195,7 +195,14 @@ export function PageFavorites() {
   const filteredFeeds = feeds.filter(f => {
     if (tab === "all") return true;
     if (tab === "masjid") return f.type === "masjid";
-    if (tab === "asatidz") return f.type === "masjid" && f.mentionedUstadz && f.mentionedUstadz.length > 0;
+    if (tab === "asatidz") {
+      if (f.type !== "masjid" || !f.mentionedUstadz || f.mentionedUstadz.length === 0) return false;
+      const hasFollowedUstadz = f.mentionedUstadz.some(ustadzName => {
+        const ustadzUsername = `ust_${ustadzName.toLowerCase().replace(/\s+/g, "_")}`;
+        return followedUsers.includes(ustadzUsername);
+      });
+      return hasFollowedUstadz;
+    }
     if (tab === "jamaah") return f.type === "jamaah";
     return false;
   });
