@@ -1,6 +1,5 @@
 import { SectionLabel } from "../components/ui/SectionLabel";
 import { MosqueCard } from "../components/ui/MosqueCard";
-import { KajianCard } from "../components/ui/KajianCard";
 import { Header } from "../components/layout/Header";
 
 import quranImg from "../assets/quran.png";
@@ -9,8 +8,8 @@ import studyImg from "../assets/study.png";
 import prayImg from "../assets/pray.png";
 import infaqImg from "../assets/infaq.png";
 import iqroImg from "../assets/iqro.png";
-import mosqueImg from "../assets/prophets-mosque.png";
 import moreImg from "../assets/more.png";
+import quizImg from "../assets/quiz.png";
 
 const MENUS: { img: string; label: string; bg: string }[] = [
   { img: quranImg, label: "Al-Qur'an", bg: "from-emerald-100 to-teal-200" },
@@ -19,7 +18,7 @@ const MENUS: { img: string; label: string; bg: string }[] = [
   { img: iqroImg, label: "Tahsin", bg: "from-pink-100 to-pink-200" },
   { img: prayImg, label: "Dzikir & Doa", bg: "from-purple-100 to-purple-200" },
   { img: infaqImg, label: "Infaq", bg: "from-teal-100 to-emerald-200" },
-  { img: mosqueImg, label: "Masjid", bg: "from-yellow-100 to-amber-200" },
+  { img: quizImg, label: "Kuis", bg: "from-orange-100 to-orange-200" },
   { img: moreImg, label: "Lainnya", bg: "from-slate-100 to-slate-200" },
 ];
 
@@ -52,14 +51,6 @@ const VIDEO_SHORTS = [
   { id: 4, title: "Niat Puasa: Ini yang Benar!", author: "Ust. Khalid", youtubeId: "zyUU-GPYWeo" },
   { id: 5, title: "Doa Agar Dimudahkan Rezeki", author: "Ust. El Khuzaimah", youtubeId: "13aBa0jI090" },
   { id: 6, title: "Keutamaan Memiliki Anak Perempuan", author: "Ust. Al Muzani", youtubeId: "Fvcd3QrsAUE" },
-];
-
-const KAJIAN_LIST = [
-  { icon: "📚", bg: "bg-emerald-50", title: "Fiqih Puasa Ramadhan — Ust. Abdurrahman", tags: ["free", "online"], date: "Jum'at, 14 Feb", time: "19:30" },
-  { icon: "🎓", bg: "bg-amber-50", title: "Dauroh Aqidah Intensif 3 Hari", tags: ["paid", "dauroh", "quiz"], date: "15–17 Feb", harga: "Rp 150k" },
-  { icon: "🧒", bg: "bg-pink-50", title: "Tahsin Al-Qur'an Anak (Usia 6–12)", tags: ["kids", "tahsin"], date: "Sabtu, 15 Feb", time: "08:00" },
-  { icon: "📖", bg: "bg-blue-50", title: "Kajian Tafsir Al-Baqarah", tags: ["free"], date: "Minggu, 16 Feb", time: "16:00" },
-  { icon: "🕌", bg: "bg-purple-50", title: "Kajian Sirah Nabawiyah", tags: ["free", "online"], date: "Senin, 17 Feb", time: "20:00" },
 ];
 
 export function PageHome() {
@@ -121,9 +112,6 @@ export function PageHome() {
             </div>
           ))}
         </div>
-
-        <SectionLabel extra="Lihat semua →">Kajian Mendatang</SectionLabel>
-        {KAJIAN_LIST.map((k, i) => <KajianCard key={i} item={k} />)}
 
         <SectionLabel extra="Lihat semua →">Video Pendek</SectionLabel>
         <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-1 lg:overflow-x-auto">
