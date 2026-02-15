@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { FavTab, FeedItem } from "../types";
-import { Heart, Repeat2, Share2, MoreHorizontal, User, Landmark } from "lucide-react";
+import { Heart, Repeat2, Share2, MoreHorizontal, User, Landmark, Check } from "lucide-react";
 
 const FEED_DATA: FeedItem[] = [
   {
@@ -195,6 +195,7 @@ export function PageFavorites() {
 function ThreadCard({ feed }: { feed: FeedItem }) {
   const [liked, setLiked] = useState(false);
   const [reposted, setReposted] = useState(false);
+  const [followed, setFollowed] = useState(false);
 
   const hasImage = feed.image || (feed.images && feed.images.length > 0);
   const isMasjid = feed.type === "masjid";
@@ -232,6 +233,23 @@ function ThreadCard({ feed }: { feed: FeedItem }) {
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[12px] text-gray-400">{feed.timestamp}</span>
+                <button
+                  onClick={() => setFollowed(!followed)}
+                  className={`text-[11px] font-bold px-3 py-1 rounded-full transition-colors ${
+                    followed 
+                      ? "bg-gray-100 text-gray-600 border border-gray-300" 
+                      : "bg-[#0b3d2e] text-white hover:bg-[#0a3528]"
+                  }`}
+                >
+                  {followed ? (
+                    <span className="flex items-center gap-1">
+                      <Check className="w-3 h-3" />
+                      Mengikuti
+                    </span>
+                  ) : (
+                    "Ikuti"
+                  )}
+                </button>
                 <button className="text-gray-400">
                   <MoreHorizontal className="w-4 h-4" />
                 </button>
