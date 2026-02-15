@@ -29,14 +29,11 @@ const MASJID_NEARBY = [
   { name: "Masjid Nurul Iman", distance: "1.2km", study: 3, bg: "from-amber-200 to-yellow-300", youtubeLive: "" },
 ];
 
-const KAJIAN_LIVE = {
-  mosque: "Masjid Al-Ikhlas",
-  title: "Kajian Kitab Tauhid - Bab Asmaul Husna",
-  ustadz: "Ust. Abdurrahman, Lc.",
-  youtubeId: "dQw4w9WgXcQ",
-  isLive: true,
-  viewers: 124,
-};
+const KAJIAN_LIVE = [
+  { id: 1, mosque: "Masjid Al-Ikhlas", title: "Kajian Kitab Tauhid", ustadz: "Ust. Abdurrahman, Lc.", youtubeId: "dQw4w9WgXcQ", isLive: true, viewers: 124, bg: "from-emerald-200 to-teal-300" },
+  { id: 2, mosque: "Masjid Nurul Iman", title: "Tafsir Al-Quran", ustadz: "Ust. Ahmad", youtubeId: "", isLive: true, viewers: 45, bg: "from-amber-200 to-yellow-300" },
+  { id: 3, mosque: "Masjid Al-Ikhsan", title: "Fiqih Shalat", ustadz: "Ust. Yazid", youtubeId: "", isLive: false, viewers: 0, bg: "from-blue-200 to-blue-300" },
+];
 
 const KAJIAN_LIST = [
   { icon: "📚", bg: "bg-emerald-50", title: "Fiqih Puasa Ramadhan — Ust. Abdurrahman", tags: ["free", "online"], date: "Jum'at, 14 Feb", time: "19:30" },
@@ -68,31 +65,40 @@ export function PageHome() {
         </div>
 
         <SectionLabel>Kajian Live</SectionLabel>
-        <div className="mx-5 mb-4 rounded-2xl overflow-hidden bg-white shadow-sm border border-black/[0.04]">
-          <div className="relative pt-[56.25%] bg-black">
-            <iframe
-              className="absolute top-0 left-0 w-full h-full"
-              src={`https://www.youtube.com/embed/${KAJIAN_LIVE.youtubeId}?autoplay=1&mute=1`}
-              title="Kajian Live"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-            {KAJIAN_LIVE.isLive && (
-              <div className="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded flex items-center gap-1">
-                <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                LIVE
+        <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-1">
+          {KAJIAN_LIVE.map((k) => (
+            <div key={k.id} className="min-w-[200px] bg-white rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] flex-shrink-0 cursor-pointer">
+              <div className={`h-24 bg-gradient-to-br ${k.bg} flex items-center justify-center relative`}>
+                {k.youtubeId ? (
+                  <iframe
+                    className="w-full h-full"
+                    src={`https://www.youtube.com/embed/${k.youtubeId}`}
+                    title={k.title}
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-black/20">
+                    <span className="text-white/80 text-xs font-medium px-2 text-center">Tidak ada stream</span>
+                  </div>
+                )}
+                {k.isLive && k.youtubeId && (
+                  <div className="absolute top-2 left-2 bg-red-600 text-white text-[9px] font-bold px-2 py-0.5 rounded flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                    LIVE
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-          <div className="p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-[11px] font-bold text-[#0b3d2e]">{KAJIAN_LIVE.mosque}</span>
-              <span className="text-[10px] text-gray-400">•</span>
-              <span className="text-[10px] text-gray-400">{KAJIAN_LIVE.viewers} penonton</span>
+              <div className="p-2.5">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-[10px] font-bold text-[#0b3d2e]">{k.mosque}</span>
+                  {k.isLive && <span className="text-[9px] text-gray-400">• {k.viewers} penonton</span>}
+                </div>
+                <div className="text-[11px] font-bold text-gray-900 mb-0.5 truncate">{k.title}</div>
+                <div className="text-[10px] text-gray-500">{k.ustadz}</div>
+              </div>
             </div>
-            <div className="text-[14px] font-bold text-gray-900 mb-1">{KAJIAN_LIVE.title}</div>
-            <div className="text-[12px] text-gray-500">{KAJIAN_LIVE.ustadz}</div>
-          </div>
+          ))}
         </div>
 
         <SectionLabel extra="Lihat semua →">Kajian Mendatang</SectionLabel>
