@@ -107,18 +107,18 @@ export function Header({ userName, userPhoto }: HeaderProps) {
       <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 85% 15%,rgba(201,148,58,0.2) 0%,transparent 55%)" }} />
 
       {/* Header Content */}
-      <div className="relative z-10 flex items-center justify-between px-5 pt-6 pb-3">
+      <div className="relative z-10 flex items-center justify-between px-5 pt-6 pb-3 lg:px-8 lg:pt-10 lg:pb-5">
         <div className="flex flex-col leading-none gap-0.5">
           <div className="flex items-center gap-1.5">
             <img
               src={masajidLogo}
               alt="MasajidApp"
-              className="h-8 w-auto object-contain"
+              className="h-8 w-auto object-contain lg:h-12"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = 'none';
                 const parent = (e.target as HTMLImageElement).parentElement;
                 if (parent) {
-                  parent.innerHTML = `<span class="text-[14px] font-black px-2 py-0.5 rounded-md" style="background:#fff;color:#0b3d2e">مساجد</span><span class="text-[14px] font-black text-white">App</span>`;
+                  parent.innerHTML = `<span class="text-[14px] font-black px-2 py-0.5 rounded-md lg:text-xl" style="background:#fff;color:#0b3d2e">مساجد</span><span class="text-[14px] font-black text-white lg:text-xl">App</span>`;
                 }
               }}
             />
@@ -126,15 +126,15 @@ export function Header({ userName, userPhoto }: HeaderProps) {
         </div>
 
         <div className="flex items-center gap-2">
-          <button className="relative w-8 h-8 rounded-xl flex items-center justify-center transition-all active:scale-90" style={{ background: "rgba(255,255,255,0.13)", border: "1px solid rgba(255,255,255,0.18)" }}>
-            <Bell className="w-4 h-4 text-white" />
-            <span className="absolute top-[5px] right-[5px] w-[7px] h-[7px] bg-red-500 rounded-full" style={{ border: "1.5px solid #1a6b4a" }} />
+          <button className="relative w-8 h-8 rounded-xl flex items-center justify-center transition-all active:scale-90 lg:w-10 lg:h-10" style={{ background: "rgba(255,255,255,0.13)", border: "1px solid rgba(255,255,255,0.18)" }}>
+            <Bell className="w-4 h-4 text-white lg:w-5 lg:h-5" />
+            <span className="absolute top-[5px] right-[5px] w-[7px] h-[7px] bg-red-500 rounded-full lg:w-2 lg:h-2" style={{ border: "1.5px solid #1a6b4a" }} />
           </button>
-          <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0" style={{ background: "rgba(255,255,255,0.18)", border: "2px solid rgba(255,255,255,0.4)" }}>
+          <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 lg:w-12 lg:h-12" style={{ background: "rgba(255,255,255,0.18)", border: "2px solid rgba(255,255,255,0.4)" }}>
             {userPhoto ? (
               <img src={userPhoto} alt="Profile" className="w-full h-full object-cover" />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-white text-[13px] font-bold">
+              <div className="w-full h-full flex items-center justify-center text-white text-[13px] font-bold lg:text-lg">
                 {userName?.charAt(0).toUpperCase() || "U"}
               </div>
             )}
@@ -143,8 +143,8 @@ export function Header({ userName, userPhoto }: HeaderProps) {
       </div>
 
       {/* Prayer Time Info */}
-      <div className="relative z-10 px-5 pb-5">
-        <div className="flex justify-between text-[12px] text-white/60 font-medium mb-3">
+      <div className="relative z-10 px-5 pb-5 lg:px-8 lg:pb-8">
+        <div className="flex justify-between text-[12px] text-white/60 font-medium mb-3 lg:text-base">
           <span>{gregorian}</span>
           <span>{hijriDate.day} {hijriDate.month} {hijriDate.year}H</span>
         </div>
@@ -155,28 +155,28 @@ export function Header({ userName, userPhoto }: HeaderProps) {
           </div>
         ) : (
           <>
-            <div className="text-center mb-1.5">
-              <span className="text-[64px] font-black text-white leading-none tracking-[-3px]" style={{ textShadow: "0 4px 20px rgba(0,0,0,0.3)" }}>{hours}:{minutes}</span>
+            <div className="text-center mb-1.5 lg:mb-3">
+              <span className="text-[64px] font-black text-white leading-none tracking-[-3px] lg:text-[96px]" style={{ textShadow: "0 4px 20px rgba(0,0,0,0.3)" }}>{hours}:{minutes}</span>
             </div>
             {hasValidLocation ? (
-              <div className="text-center text-[12px] text-white/60 mb-4">
+              <div className="text-center text-[12px] text-white/60 mb-4 lg:text-base">
                 ± {formatCountdown(nextPrayer!.minutesLeft)} lagi menuju waktu <strong className="text-amber-300">{nextPrayer!.name}</strong>
               </div>
             ) : (
-              <div className="text-center text-[12px] text-white/60 mb-4">
+              <div className="text-center text-[12px] text-white/60 mb-4 lg:text-base">
                 Aktifkan lokasi untuk melihat jadwal solat
               </div>
             )}
-            <div className="flex justify-between items-center bg-black/20 backdrop-blur-sm rounded-2xl px-3 py-2.5 border border-white/10">
+            <div className="flex justify-between items-center bg-black/20 backdrop-blur-sm rounded-2xl px-3 py-2.5 border border-white/10 lg:px-6 lg:py-4">
               {prayerList.map((p, i) => {
                 const isActive = nextPrayer?.name === p.name;
                 const Icon = prayerIcons[p.name];
                 const isDash = p.time === "-";
                 return (
                   <div key={i} className={`flex flex-col items-center gap-1 flex-1 ${i > 0 ? "border-l border-white/10" : ""}`}>
-                    <Icon className={`w-[17px] h-[17px] ${isActive ? "text-amber-300" : "text-white/70"}`} />
-                    <span className={`text-[10px] font-medium ${isActive ? "text-amber-300" : "text-white/55"}`}>{p.name}</span>
-                    <span className={`text-[12px] font-bold ${isActive ? "text-amber-300" : isDash ? "text-white/30" : "text-white"}`}>{p.time}</span>
+                    <Icon className={`w-[17px] h-[17px] lg:w-6 lg:h-6 ${isActive ? "text-amber-300" : "text-white/70"}`} />
+                    <span className={`text-[10px] font-medium lg:text-sm ${isActive ? "text-amber-300" : "text-white/55"}`}>{p.name}</span>
+                    <span className={`text-[12px] font-bold lg:text-base ${isActive ? "text-amber-300" : isDash ? "text-white/30" : "text-white"}`}>{p.time}</span>
                   </div>
                 );
               })}
@@ -184,7 +184,7 @@ export function Header({ userName, userPhoto }: HeaderProps) {
           </>
         )}
       </div>
-      <div className="text-[11px] text-white/50 px-5 pt-1 pb-1 flex-shrink-0" style={{ background: "linear-gradient(160deg,#0b3d2e,#1a6b4a 60%)" }}>
+      <div className="text-[11px] text-white/50 px-5 pt-1 pb-1 flex-shrink-0 lg:text-sm lg:px-8" style={{ background: "linear-gradient(160deg,#0b3d2e,#1a6b4a 60%)" }}>
         {renderLocation()}
       </div>
     </div>
