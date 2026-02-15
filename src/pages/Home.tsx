@@ -1,5 +1,5 @@
 import { SectionLabel } from "../components/ui/SectionLabel";
-import { MasjidCard } from "../components/ui/MasjidCard";
+import { MosqueCard } from "../components/ui/MosqueCard";
 import { KajianCard } from "../components/ui/KajianCard";
 import { Header } from "../components/layout/Header";
 import { Landmark } from "lucide-react";
@@ -39,7 +39,7 @@ const KAJIAN_LIST = [
 export function PageHome() {
   return (
     <>
-      <Header userName="Ahmad Fauzan" />
+      <Header userName="Zakie Alelm" />
 
       <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-none bg-[#f5f7f5]">
         <SectionLabel>Menu</SectionLabel>
@@ -56,7 +56,7 @@ export function PageHome() {
 
         <SectionLabel extra="Lihat semua →">Masjid Terdekat</SectionLabel>
         <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-1">
-          {MASJID_NEARBY.map((m, i) => <MasjidCard key={i} item={m} />)}
+          {MASJID_NEARBY.map((m, i) => <MosqueCard key={i} item={m} />)}
         </div>
 
         <SectionLabel>Infaq Terkini</SectionLabel>
