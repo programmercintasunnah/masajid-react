@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { FavTab, FeedItem } from "../types";
-import { Heart, Repeat2, Share2, MoreHorizontal, User, Landmark, Check } from "lucide-react";
+import { Heart, Repeat2, Share2, MoreHorizontal, User, Landmark } from "lucide-react";
 
 const FOLLOWED_USERS = ["masjid_rj", "masjid_alikhlas", "ust_adagustian", "ahmad_fauzan"];
 
@@ -245,34 +245,6 @@ function ThreadCard({ feed, isFollowed, onFollow }: {
   const hasImage = feed.image || (feed.images && feed.images.length > 0);
   const isMasjid = feed.type === "masjid";
 
-  const suggestedToFollow = (() => {
-    const suggestions: { name: string; username: string; type: "masjid" | "ustadz" }[] = [];
-    
-    if (feed.repostedBy && !isFollowed(feed.repostedBy.username)) {
-      const type = feed.repostedBy.username.includes("masjid") ? "masjid" : "ustadz";
-      suggestions.push({
-        name: feed.repostedBy.name,
-        username: feed.repostedBy.username,
-        type,
-      });
-    }
-    
-    if (feed.mentionedUstadz && feed.mentionedUstadz.length > 0) {
-      feed.mentionedUstadz.forEach((ustadzName) => {
-        const ustadzUsername = `ust_${ustadzName.toLowerCase().replace(/\s+/g, "_")}`;
-        if (!isFollowed(ustadzUsername)) {
-          suggestions.push({
-            name: ustadzName,
-            username: ustadzUsername,
-            type: "ustadz",
-          });
-        }
-      });
-    }
-    
-    return suggestions;
-  })();
-
   return (
     <div className="mx-0 sm:mx-5 my-3 bg-white rounded-none sm:rounded-2xl shadow-sm border-b sm:border border-black/[0.04]">
       <div className="p-4">
@@ -313,17 +285,41 @@ function ThreadCard({ feed, isFollowed, onFollow }: {
             </div>
 
             {feed.repostedBy && (
-              <div className="text-[12px] text-gray-400 mb-1">
-                <Repeat2 className="w-3 h-3 inline mr-1" />
-                Reposted by @{feed.repostedBy.username}
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-[12px] text-gray-400">
+                  <Repeat2 className="w-3 h-3 inline mr-1" />
+                  Reposted by @{feed.repostedBy.username}
+                </span>
+                {!isFollowed(feed.repostedBy.username) && (
+                  <button
+                    onClick={() => onFollow(feed.repostedBy!.username)}
+                    className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#0b3d2e] text-white hover:bg-[#0a3528]"
+                  >
+                    Ikuti
+                  </button>
+                )}
               </div>
             )}
 
             {feed.mentionedUstadz && feed.mentionedUstadz.length > 0 && (
-              <div className="text-[12px] text-purple-600 mb-2 flex flex-wrap gap-1">
-                🎙 Mentioned: {feed.mentionedUstadz.map((ustadz, i) => (
-                  <span key={i} className="font-medium">@{ustadz}</span>
-                ))}
+              <div className="flex items-center flex-wrap gap-2 mb-2">
+                <span className="text-[12px] text-purple-600">🎙 Mentioned:</span>
+                {feed.mentionedUstadz.map((ustadz, i) => {
+                  const ustadzUsername = `ust_${ustadz.toLowerCase().replace(/\s+/g, "_")}`;
+                  return (
+                    <span key={i} className="flex items-center gap-1">
+                      <span className="text-[12px] text-purple-600 font-medium">@{ustadz}</span>
+                      {!isFollowed(ustadzUsername) && (
+                        <button
+                          onClick={() => onFollow(ustadzUsername)}
+                          className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#0b3d2e] text-white hover:bg-[#0a3528]"
+                        >
+                          Ikuti
+                        </button>
+                      )}
+                    </span>
+                  );
+                })}
               </div>
             )}
 
@@ -343,46 +339,6 @@ function ThreadCard({ feed, isFollowed, onFollow }: {
               <div className="flex gap-2 flex-wrap mb-3">
                 {feed.tags.map((tag, i) => (
                   <span key={i} className="text-[13px] text-black font-medium">{tag}</span>
-                ))}
-              </div>
-            )}
-
-            {suggestedToFollow && suggestedToFollow.length > 0 && (
-              <div className="mb-3 p-3 bg-gray-50 rounded-xl">
-                <div className="text-[11px] text-gray-400 mb-2">Suggested to follow</div>
-                {suggestedToFollow.map((suggestion, i) => (
-                  <div key={i} className="flex items-center justify-between mb-2 last:mb-0">
-                    <div className="flex items-center gap-2">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${suggestion.type === 'masjid' ? 'bg-emerald-100' : 'bg-purple-100'}`}>
-                        {suggestion.type === 'masjid' ? (
-                          <Landmark className="w-4 h-4 text-[#0b3d2e]" />
-                        ) : (
-                          <User className="w-4 h-4 text-purple-600" />
-                        )}
-                      </div>
-                      <div>
-                        <div className="text-[13px] font-medium text-gray-900">{suggestion.name}</div>
-                        <div className="text-[11px] text-gray-400">@{suggestion.username}</div>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => onFollow(suggestion.username)}
-                      className={`text-[11px] font-bold px-3 py-1 rounded-full transition-colors ${
-                        isFollowed(suggestion.username)
-                          ? "bg-gray-100 text-gray-600 border border-gray-300" 
-                          : "bg-[#0b3d2e] text-white hover:bg-[#0a3528]"
-                      }`}
-                    >
-                      {isFollowed(suggestion.username) ? (
-                        <span className="flex items-center gap-1">
-                          <Check className="w-3 h-3" />
-                          Mengikuti
-                        </span>
-                      ) : (
-                        "Ikuti"
-                      )}
-                    </button>
-                  </div>
                 ))}
               </div>
             )}
