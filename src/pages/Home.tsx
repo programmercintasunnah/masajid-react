@@ -36,8 +36,9 @@ const KAJIAN_LIVE = [
 ];
 
 const MASJID_SUCIPRAY = [
-  { id: 1, name: "Masjidil Haram", youtubeId: "2i8kfZcW8Eo", isLive: true, viewers: 15420 },
-  { id: 2, name: "Masjid Nabawi", youtubeId: "2i8kfZcW8Eo", isLive: true, viewers: 8750 },
+  { id: 1, name: "Masjidil Haram", youtubeId: "vcO5boQBTdg", isLive: true },
+  { id: 2, name: "Masjid Nabawi", youtubeId: "3L7Gf0BD0gc", isLive: true },
+  { id: 3, name: "Kajian Masjid Nabawi (ID)", youtubeId: "bXVOv5WDRkg", isLive: true },
 ];
 
 const KAJIAN_LIST = [
@@ -109,10 +110,10 @@ export function PageHome() {
         <SectionLabel extra="Lihat semua →">Kajian Mendatang</SectionLabel>
         {KAJIAN_LIST.map((k, i) => <KajianCard key={i} item={k} />)}
 
-        <SectionLabel>Kajian Masjid Suci</SectionLabel>
-        <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-1">
+        <SectionLabel>Live Haramain</SectionLabel>
+        <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-1 lg:grid lg:grid-cols-3 lg:gap-4">
           {MASJID_SUCIPRAY.map((m) => (
-            <div key={m.id} className="min-w-[240px] bg-white rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] flex-shrink-0 cursor-pointer">
+            <div key={m.id} className="min-w-[280px] lg:min-w-0 lg:flex-1 bg-white rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] cursor-pointer">
               <div className="relative pt-[56.25%] bg-black">
                 <iframe
                   className="absolute top-0 left-0 w-full h-full"
@@ -131,7 +132,6 @@ export function PageHome() {
               <div className="p-2.5">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-[10px] font-bold text-[#0b3d2e]">{m.name}</span>
-                  {m.isLive && <span className="text-[9px] text-gray-400">• {m.viewers.toLocaleString()} penonton</span>}
                 </div>
                 <div className="text-[10px] text-gray-500">Live Streaming</div>
               </div>
