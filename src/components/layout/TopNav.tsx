@@ -59,10 +59,10 @@ export function TopNav({ currentPage, onNavigate }: TopNavProps) {
           );
         })}
 
-        {/* Dark Mode Toggle */}
+        {/* Dark Mode Toggle - only show in lg mode (when header is hidden) */}
         <button
           onClick={toggleDark}
-          className="ml-4 p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+          className="hidden lg:block ml-4 p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
         >
           {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
         </button>

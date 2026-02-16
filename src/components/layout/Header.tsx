@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { Bell, Sunrise, Sun, Cloud, Sunset, Moon, MapPin, Loader2 } from "lucide-react";
+import { Bell, Sunrise, Sun, Cloud, Sunset, Moon, MapPin, Loader2, Moon as MoonIcon, Sun as SunIcon } from "lucide-react";
 import { useLocation } from "../../hooks/useLocation";
 import { usePrayerTimes, getNextPrayer } from "../../hooks/usePrayerTimes";
+import { useThemeStore } from "../../stores";
 import masajidLogo from "../../assets/masajid_logo.png"
 interface HeaderProps {
   userName?: string;
@@ -29,6 +30,7 @@ export function Header({ userName, userPhoto }: HeaderProps) {
   const [time, setTime] = useState(new Date());
   const { location, loading: locationLoading, requestLocation } = useLocation();
   const { prayerTimes, hijriDate, loading: prayerLoading } = usePrayerTimes();
+  const { isDark, toggleDark } = useThemeStore();
 
   const gregorian = getGregorianDate(time);
   const hasValidLocation = location?.cityCode && prayerTimes.Fajr !== "-";
@@ -126,6 +128,14 @@ export function Header({ userName, userPhoto }: HeaderProps) {
         </div>
 
         <div className="flex items-center gap-2">
+          {/* Dark Mode Toggle */}
+          <button 
+            onClick={toggleDark}
+            className="relative w-8 h-8 rounded-xl flex items-center justify-center transition-all active:scale-90 lg:w-10 lg:h-10" 
+            style={{ background: "rgba(255,255,255,0.13)", border: "1px solid rgba(255,255,255,0.18)" }}
+          >
+            {isDark ? <SunIcon className="w-4 h-4 text-white lg:w-5 lg:h-5" /> : <MoonIcon className="w-4 h-4 text-white lg:w-5 lg:h-5" />}
+          </button>
           <button className="relative w-8 h-8 rounded-xl flex items-center justify-center transition-all active:scale-90 lg:w-10 lg:h-10" style={{ background: "rgba(255,255,255,0.13)", border: "1px solid rgba(255,255,255,0.18)" }}>
             <Bell className="w-4 h-4 text-white lg:w-5 lg:h-5" />
             <span className="absolute top-[5px] right-[5px] w-[7px] h-[7px] bg-red-500 rounded-full lg:w-2 lg:h-2" style={{ border: "1.5px solid #1a6b4a" }} />
