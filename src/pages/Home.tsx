@@ -58,19 +58,25 @@ const VIDEO_SHORTS = [
 export function PageHome() {
   return (
     <>
-      <Header userName="Zakie Alelm" />
+      {/* Header - visible on mobile and md, hidden on lg (waktu solat di RightPanel) */}
+      <div className="lg:hidden">
+        <Header userName="Zakie Alelm" />
+      </div>
 
-      <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-none bg-[#f5f7f5] lg:px-8">
-        <SectionLabel>Menu</SectionLabel>
-        <div className="grid grid-cols-4 gap-3 px-5 lg:grid-cols-8 lg:gap-6 lg:px-0">
-          {MENUS.map((m, i) => (
-            <div key={i} className="flex flex-col items-center gap-1.5 cursor-pointer group">
-              <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${m.bg} flex items-center justify-center group-hover:scale-105 transition-transform lg:w-20 lg:h-20`}>
-                <img src={m.img} alt={m.label} className="w-7 h-7 lg:w-10 lg:h-10" />
+      <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-none bg-[#f5f7f5] dark:bg-gray-900 md:bg-white md:dark:bg-gray-900 lg:px-8">
+        {/* MenuGrid - only visible on mobile (< md) */}
+        <div className="md:hidden">
+          <SectionLabel>Menu</SectionLabel>
+          <div className="grid grid-cols-4 gap-3 px-5 lg:grid-cols-8 lg:gap-6 lg:px-0">
+            {MENUS.map((m, i) => (
+              <div key={i} className="flex flex-col items-center gap-1.5 cursor-pointer group">
+                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${m.bg} flex items-center justify-center group-hover:scale-105 transition-transform lg:w-20 lg:h-20`}>
+                  <img src={m.img} alt={m.label} className="w-7 h-7 lg:w-10 lg:h-10" />
+                </div>
+                <span className="text-[10px] font-semibold text-gray-600 text-center leading-tight lg:text-sm">{m.label}</span>
               </div>
-              <span className="text-[10px] font-semibold text-gray-600 text-center leading-tight lg:text-sm">{m.label}</span>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         <SectionLabel extra="Lihat semua →">Masjid Terdekat</SectionLabel>

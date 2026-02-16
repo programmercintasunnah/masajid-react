@@ -1,6 +1,6 @@
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { MobileContainer } from "../components/layout/MobileContainer";
-import { PageHome, PageFavorites, PageInfaq, PageAmal, PageProfile, PageLogin } from "../pages";
+import { PageHome, PageFavorites, PageInfaq, PageQuiz, PageProfile, PageLogin } from "../pages";
 import type { Page } from "../types";
 
 export default function App() {
@@ -31,7 +31,7 @@ export default function App() {
           <Route path="/home" element={<PageHome />} />
           <Route path="/favorites" element={<PageFavorites />} />
           <Route path="/infaq" element={<PageInfaq />} />
-          <Route path="/amal" element={<PageAmal />} />
+          <Route path="/quiz" element={<PageQuiz />} />
           <Route path="/profile" element={<PageProfile />} />
         </Routes>
       </MobileContainer>

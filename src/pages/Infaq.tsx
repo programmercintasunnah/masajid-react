@@ -26,7 +26,7 @@ export function PageInfaq() {
       <div className="flex-shrink-0 px-5 pt-10 pb-5" style={{ background: "linear-gradient(160deg,#0b3d2e 0%,#1a6b4a 70%)" }}>
         <div className="flex justify-between items-start mb-0">
           <div className="flex items-center gap-2">
-            <Banknote className="w-6 h-6 text-amber-300" />
+            <Banknote className="w-6 h-6 text-white" />
             <h2 className="text-xl font-black text-white">Infaq & Sedekah</h2>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-2.5 border border-white/15 text-center">

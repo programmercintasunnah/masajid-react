@@ -1,8 +1,34 @@
 import { useState } from "react";
 import type { FavTab, FeedItem } from "../types";
-import { Heart, Repeat2, Share2, MoreHorizontal, User, Landmark } from "lucide-react";
+import { Heart, Repeat2, Share2, MoreHorizontal, User, Landmark, Calendar, Clock, Play } from "lucide-react";
 
 const FOLLOWED_USERS = ["masjid_rj", "masjid_alikhlas", "ust_adagustian", "ahmad_fauzan"];
+
+const LIVE_DATA = [
+  { id: "live1", type: "live" as const, title: "Kajian Kitab Tauhid", mosque: "Masjid Al-Ikhlas", ustadz: "Ust. Abdurrahman, Lc.", datetime: "Sabtu, 14 Feb 2026 - 19.30 WIB", youtubeId: "X9CEm2ZTK-8", isLive: true, bg: "from-emerald-200 to-teal-300" },
+  { id: "live2", type: "live" as const, title: "Tafsir Al-Quran Juz 30", mosque: "Masjid Nurul Iman", ustadz: "Ust. Ahmad Fauzan", datetime: "Minggu, 15 Feb 2026 - 07.00 WIB", youtubeId: "CpDGDo3NDgg", isLive: true, bg: "from-amber-200 to-yellow-300" },
+  { id: "live3", type: "live" as const, title: "Fiqih Shalat", mosque: "Masjid Abu Darda", ustadz: "Ust. Yazid", datetime: "Senin, 16 Feb 2026 - 08.00 WIB", youtubeId: "71iNGcW8yDc", isLive: true, bg: "from-blue-200 to-blue-300" },
+  { id: "live4", type: "live" as const, title: "Sirah Nabawiyah", mosque: "Masjid Al-Badr", ustadz: "Ust. Khalid", datetime: "Selasa, 17 Feb 2026 - 20.00 WIB", youtubeId: "QB8CoT7XMmU", isLive: true, bg: "from-purple-200 to-purple-300" },
+  { id: "live5", type: "live" as const, title: "Akhlak Mulia", mosque: "Masjid Raudhatul Jannah", ustadz: "Ust. Ade Agustian", datetime: "Rabu, 18 Feb 2026 - 16.00 WIB", youtubeId: "ULmp9aYw5jM", isLive: true, bg: "from-pink-200 to-pink-300" },
+];
+
+const VIDEO_DATA = [
+  { id: "vid1", title: "3 Amalan Agar Diterima di Bulan Ramadhan", mosque: "Masjid Al-Ikhlas", ustadz: "Ust. Abdurrahman", datetime: "Sabtu, 14 Feb 2026 - 19.30 WIB", youtubeId: "8dHpL_sFwoM" },
+  { id: "vid2", title: "Keutamaan Shalat Subuh Berjamaah", mosque: "Masjid Nurul Iman", ustadz: "Ust. Izzuddin Abdissalam", datetime: "Minggu, 15 Feb 2026 - 07.00 WIB", youtubeId: "74oRlKJkJHo" },
+  { id: "vid3", title: "Cara Menghilangkan Sifat Riya", mosque: "Masjid Al-Badr", ustadz: "Ust. Yazid", datetime: "Senin, 16 Feb 2026 - 16.00 WIB", youtubeId: "KWkftxVeRZI" },
+  { id: "vid4", title: "Niat Puasa: Ini yang Benar!", mosque: "Masjid Raudhatul Jannah", ustadz: "Ust. Khalid", datetime: "Selasa, 17 Feb 2026 - 20.00 WIB", youtubeId: "zyUU-GPYWeo" },
+  { id: "vid5", title: "Doa Agar Dimudahkan Rezeki", mosque: "Masjid Al-Hijrah", ustadz: "Ust. El Khuzaimah", datetime: "Rabu, 18 Feb 2026 - 21.00 WIB", youtubeId: "13aBa0jI090" },
+  { id: "vid6", title: "Keutamaan Memiliki Anak Perempuan", mosque: "Masjid Abu Darda", ustadz: "Ust. Al Muzani", datetime: "Kamis, 19 Feb 2026 - 18.30 WIB", youtubeId: "Fvcd3QrsAUE" },
+];
+
+const JADWAL_DATA: JadwalItem[] = [
+  { id: "j1", title: "Kajian Kitab Tauhid", mosque: "Masjid Al-Ikhlas", ustadz: "Ust. Abdurrahman, Lc.", day: "Sabtu", time: "19.30 WIB", type: "online" as const },
+  { id: "j2", title: "Tafsir Al-Quran", mosque: "Masjid Nurul Iman", ustadz: "Ust. Ahmad Fauzan", day: "Minggu", time: "07.00 WIB", type: "offline" as const },
+  { id: "j3", title: "Fiqih Puasa", mosque: "Masjid Raudhatul Jannah", ustadz: "Ust. Ade Agustian", day: "Senin", time: "16.00 WIB", type: "offline" as const },
+  { id: "j4", title: "Sirah Nabawiyah", mosque: "Masjid Al-Badr", ustadz: "Ust. Khalid", day: "Selasa", time: "20.00 WIB", type: "online" as const },
+  { id: "j5", title: "Akhlak Mulia", mosque: "Masjid Abu Darda", ustadz: "Ust. Yazid", day: "Rabu", time: "18.30 WIB", type: "offline" as const },
+  { id: "j6", title: "Doa & Dzikir", mosque: "Masjid Al-Hijrah", ustadz: "Ust. Faiz", day: "Kamis", time: "21.00 WIB", type: "offline" as const },
+];
 
 const FEED_DATA: FeedItem[] = [
   {
@@ -223,6 +249,8 @@ export function PageFavorites() {
           { id: "masjid" as FavTab, label: "Masjid" },
           { id: "asatidz" as FavTab, label: "Asatidz" },
           { id: "jamaah" as FavTab, label: "Jamaah" },
+          { id: "live" as FavTab, label: "Live" },
+          { id: "jadwal" as FavTab, label: "Jadwal" },
         ].map(t => (
           <button
             key={t.id}
@@ -235,14 +263,49 @@ export function PageFavorites() {
       </div>
 
       <div className="flex-1 overflow-y-auto bg-[#f5f7f5]">
-        {filteredFeeds.map((feed) => (
-          <ThreadCard 
-            key={feed.id} 
-            feed={feed} 
-            isFollowed={isFollowed}
-            onFollow={handleFollow}
-          />
-        ))}
+        {tab === "live" ? (
+          <div className="py-4">
+            <h3 className="text-sm font-bold text-gray-700 px-5 mb-3">Sedang Berlangsung</h3>
+            <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-4">
+              {LIVE_DATA.filter(l => l.isLive).map((item) => (
+                <LiveHorizontalCard key={item.id} item={item} />
+              ))}
+            </div>
+            
+            <h3 className="text-sm font-bold text-gray-700 px-5 mb-3 mt-2">Video Kajian</h3>
+            <div className="px-5">
+              {VIDEO_DATA.map((item) => (
+                <VideoCard key={item.id} item={item} />
+              ))}
+            </div>
+          </div>
+        ) : tab === "jadwal" ? (
+          <div className="px-5 py-4">
+            <h3 className="text-sm font-bold text-gray-700 mb-3">Jadwal Kajian Mingguan</h3>
+            {JADWAL_DATA.map((item) => (
+              <JadwalCard key={item.id} item={item} />
+            ))}
+          </div>
+        ) : (
+          <div>
+            <div className="py-4">
+              <h3 className="text-sm font-bold text-gray-700 px-5 mb-3">Sedang Berlangsung</h3>
+              <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-2">
+                {LIVE_DATA.filter(l => l.isLive).map((item) => (
+                  <LiveHorizontalCard key={item.id} item={item} />
+                ))}
+              </div>
+            </div>
+            {filteredFeeds.map((feed) => (
+              <ThreadCard 
+                key={feed.id} 
+                feed={feed} 
+                isFollowed={isFollowed}
+                onFollow={handleFollow}
+              />
+            ))}
+          </div>
+        )}
         <div className="h-6" />
       </div>
     </>
@@ -381,6 +444,145 @@ function ThreadCard({ feed, isFollowed, onFollow }: {
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+type LiveItem = {
+  id: string;
+  type: "live";
+  title: string;
+  mosque: string;
+  ustadz: string;
+  datetime: string;
+  youtubeId: string;
+  isLive: boolean;
+  bg: string;
+};
+
+function LiveHorizontalCard({ item }: { item: LiveItem }) {
+  return (
+    <div className="min-w-[280px] lg:min-w-[320px] bg-white rounded-xl shadow-sm border border-black/[0.04] overflow-hidden flex-shrink-0">
+      <div className="relative pt-[56.25%] bg-black">
+        <iframe
+          className="absolute top-0 left-0 w-full h-full"
+          src={`https://www.youtube.com/embed/${item.youtubeId}`}
+          title={item.title}
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+        {item.isLive && (
+          <div className="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+            LIVE
+          </div>
+        )}
+      </div>
+      <div className="p-3">
+        <h4 className="text-sm font-bold text-gray-800 line-clamp-2 mb-1">{item.title}</h4>
+        <div className="text-[12px] text-gray-500 truncate">
+          <span className="inline-flex items-center gap-1">
+            <Landmark className="w-3 h-3 flex-shrink-0" />
+            <span className="truncate">{item.mosque}</span>
+            <span className="flex-shrink-0">•</span>
+            <span className="truncate">{item.ustadz}</span>
+          </span>
+        </div>
+        <div className="text-[11px] text-gray-400 mt-1 truncate">
+          <span className="inline-flex items-center gap-1">
+            <Calendar className="w-3 h-3 flex-shrink-0" />
+            <span className="truncate">{item.datetime}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+type VideoItem = {
+  id: string;
+  title: string;
+  mosque: string;
+  ustadz: string;
+  datetime: string;
+  youtubeId: string;
+};
+
+function VideoCard({ item }: { item: VideoItem }) {
+  return (
+    <div className="bg-white rounded-xl shadow-sm border border-black/[0.04] mb-3 overflow-hidden">
+      <div className="flex gap-3 p-3">
+        <div className="w-24 h-16 rounded-lg flex-shrink-0 bg-gray-200 relative overflow-hidden">
+          <img 
+            src={`https://img.youtube.com/vi/${item.youtubeId}/mqdefault.jpg`} 
+            alt={item.title}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+            <Play className="w-6 h-6 text-white/80" fill="currentColor" />
+          </div>
+        </div>
+        <div className="flex-1 min-w-0">
+          <h4 className="text-sm font-bold text-gray-800 line-clamp-2">{item.title}</h4>
+          <div className="text-[12px] text-gray-500 mt-1 truncate">
+            <span className="inline-flex items-center gap-1">
+              <Landmark className="w-3 h-3 flex-shrink-0" />
+              <span className="truncate">{item.mosque}</span>
+            </span>
+          </div>
+          <div className="text-[11px] text-gray-400 mt-0.5 truncate">
+            <span className="inline-flex items-center gap-1 flex-wrap">
+              <span className="truncate">{item.ustadz}</span>
+              <span className="flex-shrink-0">•</span>
+              <span className="flex items-center gap-1 flex-shrink-0">
+                <Calendar className="w-3 h-3" />
+              </span>
+              <span className="truncate">{item.datetime}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+type JadwalItem = {
+  id: string;
+  title: string;
+  mosque: string;
+  ustadz: string;
+  day: string;
+  time: string;
+  type: "online" | "offline";
+};
+
+function JadwalCard({ item }: { item: JadwalItem }) {
+  return (
+    <div className="bg-white rounded-xl shadow-sm border border-black/[0.04] mb-3 p-4">
+      <div className="flex items-start justify-between mb-2">
+        <h4 className="text-sm font-bold text-gray-800 flex-1">{item.title}</h4>
+        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${item.type === 'online' ? 'bg-blue-100 text-blue-600' : 'bg-green-100 text-green-600'}`}>
+          {item.type === "online" ? "Online" : "Offline"}
+        </span>
+      </div>
+      <div className="flex items-center gap-3 text-[12px] text-gray-500">
+        <span className="flex items-center gap-1">
+          <Landmark className="w-3 h-3" />
+          {item.mosque}
+        </span>
+        <span>•</span>
+        <span>{item.ustadz}</span>
+      </div>
+      <div className="flex items-center gap-4 mt-2 text-[12px] text-gray-400">
+        <span className="flex items-center gap-1">
+          <Calendar className="w-3 h-3" />
+          {item.day}
+        </span>
+        <span className="flex items-center gap-1">
+          <Clock className="w-3 h-3" />
+          {item.time}
+        </span>
       </div>
     </div>
   );

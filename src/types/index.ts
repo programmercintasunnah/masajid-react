@@ -1,4 +1,4 @@
-export type Page = "home" | "favorites" | "infaq" | "amal" | "profile";
+export type Page = "home" | "favorites" | "infaq" | "quiz" | "profile";
 
 export interface NavItem {
   id: Page;
@@ -6,7 +6,7 @@ export interface NavItem {
   label: string;
 }
 
-export type FavTab = "all" | "masjid" | "asatidz" | "jamaah";
+export type FavTab = "all" | "masjid" | "asatidz" | "jamaah" | "live" | "jadwal";
 
 export type FeedType = "masjid" | "ustadz" | "jamaah";
 
