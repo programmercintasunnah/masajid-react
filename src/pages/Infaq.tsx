@@ -48,11 +48,11 @@ export function PageInfaq() {
         {CAMPAIGNS.map((c, i) => <CampaignCard key={i} item={c} />)}
 
         <SectionLabel>Riwayat Infaqmu</SectionLabel>
-        <div className="mx-5 mb-3 bg-white rounded-2xl overflow-hidden shadow-sm">
+        <div className="mx-5 mb-3 bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] dark:border-gray-700">
           {INFAQ_HISTORY.map((r, i, arr) => (
-            <div key={i} className={`flex justify-between items-center px-4 py-3 ${i < arr.length - 1 ? "border-b border-black/[0.05]" : ""}`}>
-              <span className="text-[12px] font-bold text-gray-900">{r.label}</span>
-              <span className="text-[13px] font-black text-emerald-700">{r.val}</span>
+            <div key={i} className={`flex justify-between items-center px-4 py-3 ${i < arr.length - 1 ? "border-b border-black/[0.05] dark:border-gray-700" : ""}`}>
+              <span className="text-[12px] font-bold text-gray-900 dark:text-white">{r.label}</span>
+              <span className="text-[13px] font-black text-emerald-700 dark:text-emerald-400">{r.val}</span>
             </div>
           ))}
         </div>

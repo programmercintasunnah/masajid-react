@@ -46,17 +46,17 @@ export function PageProfile() {
 
       <div className="flex-1 overflow-y-auto bg-[#f5f7f5] dark:bg-gray-900">
         <SectionLabel>Aktivitas Saya</SectionLabel>
-        <div className="mx-5 mb-3 bg-white rounded-2xl overflow-hidden shadow-sm">
+        <div className="mx-5 mb-3 bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] dark:border-gray-700">
           {PROFILE_ACTIVITY.map((m, i) => {
             const Icon = m.icon;
             return (
-              <div key={i} className={`flex items-center gap-3 px-4 py-3.5 border-b border-black/[0.05] last:border-b-0 cursor-pointer hover:bg-black/[0.02] transition-colors`}>
-                <div className={`w-9 h-9 rounded-[10px] flex items-center justify-center flex-shrink-0 ${m.bg}`}>
-                  <Icon className="w-[17px] h-[17px]" />
+              <div key={i} className={`flex items-center gap-3 px-4 py-3.5 border-b border-black/[0.05] dark:border-gray-700 last:border-b-0 cursor-pointer hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors`}>
+                <div className={`w-9 h-9 rounded-[10px] flex items-center justify-center flex-shrink-0 ${m.bg} dark:bg-gray-700`}>
+                  <Icon className="w-[17px] h-[17px] dark:text-gray-300" />
                 </div>
                 <div className="flex-1">
-                  <div className="text-[13px] font-bold text-gray-900">{m.label}</div>
-                  <div className="text-[11px] text-gray-400 mt-0.5">{m.sub}</div>
+                  <div className="text-[13px] font-bold text-gray-900 dark:text-white">{m.label}</div>
+                  <div className="text-[11px] text-gray-400 dark:text-gray-500 mt-0.5">{m.sub}</div>
                 </div>
                 <ChevronRight className="w-4 h-4 text-gray-300" />
               </div>
@@ -65,17 +65,17 @@ export function PageProfile() {
         </div>
 
         <SectionLabel>Pengaturan</SectionLabel>
-        <div className="mx-5 mb-3 bg-white rounded-2xl overflow-hidden shadow-sm">
+        <div className="mx-5 mb-3 bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] dark:border-gray-700">
           {PROFILE_SETTINGS.map((m, i) => {
             const Icon = m.icon;
             return (
-              <div key={i} className={`flex items-center gap-3 px-4 py-3.5 border-b border-black/[0.05] last:border-b-0 cursor-pointer hover:bg-black/[0.02] transition-colors`}>
-                <div className={`w-9 h-9 rounded-[10px] flex items-center justify-center flex-shrink-0 ${m.bg}`}>
-                  <Icon className="w-[17px] h-[17px]" />
+              <div key={i} className={`flex items-center gap-3 px-4 py-3.5 border-b border-black/[0.05] dark:border-gray-700 last:border-b-0 cursor-pointer hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors`}>
+                <div className={`w-9 h-9 rounded-[10px] flex items-center justify-center flex-shrink-0 ${m.bg} dark:bg-gray-700`}>
+                  <Icon className="w-[17px] h-[17px] dark:text-gray-300" />
                 </div>
                 <div className="flex-1">
-                  <div className="text-[13px] font-bold text-gray-900">{m.label}</div>
-                  <div className="text-[11px] text-gray-400 mt-0.5">{m.sub}</div>
+                  <div className="text-[13px] font-bold text-gray-900 dark:text-white">{m.label}</div>
+                  <div className="text-[11px] text-gray-400 dark:text-gray-500 mt-0.5">{m.sub}</div>
                 </div>
                 <ChevronRight className="w-4 h-4 text-gray-300" />
               </div>

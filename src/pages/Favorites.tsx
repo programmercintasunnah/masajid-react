@@ -243,7 +243,7 @@ export function PageFavorites() {
         <p className="text-[12px] text-white/55">Update terbaru dari Masjid & Asatidz</p>
       </div>
 
-      <div className="flex bg-white border-b border-black/[0.07] flex-shrink-0 overflow-x-auto">
+      <div className="flex bg-white dark:bg-gray-800 border-b border-black/[0.07] dark:border-gray-700 flex-shrink-0 overflow-x-auto">
         {[
           { id: "all" as FavTab, label: "Semua" },
           { id: "masjid" as FavTab, label: "Masjid" },
@@ -265,14 +265,14 @@ export function PageFavorites() {
       <div className="flex-1 overflow-y-auto bg-[#f5f7f5] dark:bg-gray-900">
         {tab === "live" ? (
           <div className="py-4">
-            <h3 className="text-sm font-bold text-gray-700 px-5 mb-3">Sedang Berlangsung</h3>
+            <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300 px-5 mb-3">Sedang Berlangsung</h3>
             <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-4">
               {LIVE_DATA.filter(l => l.isLive).map((item) => (
                 <LiveHorizontalCard key={item.id} item={item} />
               ))}
             </div>
             
-            <h3 className="text-sm font-bold text-gray-700 px-5 mb-3 mt-2">Video Kajian</h3>
+            <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300 px-5 mb-3 mt-2">Video Kajian</h3>
             <div className="px-5">
               {VIDEO_DATA.map((item) => (
                 <VideoCard key={item.id} item={item} />
@@ -281,7 +281,7 @@ export function PageFavorites() {
           </div>
         ) : tab === "jadwal" ? (
           <div className="px-5 py-4">
-            <h3 className="text-sm font-bold text-gray-700 mb-3">Jadwal Kajian Mingguan</h3>
+            <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">Jadwal Kajian Mingguan</h3>
             {JADWAL_DATA.map((item) => (
               <JadwalCard key={item.id} item={item} />
             ))}
@@ -289,7 +289,7 @@ export function PageFavorites() {
         ) : (
           <div>
             <div className="py-4">
-              <h3 className="text-sm font-bold text-gray-700 px-5 mb-3">Sedang Berlangsung</h3>
+              <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300 px-5 mb-3">Sedang Berlangsung</h3>
               <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-2">
                 {LIVE_DATA.filter(l => l.isLive).map((item) => (
                   <LiveHorizontalCard key={item.id} item={item} />
@@ -324,22 +324,22 @@ function ThreadCard({ feed, isFollowed, onFollow }: {
   const isMasjid = feed.type === "masjid";
 
   return (
-    <div className="mx-0 sm:mx-5 my-3 bg-white rounded-none sm:rounded-2xl shadow-sm border-b sm:border border-black/[0.04]">
+    <div className="mx-0 sm:mx-5 my-3 bg-white dark:bg-gray-800 rounded-none sm:rounded-2xl shadow-sm border-b sm:border border-black/[0.04] dark:border-gray-700">
       <div className="p-4">
         <div className="flex gap-3">
           <div className="flex flex-col items-center">
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center ${isMasjid ? 'bg-emerald-100' : 'bg-gray-200'}`}>
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center ${isMasjid ? 'bg-emerald-100 dark:bg-emerald-900' : 'bg-gray-200 dark:bg-gray-700'}`}>
               {isMasjid ? (
-                <Landmark className="w-5 h-5 text-[#0b3d2e]" />
+                <Landmark className="w-5 h-5 text-[#0b3d2e] dark:text-emerald-400" />
               ) : (
-                <User className="w-5 h-5 text-gray-500" />
+                <User className="w-5 h-5 text-gray-500 dark:text-gray-400" />
               )}
             </div>
             {feed.repostedBy && (
               <>
-                <div className="w-0.5 flex-1 bg-gray-200 mt-2" />
-                <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center mt-2">
-                  <Repeat2 className="w-3 h-3 text-gray-500" />
+                <div className="w-0.5 flex-1 bg-gray-200 dark:bg-gray-700 mt-2" />
+                <div className="w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center mt-2">
+                  <Repeat2 className="w-3 h-3 text-gray-500 dark:text-gray-400" />
                 </div>
               </>
             )}
@@ -348,15 +348,15 @@ function ThreadCard({ feed, isFollowed, onFollow }: {
           <div className="flex-1 pb-3">
             <div className="flex items-center justify-between mb-1">
               <div>
-                <span className="text-[14px] font-bold text-gray-900">{feed.author.name}</span>
+                <span className="text-[14px] font-bold text-gray-900 dark:text-white">{feed.author.name}</span>
                 {feed.author.isVerified && (
                   <span className="text-[12px] text-blue-400 ml-1">✓</span>
                 )}
-                <span className="text-[12px] text-gray-400 ml-1">@{feed.author.username}</span>
+                <span className="text-[12px] text-gray-400 dark:text-gray-500 ml-1">@{feed.author.username}</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-[12px] text-gray-400">{feed.timestamp}</span>
-                <button className="text-gray-400">
+                <span className="text-[12px] text-gray-400 dark:text-gray-500">{feed.timestamp}</span>
+                <button className="text-gray-400 dark:text-gray-500">
                   <MoreHorizontal className="w-4 h-4" />
                 </button>
               </div>
@@ -364,7 +364,7 @@ function ThreadCard({ feed, isFollowed, onFollow }: {
 
             {feed.repostedBy && (
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[12px] text-gray-400">
+                <span className="text-[12px] text-gray-400 dark:text-gray-500">
                   <Repeat2 className="w-3 h-3 inline mr-1" />
                   Reposted by @{feed.repostedBy.username}
                 </span>
@@ -381,12 +381,12 @@ function ThreadCard({ feed, isFollowed, onFollow }: {
 
             {feed.mentionedUstadz && feed.mentionedUstadz.length > 0 && (
               <div className="flex items-center flex-wrap gap-2 mb-2">
-                <span className="text-[12px] text-purple-600">🎙 Mentioned:</span>
+                <span className="text-[12px] text-purple-600 dark:text-purple-400">🎙 Mentioned:</span>
                 {feed.mentionedUstadz.map((ustadz, i) => {
                   const ustadzUsername = `ust_${ustadz.toLowerCase().replace(/\s+/g, "_")}`;
                   return (
                     <span key={i} className="flex items-center gap-1">
-                      <span className="text-[12px] text-purple-600 font-medium">@{ustadz}</span>
+                      <span className="text-[12px] text-purple-600 dark:text-purple-400 font-medium">@{ustadz}</span>
                       {!isFollowed(ustadzUsername) && (
                         <button
                           onClick={() => onFollow(ustadzUsername)}
@@ -411,20 +411,20 @@ function ThreadCard({ feed, isFollowed, onFollow }: {
               </div>
             )}
 
-            <div className="text-[14px] text-gray-800 whitespace-pre-line mb-3 leading-relaxed">{feed.content}</div>
+            <div className="text-[14px] text-gray-800 dark:text-gray-200 whitespace-pre-line mb-3 leading-relaxed">{feed.content}</div>
 
             {feed.tags && (
               <div className="flex gap-2 flex-wrap mb-3">
                 {feed.tags.map((tag, i) => (
-                  <span key={i} className="text-[13px] text-black font-medium">{tag}</span>
+                  <span key={i} className="text-[13px] text-black dark:text-white font-medium">{tag}</span>
                 ))}
               </div>
             )}
 
-            <div className="flex items-center gap-1 text-gray-500 pt-2 border-t border-gray-100">
+            <div className="flex items-center gap-1 text-gray-500 dark:text-gray-400 pt-2 border-t border-gray-100 dark:border-gray-700">
               <button 
                 onClick={() => setLiked(!liked)}
-                className={`flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-gray-100 ${liked ? 'text-red-500' : ''}`}
+                className={`flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 ${liked ? 'text-red-500' : ''}`}
               >
                 <Heart className={`w-4 h-4 ${liked ? 'fill-current' : ''}`} />
                 <span className="text-[12px]">{feed.likes}</span>
@@ -432,13 +432,13 @@ function ThreadCard({ feed, isFollowed, onFollow }: {
               
               <button 
                 onClick={() => setReposted(!reposted)}
-                className={`flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-gray-100 ${reposted ? 'text-green-500' : ''}`}
+                className={`flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 ${reposted ? 'text-green-500' : ''}`}
               >
                 <Repeat2 className={`w-4 h-4 ${reposted ? 'fill-current' : ''}`} />
                 <span className="text-[12px]">{feed.shares}</span>
               </button>
               
-              <button className="flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-gray-100">
+              <button className="flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
                 <Share2 className="w-4 h-4" />
               </button>
             </div>
@@ -463,7 +463,7 @@ type LiveItem = {
 
 function LiveHorizontalCard({ item }: { item: LiveItem }) {
   return (
-    <div className="min-w-[280px] lg:min-w-[320px] bg-white rounded-xl shadow-sm border border-black/[0.04] overflow-hidden flex-shrink-0">
+    <div className="min-w-[280px] lg:min-w-[320px] bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-black/[0.04] dark:border-gray-700 overflow-hidden flex-shrink-0">
       <div className="relative pt-[56.25%] bg-black">
         <iframe
           className="absolute top-0 left-0 w-full h-full"
@@ -480,8 +480,8 @@ function LiveHorizontalCard({ item }: { item: LiveItem }) {
         )}
       </div>
       <div className="p-3">
-        <h4 className="text-sm font-bold text-gray-800 line-clamp-2 mb-1">{item.title}</h4>
-        <div className="text-[12px] text-gray-500 truncate">
+        <h4 className="text-sm font-bold text-gray-800 dark:text-white line-clamp-2 mb-1">{item.title}</h4>
+        <div className="text-[12px] text-gray-500 dark:text-gray-400 truncate">
           <span className="inline-flex items-center gap-1">
             <Landmark className="w-3 h-3 flex-shrink-0" />
             <span className="truncate">{item.mosque}</span>
@@ -489,7 +489,7 @@ function LiveHorizontalCard({ item }: { item: LiveItem }) {
             <span className="truncate">{item.ustadz}</span>
           </span>
         </div>
-        <div className="text-[11px] text-gray-400 mt-1 truncate">
+        <div className="text-[11px] text-gray-400 dark:text-gray-500 mt-1 truncate">
           <span className="inline-flex items-center gap-1">
             <Calendar className="w-3 h-3 flex-shrink-0" />
             <span className="truncate">{item.datetime}</span>
@@ -511,9 +511,9 @@ type VideoItem = {
 
 function VideoCard({ item }: { item: VideoItem }) {
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-black/[0.04] mb-3 overflow-hidden">
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-black/[0.04] dark:border-gray-700 mb-3 overflow-hidden">
       <div className="flex gap-3 p-3">
-        <div className="w-24 h-16 rounded-lg flex-shrink-0 bg-gray-200 relative overflow-hidden">
+        <div className="w-24 h-16 rounded-lg flex-shrink-0 bg-gray-200 dark:bg-gray-700 relative overflow-hidden">
           <img 
             src={`https://img.youtube.com/vi/${item.youtubeId}/mqdefault.jpg`} 
             alt={item.title}
@@ -524,14 +524,14 @@ function VideoCard({ item }: { item: VideoItem }) {
           </div>
         </div>
         <div className="flex-1 min-w-0">
-          <h4 className="text-sm font-bold text-gray-800 line-clamp-2">{item.title}</h4>
-          <div className="text-[12px] text-gray-500 mt-1 truncate">
+          <h4 className="text-sm font-bold text-gray-800 dark:text-white line-clamp-2">{item.title}</h4>
+          <div className="text-[12px] text-gray-500 dark:text-gray-400 mt-1 truncate">
             <span className="inline-flex items-center gap-1">
               <Landmark className="w-3 h-3 flex-shrink-0" />
               <span className="truncate">{item.mosque}</span>
             </span>
           </div>
-          <div className="text-[11px] text-gray-400 mt-0.5 truncate">
+          <div className="text-[11px] text-gray-400 dark:text-gray-500 mt-0.5 truncate">
             <span className="inline-flex items-center gap-1 flex-wrap">
               <span className="truncate">{item.ustadz}</span>
               <span className="flex-shrink-0">•</span>
@@ -559,14 +559,14 @@ type JadwalItem = {
 
 function JadwalCard({ item }: { item: JadwalItem }) {
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-black/[0.04] mb-3 p-4">
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-black/[0.04] dark:border-gray-700 mb-3 p-4">
       <div className="flex items-start justify-between mb-2">
-        <h4 className="text-sm font-bold text-gray-800 flex-1">{item.title}</h4>
-        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${item.type === 'online' ? 'bg-blue-100 text-blue-600' : 'bg-green-100 text-green-600'}`}>
+        <h4 className="text-sm font-bold text-gray-800 dark:text-white flex-1">{item.title}</h4>
+        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${item.type === 'online' ? 'bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300' : 'bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-300'}`}>
           {item.type === "online" ? "Online" : "Offline"}
         </span>
       </div>
-      <div className="flex items-center gap-3 text-[12px] text-gray-500">
+      <div className="flex items-center gap-3 text-[12px] text-gray-500 dark:text-gray-400">
         <span className="flex items-center gap-1">
           <Landmark className="w-3 h-3" />
           {item.mosque}
@@ -574,7 +574,7 @@ function JadwalCard({ item }: { item: JadwalItem }) {
         <span>•</span>
         <span>{item.ustadz}</span>
       </div>
-      <div className="flex items-center gap-4 mt-2 text-[12px] text-gray-400">
+      <div className="flex items-center gap-4 mt-2 text-[12px] text-gray-400 dark:text-gray-500">
         <span className="flex items-center gap-1">
           <Calendar className="w-3 h-3" />
           {item.day}

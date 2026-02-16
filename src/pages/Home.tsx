@@ -87,7 +87,7 @@ export function PageHome() {
         <SectionLabel extra="Lihat semua →">Kajian Live</SectionLabel>
         <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-1 lg:overflow-x-auto">
           {KAJIAN_LIVE.map((k) => (
-            <div key={k.id} className="min-w-[240px] lg:min-w-[280px] bg-white rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] flex-shrink-0 cursor-pointer">
+            <div key={k.id} className="min-w-[240px] lg:min-w-[280px] bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] dark:border-gray-700 flex-shrink-0 cursor-pointer">
               <div className="relative pt-[56.25%] bg-black">
                 {k.youtubeId ? (
                   <iframe
@@ -111,11 +111,11 @@ export function PageHome() {
               </div>
               <div className="p-2.5">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[10px] font-bold text-[#0b3d2e]">{k.mosque}</span>
+                  <span className="text-[10px] font-bold text-[#0b3d2e] dark:text-emerald-400">{k.mosque}</span>
                   {k.isLive && <span className="text-[9px] text-gray-400"></span>}
                 </div>
-                <div className="text-[11px] font-bold text-gray-900 mb-0.5 truncate">{k.title}</div>
-                <div className="text-[10px] text-gray-500">{k.ustadz}</div>
+                <div className="text-[11px] font-bold text-gray-900 dark:text-white mb-0.5 truncate">{k.title}</div>
+                <div className="text-[10px] text-gray-500 dark:text-gray-400">{k.ustadz}</div>
               </div>
             </div>
           ))}
@@ -124,7 +124,7 @@ export function PageHome() {
         <SectionLabel extra="Lihat semua →">Video Pendek</SectionLabel>
         <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-1 lg:overflow-x-auto">
           {VIDEO_SHORTS.map((s) => (
-            <div key={s.id} className="w-[140px] lg:w-[180px] bg-white rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] flex-shrink-0 cursor-pointer">
+            <div key={s.id} className="w-[140px] lg:w-[180px] bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] dark:border-gray-700 flex-shrink-0 cursor-pointer">
               <div className="pt-[177%] bg-black relative">
                 <iframe
                   className="absolute top-0 left-0 w-full h-full"
@@ -135,8 +135,8 @@ export function PageHome() {
                 />
               </div>
               <div className="p-2">
-                <div className="text-[10px] font-bold text-gray-900 mb-0.5 line-clamp-2">{s.title}</div>
-                <div className="text-[9px] text-gray-400">{s.author}</div>
+                <div className="text-[10px] font-bold text-gray-900 dark:text-white mb-0.5 line-clamp-2">{s.title}</div>
+                <div className="text-[9px] text-gray-400 dark:text-gray-500">{s.author}</div>
               </div>
             </div>
           ))}
@@ -145,7 +145,7 @@ export function PageHome() {
         <SectionLabel>Live Haramain</SectionLabel>
         <div className="flex gap-3 px-5 overflow-x-auto scrollbar-none pb-1 lg:grid lg:grid-cols-3 lg:gap-4">
           {MASJID_HARAMAIN.map((m) => (
-            <div key={m.id} className="min-w-[280px] lg:min-w-0 lg:flex-1 bg-white rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] cursor-pointer">
+            <div key={m.id} className="min-w-[280px] lg:min-w-0 lg:flex-1 bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] dark:border-gray-700 cursor-pointer">
               <div className="relative pt-[56.25%] bg-black">
                 <iframe
                   className="absolute top-0 left-0 w-full h-full"
@@ -163,9 +163,9 @@ export function PageHome() {
               </div>
               <div className="p-2.5">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[10px] font-bold text-[#0b3d2e]">{m.name}</span>
+                  <span className="text-[10px] font-bold text-[#0b3d2e] dark:text-emerald-400">{m.name}</span>
                 </div>
-                <div className="text-[10px] text-gray-500">Live Streaming</div>
+                <div className="text-[10px] text-gray-500 dark:text-gray-400">Live Streaming</div>
               </div>
             </div>
           ))}
