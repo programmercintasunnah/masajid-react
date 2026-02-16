@@ -37,13 +37,13 @@ export function PageInfaq() {
         <p className="text-[12px] text-white/55 mt-2">Titip kebaikan lewat masjid</p>
       </div>
 
-      <div className="flex gap-2 px-5 py-3 overflow-x-auto scrollbar-none bg-white border-b border-black/[0.06] flex-shrink-0">
+      <div className="flex gap-2 px-5 py-3 overflow-x-auto scrollbar-none bg-white dark:bg-gray-800 border-b border-black/[0.06] dark:border-gray-700 flex-shrink-0">
         {INFAQ_FILTERS.map(f => (
           <FilterChip key={f} label={f} active={filter === f} onClick={() => setFilter(f)} />
         ))}
       </div>
 
-      <div className="flex-1 overflow-y-auto bg-[#f5f7f5]">
+      <div className="flex-1 overflow-y-auto bg-[#f5f7f5] dark:bg-gray-900">
         <SectionLabel extra="12 campaign →">Campaign Aktif</SectionLabel>
         {CAMPAIGNS.map((c, i) => <CampaignCard key={i} item={c} />)}
 

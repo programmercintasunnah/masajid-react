@@ -262,7 +262,7 @@ export function PageFavorites() {
         ))}
       </div>
 
-      <div className="flex-1 overflow-y-auto bg-[#f5f7f5]">
+      <div className="flex-1 overflow-y-auto bg-[#f5f7f5] dark:bg-gray-900">
         {tab === "live" ? (
           <div className="py-4">
             <h3 className="text-sm font-bold text-gray-700 px-5 mb-3">Sedang Berlangsung</h3>

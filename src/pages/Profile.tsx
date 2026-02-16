@@ -44,7 +44,7 @@ export function PageProfile() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto bg-[#f5f7f5]">
+      <div className="flex-1 overflow-y-auto bg-[#f5f7f5] dark:bg-gray-900">
         <SectionLabel>Aktivitas Saya</SectionLabel>
         <div className="mx-5 mb-3 bg-white rounded-2xl overflow-hidden shadow-sm">
           {PROFILE_ACTIVITY.map((m, i) => {

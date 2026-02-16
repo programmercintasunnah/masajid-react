@@ -8,7 +8,7 @@ interface MosqueCardProps {
 
 export function MosqueCard({ item }: MosqueCardProps) {
   return (
-    <div className="min-w-[150px] bg-white rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] flex-shrink-0 cursor-pointer hover:-translate-y-0.5 transition-transform lg:min-w-[240px]">
+    <div className="min-w-[150px] bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm border border-black/[0.04] dark:border-gray-700 flex-shrink-0 cursor-pointer hover:-translate-y-0.5 transition-transform lg:min-w-[240px]">
       <div className={`h-20 lg:h-28 bg-gradient-to-br ${item.bg} flex items-center justify-center relative`}>
         {item.image ? (
           <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
@@ -21,13 +21,13 @@ export function MosqueCard({ item }: MosqueCardProps) {
         </span>
       </div>
       <div className="p-2.5 lg:p-4">
-        <div className="text-[11px] font-bold text-gray-900 mb-0.5 lg:text-sm">{item.name}</div>
-        <div className="text-[10px] text-gray-400 mb-1 lg:text-xs truncate">{item.address}</div>
+        <div className="text-[11px] font-bold text-gray-900 dark:text-white mb-0.5 lg:text-sm">{item.name}</div>
+        <div className="text-[10px] text-gray-400 dark:text-gray-500 mb-1 lg:text-xs truncate">{item.address}</div>
         <div className="flex items-center justify-between">
-          <div className="text-[10px] text-[#0b3d2e] font-medium lg:text-xs">
+          <div className="text-[10px] text-[#0b3d2e] dark:text-emerald-400 font-medium lg:text-xs">
             📚 {item.kajianToday || "Kajian Hari Ini"}
           </div>
-          <button className="text-[#0b3d2e] hover:opacity-70">
+          <button className="text-[#0b3d2e] dark:text-emerald-400 hover:opacity-70">
             <Navigation className="w-4 h-4 lg:w-5 lg:h-5" />
           </button>
         </div>

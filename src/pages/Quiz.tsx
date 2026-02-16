@@ -11,11 +11,11 @@ export function PageQuiz() {
         <p className="text-[12px] text-white/55">Tes pengetahuan agama Islam</p>
       </div>
 
-      <div className="flex-1 overflow-y-auto bg-[#f5f7f5] p-5">
+      <div className="flex-1 overflow-y-auto bg-[#f5f7f5] dark:bg-gray-900 p-5">
         <div className="text-center py-10">
           <div className="text-4xl mb-4">📝</div>
-          <h3 className="text-lg font-bold text-gray-900 mb-2">Quiz Akan Hadir</h3>
-          <p className="text-sm text-gray-500">
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Quiz Akan Hadir</h3>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             Quiz pasca kajian akan tersedia setelah kajian selesai.
             Nantikan informasi lebih lanjut!
           </p>
