@@ -63,7 +63,7 @@ export function PageHome() {
         <Header userName="Zakie Alelm" />
       </div>
 
-      <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-none bg-[#f5f7f5] dark:bg-gray-900 md:bg-white md:dark:bg-gray-900 lg:px-8">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-none bg-[#f5f7f5] dark:bg-gray-900 lg:px-8">
         {/* MenuGrid - only visible on mobile (< md) */}
         <div className="md:hidden">
           <SectionLabel>Menu</SectionLabel>
