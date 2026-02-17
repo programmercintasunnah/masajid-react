@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { Bell, Sunrise, Sun, Cloud, Sunset, Moon, MapPin, Loader2, Moon as MoonIcon, Sun as SunIcon } from "lucide-react";
 import { useLocation } from "../../hooks/useLocation";
 import { usePrayerTimes, getNextPrayer } from "../../hooks/usePrayerTimes";
+import { useTime } from "../../hooks/useTime";
 import { useThemeStore } from "../../stores";
 import masajidLogo from "../../assets/masajid_logo.png"
 interface HeaderProps {
@@ -27,7 +27,7 @@ function formatCountdown(minutes: number): string {
 }
 
 export function Header({ userName, userPhoto }: HeaderProps) {
-  const [time] = useState(new Date());
+  const time = useTime();
   const { location, loading: locationLoading, requestLocation } = useLocation();
   const { prayerTimes, hijriDate, loading: prayerLoading } = usePrayerTimes();
   const { isDark, toggleDark } = useThemeStore();

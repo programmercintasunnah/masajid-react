@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
 import { Sunrise, Sun, Cloud, Sunset, Moon, MapPin } from "lucide-react";
 import { useLocation } from "../../hooks/useLocation";
 import { usePrayerTimes, getNextPrayer } from "../../hooks/usePrayerTimes";
+import { useTime } from "../../hooks/useTime";
 
 export function RightPanel() {
   const { location, loading: locationLoading, requestLocation } = useLocation();
@@ -10,12 +10,7 @@ export function RightPanel() {
   const hasValidLocation = location?.cityCode && prayerTimes.Fajr !== "-";
   const nextPrayer = hasValidLocation ? getNextPrayer(prayerTimes) : null;
 
-  const [now, setNow] = useState(new Date());
-
-  useEffect(() => {
-    const timer = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
+  const now = useTime();
 
   const hours = now.getHours().toString().padStart(2, "0");
   const minutes = now.getMinutes().toString().padStart(2, "0");
