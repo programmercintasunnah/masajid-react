@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Bell, Sunrise, Sun, Cloud, Sunset, Moon, MapPin, Loader2, Moon as MoonIcon, Sun as SunIcon } from "lucide-react";
 import { useLocation } from "../../hooks/useLocation";
 import { usePrayerTimes, getNextPrayer } from "../../hooks/usePrayerTimes";
@@ -27,7 +27,7 @@ function formatCountdown(minutes: number): string {
 }
 
 export function Header({ userName, userPhoto }: HeaderProps) {
-  const [time, setTime] = useState(new Date());
+  const [time] = useState(new Date());
   const { location, loading: locationLoading, requestLocation } = useLocation();
   const { prayerTimes, hijriDate, loading: prayerLoading } = usePrayerTimes();
   const { isDark, toggleDark } = useThemeStore();
@@ -35,11 +35,6 @@ export function Header({ userName, userPhoto }: HeaderProps) {
   const gregorian = getGregorianDate(time);
   const hasValidLocation = location?.cityCode && prayerTimes.Fajr !== "-";
   const nextPrayer = hasValidLocation ? getNextPrayer(prayerTimes) : null;
-
-  useEffect(() => {
-    const timer = setInterval(() => setTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   const hours = time.getHours().toString().padStart(2, "0");
   const minutes = time.getMinutes().toString().padStart(2, "0");
