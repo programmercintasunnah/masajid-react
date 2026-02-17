@@ -1,21 +1,10 @@
 import { useState, useEffect } from "react";
 import type { Page } from "../../types";
-import { BookOpen, ScrollText, GraduationCap, BookMarked, Sparkles, MoreHorizontal, Home, Heart, Banknote, CheckSquare, User } from "lucide-react";
+import { Home, Heart, Banknote, CheckSquare, User } from "lucide-react";
 import { TopNav } from "./TopNav";
 import { RightPanel } from "./RightPanel";
 import { MENUS } from "../../config/menus";
 import { useThemeStore } from "../../stores";
-
-const MENU_ICONS: Record<string, any> = {
-  quran: BookOpen,
-  hadits: ScrollText,
-  kajian: GraduationCap,
-  tahsin: BookMarked,
-  dzikir: Sparkles,
-  infaq: BookOpen,
-  quiz: BookMarked,
-  other: MoreHorizontal,
-};
 
 const NAV_ITEMS: { id: Page; icon: any; label: string }[] = [
   { id: "home", icon: Home, label: "Beranda" },
@@ -66,18 +55,17 @@ export function MobileContainer({ children, currentPage, onNavigate }: MobileCon
               <h1 className="text-lg font-bold text-[#0b3d2e]">Masajid<span className="text-gray-300">App</span></h1>
             </div>
             
-            {/* MenuGrid */}
+            {/* MenuGrid - use images like in Home grid */}
             <nav className="p-3">
               <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3">Menu</div>
               {MENUS.map((m, i) => {
-                const Icon = MENU_ICONS[m.page] || MoreHorizontal;
                 return (
                   <button
                     key={i}
                     className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl mb-1 transition-colors text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${m.bg} flex items-center justify-center`}>
-                      <Icon className="w-4 h-4 text-gray-600" />
+                      <img src={m.img} alt={m.label} className="w-5 h-5" />
                     </div>
                     <span className="text-sm font-medium">{m.label}</span>
                   </button>
