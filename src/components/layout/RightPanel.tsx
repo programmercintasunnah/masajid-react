@@ -1,28 +1,17 @@
 import { Sunrise, Sun, Cloud, Sunset, Moon, MapPin } from "lucide-react";
 import { useLocation } from "../../hooks/useLocation";
-import { usePrayerTimes, getNextPrayer } from "../../hooks/usePrayerTimes";
+import { usePrayerTimes } from "../../hooks/usePrayerTimes";
+import { usePrayerInfo } from "../../hooks/usePrayerInfo";
 import { useTime } from "../../hooks/useTime";
 
 export function RightPanel() {
   const { location, loading: locationLoading, requestLocation } = useLocation();
   const { prayerTimes, hijriDate, loading: prayerLoading } = usePrayerTimes();
-
-  const hasValidLocation = location?.cityCode && prayerTimes.Fajr !== "-";
-  const nextPrayer = hasValidLocation ? getNextPrayer(prayerTimes) : null;
-
+  const { nextPrayer, gregorian, prayerList } = usePrayerInfo();
+  
   const now = useTime();
-
   const hours = now.getHours().toString().padStart(2, "0");
   const minutes = now.getMinutes().toString().padStart(2, "0");
-  const gregorian = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-
-  const prayerList = [
-    { name: "Subuh", time: prayerTimes.Fajr || "-" },
-    { name: "Dzuhur", time: prayerTimes.Dhuhr || "-" },
-    { name: "Ashar", time: prayerTimes.Asr || "-" },
-    { name: "Maghrib", time: prayerTimes.Maghrib || "-" },
-    { name: "Isya", time: prayerTimes.Isha || "-" },
-  ];
 
   const prayerIcons: Record<string, any> = {
     Subuh: Sunrise,
@@ -31,6 +20,8 @@ export function RightPanel() {
     Maghrib: Sunset,
     Isya: Moon,
   };
+
+  const hasValidLocation = location?.cityCode && prayerTimes.Fajr !== "-";
 
   return (
     <div className="hidden lg:flex flex-col w-[300px] bg-white dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700 p-4 flex-shrink-0">

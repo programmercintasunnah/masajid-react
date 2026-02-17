@@ -1,21 +1,17 @@
 import { Bell, Sunrise, Sun, Cloud, Sunset, Moon, MapPin, Loader2, Moon as MoonIcon, Sun as SunIcon } from "lucide-react";
-import { useLocation } from "../../hooks/useLocation";
-import { usePrayerTimes, getNextPrayer } from "../../hooks/usePrayerTimes";
 import { useTime } from "../../hooks/useTime";
+import { useLocation } from "../../hooks/useLocation";
+import { usePrayerTimes } from "../../hooks/usePrayerTimes";
+import { usePrayerInfo } from "../../hooks/usePrayerInfo";
 import { useThemeStore } from "../../stores";
 import masajidLogo from "../../assets/masajid_logo.png"
+
 interface HeaderProps {
   userName?: string;
   userPhoto?: string;
 }
 
 const HEADER_BG = "linear-gradient(160deg,#0b3d2e 0%,#1a6b4a 55%,#1f8a5e 100%)";
-
-function getGregorianDate(date: Date): string {
-  const days = ["Ahad", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-  const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-  return `${days[date.getDay()]}, ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
-}
 
 function formatCountdown(minutes: number): string {
   const hours = Math.floor(minutes / 60);
@@ -31,11 +27,10 @@ export function Header({ userName, userPhoto }: HeaderProps) {
   const { location, loading: locationLoading, requestLocation } = useLocation();
   const { prayerTimes, hijriDate, loading: prayerLoading } = usePrayerTimes();
   const { isDark, toggleDark } = useThemeStore();
+  
+  const { nextPrayer, gregorian, prayerList } = usePrayerInfo();
 
-  const gregorian = getGregorianDate(time);
   const hasValidLocation = location?.cityCode && prayerTimes.Fajr !== "-";
-  const nextPrayer = hasValidLocation ? getNextPrayer(prayerTimes) : null;
-
   const hours = time.getHours().toString().padStart(2, "0");
   const minutes = time.getMinutes().toString().padStart(2, "0");
 
@@ -46,14 +41,6 @@ export function Header({ userName, userPhoto }: HeaderProps) {
     Maghrib: Sunset,
     Isya: Moon,
   };
-
-  const prayerList = [
-    { name: "Subuh", time: prayerTimes.Fajr },
-    { name: "Dzuhur", time: prayerTimes.Dhuhr },
-    { name: "Ashar", time: prayerTimes.Asr },
-    { name: "Maghrib", time: prayerTimes.Maghrib },
-    { name: "Isya", time: prayerTimes.Isha },
-  ];
 
   const isLoading = locationLoading || prayerLoading;
 
