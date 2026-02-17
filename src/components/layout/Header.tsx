@@ -67,7 +67,7 @@ export function Header({ userName, userPhoto }: HeaderProps) {
       return (
         <span className="flex items-center gap-1">
           <MapPin className="w-3 h-3" />
-          {locationText} ({location.cityCode})
+          {locationText}
         </span>
       );
     }
@@ -150,9 +150,9 @@ export function Header({ userName, userPhoto }: HeaderProps) {
             <div className="text-center mb-1.5 lg:mb-3">
               <span className="text-[64px] font-black text-white leading-none tracking-[-3px] lg:text-[96px]" style={{ textShadow: "0 4px 20px rgba(0,0,0,0.3)" }}>{hours}:{minutes}</span>
             </div>
-            {hasValidLocation ? (
+            {hasValidLocation && nextPrayer ? (
               <div className="text-center text-[12px] text-white/60 mb-4 lg:text-base">
-                ± {formatCountdown(nextPrayer!.minutesLeft)} lagi menuju waktu <strong className="text-amber-300">{nextPrayer!.name}</strong>
+                ± {formatCountdown(nextPrayer.minutesLeft)} lagi menuju waktu <strong className="text-amber-300">{nextPrayer.name}</strong>
               </div>
             ) : (
               <div className="text-center text-[12px] text-white/60 mb-4 lg:text-base">

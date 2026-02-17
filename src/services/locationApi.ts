@@ -6,13 +6,17 @@ interface NominatimResponse {
     town?: string;
     village?: string;
     county?: string;
+    municipality?: string;
+    suburb?: string;
+    neighbourhood?: string;
+    district?: string;
   };
 }
 
 export async function getCityFromCoordinates(
   latitude: number,
   longitude: number
-): Promise<string> {
+): Promise<{ city: string; district: string }> {
   const response = await fetch(
     `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`,
     {
@@ -21,13 +25,10 @@ export async function getCityFromCoordinates(
   );
   
   const data: NominatimResponse = await response.json();
-  return (
-    data.address.city ||
-    data.address.town ||
-    data.address.village ||
-    data.address.county ||
-    "Unknown"
-  );
+  const city = data.address.city || data.address.town || data.address.village || data.address.county || data.address.municipality || "Unknown";
+  const district = data.address.suburb || data.address.neighbourhood || data.address.district || "";
+  
+  return { city, district };
 }
 
 export function getCurrentLocation(): Promise<GeolocationPosition> {

@@ -70,8 +70,7 @@ export function usePrayerTimes() {
 }
 
 export function getNextPrayer(prayerTimes: PrayerTimes): NextPrayer | null {
-  // If no valid prayer times, return null
-  if (prayerTimes.Fajr === "-" || !prayerTimes.Fajr) {
+  if (!prayerTimes.Fajr || prayerTimes.Fajr === "-") {
     return null;
   }
   
@@ -79,21 +78,24 @@ export function getNextPrayer(prayerTimes: PrayerTimes): NextPrayer | null {
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
   
   const prayers = [
-    { name: "Subuh", time: prayerTimes.Fajr },
-    { name: "Dzuhur", time: prayerTimes.Dhuhr },
-    { name: "Ashar", time: prayerTimes.Asr },
-    { name: "Maghrib", time: prayerTimes.Maghrib },
-    { name: "Isya", time: prayerTimes.Isha },
+    { name: "Subuh", time: prayerTimes.Fajr || "-" },
+    { name: "Dzuhur", time: prayerTimes.Dhuhr || "-" },
+    { name: "Ashar", time: prayerTimes.Asr || "-" },
+    { name: "Maghrib", time: prayerTimes.Maghrib || "-" },
+    { name: "Isya", time: prayerTimes.Isha || "-" },
   ];
   
-  const prayerMinutes = prayers.map(p => {
+  const validPrayers = prayers.filter(p => p.time && p.time !== "-");
+  if (validPrayers.length === 0) return null;
+  
+  const prayerMinutes = validPrayers.map(p => {
     const [h, m] = p.time.split(":").map(Number);
     return isNaN(h) ? Infinity : h * 60 + m;
   });
   
   for (let i = 0; i < prayerMinutes.length; i++) {
     if (currentMinutes < prayerMinutes[i]) {
-      return { name: prayers[i].name, minutesLeft: prayerMinutes[i] - currentMinutes };
+      return { name: validPrayers[i].name, minutesLeft: prayerMinutes[i] - currentMinutes };
     }
   }
   

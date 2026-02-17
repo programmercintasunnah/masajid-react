@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { getCurrentLocation } from "@/services/locationApi";
+import { getCurrentLocation, getCityFromCoordinates } from "@/services/locationApi";
 
 export interface Location {
   latitude: number;
@@ -75,16 +75,29 @@ function getCityNameFromTimezone(timezone: "wib" | "wita" | "wit"): string {
 }
 
 async function getCityCodeFromCoordinates(
-  _latitude: number,
+  latitude: number,
   longitude: number
 ): Promise<{ city: string; district: string; cityCode: string }> {
   const timezone = getTimezoneFromLongitude(longitude);
   const cityCode = getCityCodeFromTimezone(timezone);
-  const city = getCityNameFromTimezone(timezone);
+  
+  let city = getCityNameFromTimezone(timezone);
+  let district = "";
+  
+  try {
+    const { city: nominatimCity, district: nominatimDistrict } = await getCityFromCoordinates(latitude, longitude);
+    if (nominatimCity && nominatimCity !== "Unknown") {
+      city = nominatimCity;
+      district = nominatimDistrict;
+      console.log("[Location] Got from Nominatim - city:", city, "district:", district);
+    }
+  } catch (e) {
+    console.warn("[Location] Nominatim failed, using timezone fallback");
+  }
   
   console.log("[Location] Using timezone:", timezone, "cityCode:", cityCode);
   
-  return { city, district: "", cityCode };
+  return { city, district, cityCode };
 }
 
 export function useLocation() {
