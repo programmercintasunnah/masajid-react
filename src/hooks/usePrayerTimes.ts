@@ -69,7 +69,12 @@ export function usePrayerTimes() {
   return { prayerTimes, hijriDate, loading, error };
 }
 
-export function getNextPrayer(prayerTimes: PrayerTimes): NextPrayer {
+export function getNextPrayer(prayerTimes: PrayerTimes): NextPrayer | null {
+  // If no valid prayer times, return null
+  if (prayerTimes.Fajr === "-" || !prayerTimes.Fajr) {
+    return null;
+  }
+  
   const now = new Date();
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
   
@@ -83,7 +88,7 @@ export function getNextPrayer(prayerTimes: PrayerTimes): NextPrayer {
   
   const prayerMinutes = prayers.map(p => {
     const [h, m] = p.time.split(":").map(Number);
-    return h * 60 + m;
+    return isNaN(h) ? Infinity : h * 60 + m;
   });
   
   for (let i = 0; i < prayerMinutes.length; i++) {
